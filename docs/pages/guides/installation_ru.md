@@ -9,6 +9,6 @@ lang: ru
 
 {% include /readme/installation_ru.md %}
 
-# Backward Compatibility Promise
+# Обещание обратной совместимости
 
 {% include /readme/backward_compatibility_promise_ru.md %}

@@ -2,6 +2,7 @@
 title: Running assembly instructions
 sidebar: documentation
 permalink: documentation/configuration/stapel_image/assembly_instructions.html
+ref: documentation_configuration_stapel_image_assembly_instructions
 summary: |
   <a class="google-drawings" href="https://docs.google.com/drawings/d/e/2PACX-1vQcjW39mf0TUxI7yqNzKPq4_9ffzg2IsMxQxu1Uk1-M0V_Wq5HxZCQJ6x-iD-33u2LN25F1nbk_1Yx5/pub?w=2031&amp;h=144" data-featherlight="image">
       <img src="https://docs.google.com/drawings/d/e/2PACX-1vQcjW39mf0TUxI7yqNzKPq4_9ffzg2IsMxQxu1Uk1-M0V_Wq5HxZCQJ6x-iD-33u2LN25F1nbk_1Yx5/pub?w=1016&amp;h=72">
@@ -333,22 +334,15 @@ results if executed twice and werf cannot correctly calculate _signature_ to
 rebuild _stages_. For now, there is a list of supported modules:
 
 - [Command modules](https://docs.ansible.com/ansible/2.5/modules/list_of_commands_modules.html): command, shell, raw, script.
-
 - [Crypto modules](https://docs.ansible.com/ansible/2.5/modules/list_of_crypto_modules.html): openssl_certificate, and other.
-
 - [Files modules](https://docs.ansible.com/ansible/2.5/modules/list_of_files_modules.html): acl, archive, copy, stat, tempfile, and other.
-
 - [Net Tools Modules](https://docs.ansible.com/ansible/2.5/modules/list_of_net_tools_modules.html): get_url, slurp, uri.
-
 - [Packaging/Language modules](https://docs.ansible.com/ansible/2.5/modules/list_of_packaging_modules.html#language): composer, gem, npm, pip, and other.
-
 - [Packaging/OS modules](https://docs.ansible.com/ansible/2.5/modules/list_of_packaging_modules.html#os): apt, apk, yum, and other.
-
 - [System modules](https://docs.ansible.com/ansible/2.5/modules/list_of_system_modules.html): user, group, getent, locale_gen, timezone, cron, and other.
-
 - [Utilities modules](https://docs.ansible.com/ansible/2.5/modules/list_of_utilities_modules.html): assert, debug, set_fact, wait_for.
 
-_Werf config_ with the module not from this list gives an error and stops a build. Feel free to report an issue if some module should be enabled.
+_Werf config_ with the module not from this list gives an error and stops a build. Feel free to report an [issue](https://github.com/flant/werf/issues/new) if some module should be enabled.
 
 ### Copy files
 
@@ -520,7 +514,7 @@ So this configuration rebuilds _beforeInstall_ user stage on every commit.
     <img src="https://docs.google.com/drawings/d/e/2PACX-1vRv56S-dpoTSzLC_24ifLqJHQoHdmJ30l1HuAS4dgqBgUzZdNQyA1balT-FwK16pBbbXqlLE3JznYDk/pub?w=622&amp;h=206">
   </a>
 
-As stated in a _git mapping_ reference, there are _gitArchive_ and _gitLatestPatch_ stages. _gitArchive_ is executed after _beforeInstall_ user stage, and _gitLatestPatch_ is executed after _setup_ user stage if a local git repository has changes. So, to execute assembly instructions with the latest version of source codes, you may rebuild _gitArchive_ with [special commit]({{site.baseurl}}/documentation/configuration/stapel_image/git_directive.html#rebuild-of-git_archive-stage) or rebuild _beforeInstall_ (change _cacheVersion_ or instructions for _beforeInstall_ stage).
+As stated in a _git mapping_ reference, there are _gitArchive_ and _gitLatestPatch_ stages. _gitArchive_ is executed after _beforeInstall_ user stage, and _gitLatestPatch_ is executed after _setup_ user stage if a local git repository has changes. So, to execute assembly instructions with the latest version of source codes, you may rebuild _gitArchive_ with [special commit]({{site.baseurl}}/documentation/configuration/stapel_image/git_directive.html#rebuild-of-gitarchive-stage) or rebuild _beforeInstall_ (change _cacheVersion_ or instructions for _beforeInstall_ stage).
 
 _install_, _beforeSetup_ and _setup_ user stages are also dependant on git repository changes. A git patch is applied at the beginning of _user stage_ to execute assembly instructions with the latest version of source codes.
 

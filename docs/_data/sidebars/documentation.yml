@@ -312,112 +312,112 @@ entries:
   ru:
     f:
       - title: Обзор
-        url: /documentation/index.html
+        url: /ru/documentation/index.html
 
       - title: Конфигурация
         sf:
 
           - title: Общие сведения
-            url: /documentation/configuration/introduction.html
+            url: /ru/documentation/configuration/introduction.html
 
-          - title: Сборка с Dockerfile
-            url: /documentation/configuration/dockerfile_image.html
+          - title: Dockerfile-образ
+            url: /ru/documentation/configuration/dockerfile_image.html
 
-          - title: Сборка со Stapel
+          - title: Stapel-образ
             sfi:
 
               - title: Именование (обязательно)
-                url: /documentation/configuration/stapel_image/naming.html
+                url: /ru/documentation/configuration/stapel_image/naming.html
 
               - title: Базовый образ (обязательно)
-                url: /documentation/configuration/stapel_image/base_image.html
+                url: /ru/documentation/configuration/stapel_image/base_image.html
 
               - title: Добавление Docker-инструкций
-                url: /documentation/configuration/stapel_image/docker_directive.html
+                url: /ru/documentation/configuration/stapel_image/docker_directive.html
 
               - title: Добавление исходного кода из git-репозиториев
-                url: /documentation/configuration/stapel_image/git_directive.html
+                url: /ru/documentation/configuration/stapel_image/git_directive.html
 
-              - title: Запус инструкций сборки
-                url: /documentation/configuration/stapel_image/assembly_instructions.html
+              - title: Запуск инструкций сборки
+                url: /ru/documentation/configuration/stapel_image/assembly_instructions.html
 
-              - title: Использование монтирования для уменьшения размера образа и ускорения сборки
-                url: /documentation/configuration/stapel_image/mount_directive.html
+              - title: Монтирование, для уменьшения размера и ускорения сборки
+                url: /ru/documentation/configuration/stapel_image/mount_directive.html
 
-              - title: Импортирование из артефактов и образов
-                url: /documentation/configuration/stapel_image/import_directive.html
+              - title: Импорт из артефактов и образов
+                url: /ru/documentation/configuration/stapel_image/import_directive.html
 
-              - title: Итоговый список директив
-                url: /documentation/configuration/stapel_image/image_directives.html
+              - title: Полный список директив
+                url: /ru/documentation/configuration/stapel_image/image_directives.html
 
-          - title: Артефакты Stapel
-            url: /documentation/configuration/stapel_artifact.html
+          - title: Stapel-артефакт
+            url: /ru/documentation/configuration/stapel_artifact.html
 
           - title: Деплой в Kubernetes
-            url: /documentation/configuration/deploy_into_kubernetes.html
+            url: /ru/documentation/configuration/deploy_into_kubernetes.html
 
       - title: Справочник
         sf:
 
-        - title: Stages and Images
-          url: /documentation/reference/stages_and_images.html
+        - title: Стадии и образы
+          url: /ru/documentation/reference/stages_and_images.html
 
-        - title: Авторизация в Registry
-          url: /documentation/reference/registry_authorization.html
+        - title: Авторизация в registry
+          url: /ru/documentation/reference/registry_authorization.html
 
         - title: Сборка
-          url: /documentation/reference/build_process.html
+          url: /ru/documentation/reference/build_process.html
 
         - title: Публикация (Publish)
-          url: /documentation/reference/publish_process.html
+          url: /ru/documentation/reference/publish_process.html
 
         - title: Деплой
           sfi:
 
             - title: Деплой в Kubernetes
-              url: /documentation/reference/deploy_process/deploy_into_kubernetes.html
+              url: /ru/documentation/reference/deploy_process/deploy_into_kubernetes.html
 
             - title: Работа с секретами
-              url: /documentation/reference/deploy_process/working_with_secrets.html
+              url: /ru/documentation/reference/deploy_process/working_with_secrets.html
 
             - title: Отличия от Helm
-              url: /documentation/reference/deploy_process/differences_with_helm.html
+              url: /ru/documentation/reference/deploy_process/differences_with_helm.html
 
         - title: Очистка
-          url: /documentation/reference/cleaning_process.html
+          url: /ru/documentation/reference/cleaning_process.html
 
         - title: Работа с CI/CD
           sfi:
 
             - title: Общие сведения
-              url: /documentation/reference/plugging_into_cicd/overview.html
+              url: /ru/documentation/reference/plugging_into_cicd/overview.html
 
             - title: Gitlab CI
-              url: /documentation/reference/plugging_into_cicd/gitlab_ci.html
+              url: /ru/documentation/reference/plugging_into_cicd/gitlab_ci.html
 
         - title: Разработка и отладка
           sfi:
 
             - title: Настройка Minikube
-              url: /documentation/reference/development_and_debug/setup_minikube.html
+              url: /ru/documentation/reference/development_and_debug/setup_minikube.html
 
             - title: Интроспекция стадий
-              url: /documentation/reference/development_and_debug/stage_introspection.html
+              url: /ru/documentation/reference/development_and_debug/stage_introspection.html
 
-            - title: Директива `asLayers`
-              url: /documentation/reference/development_and_debug/as_layers.html
+            - title: Директива asLayers
+              url: /ru/documentation/reference/development_and_debug/as_layers.html
 
-            - title: Рендеринг и проверка корректости синтаксиса чарта
-              url: /documentation/reference/development_and_debug/lint_and_render_chart.html
+            - title: Рендеринг и линтер конфигурации
+              url: /ru/documentation/reference/development_and_debug/lint_and_render_chart.html
 
         - title: Toolbox
           sfi:
 
             - title: Slug
-              url: /documentation/reference/toolbox/slug.html
+              url: /ru/documentation/reference/toolbox/slug.html
 
-            - title: SSH
-              url: /documentation/reference/toolbox/ssh.html
+            - title: Работа с SSH
+              url: /ru/documentation/reference/toolbox/ssh.html
 
       - title: Руководства
         sf:
@@ -433,7 +433,7 @@ entries:
           - title: Интеграция с Gitlab CI/CD
             url: /ru/documentation/guides/gitlab_ci_cd_integration.html
 
-          - title: Интеграция с другими CI/CD системами
+          - title: Интеграция с неподдерживаемыми системами CI/CD
             url: /ru/documentation/guides/unsupported_ci_cd_integration.html
 
           - title: Расширенная сборка
@@ -451,7 +451,7 @@ entries:
               - title: Использование артефактов
                 url: /ru/documentation/guides/advanced_build/artifacts.html
 
-      - title: CLI Commands
+      - title: CLI команды
         sf:
           - title: Main Commands
             sfi:

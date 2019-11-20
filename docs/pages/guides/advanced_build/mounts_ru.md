@@ -11,8 +11,6 @@ lang: ru
 
 В статье сначала рассматривается сборка тестового приложения на GO, а затем инструкции сборки оптимизируются с использованием опций монтирования, для существенного уменьшения размера образа.
 
-In this article, we will build an example GO application. Then we will optimize the build instructions to substantial reduce image size with using mount directives.
-
 ## Требования
 
 * Установленные [зависимости Werf]({{ site.baseurl }}/ru/documentation/guides/installation.html#install-dependencies).

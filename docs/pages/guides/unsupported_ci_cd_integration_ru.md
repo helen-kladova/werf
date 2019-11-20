@@ -1,5 +1,5 @@
 ---
-title: Интеграция с другими CI/CD системами
+title: Интеграция с неподдерживаемыми системами CI/CD
 sidebar: documentation
 permalink: ru/documentation/guides/unsupported_ci_cd_integration.html
 author: Timofey Kirillov <timofey.kirillov@flant.com>
@@ -7,7 +7,7 @@ ref: documentation_guides_unsupported_ci_cd_integration
 lang: ru
 ---
 
-В настоящий момент Werf поддерживает только работу с [Gitlab CI]({{ site.baseurl }}/ru/documentation/reference/plugging_into_cicd/gitlab_ci.html). Мы планируем в [скором будущем](https://github.com/flant/werf/issues/1682) обеспечить поддержку top-10 популярных CI систем.
+В настоящий момент Werf поддерживает только работу с [Gitlab CI]({{ site.baseurl }}/ru/documentation/reference/plugging_into_cicd/gitlab_ci.html), но мы планируем в [скором будущем](https://github.com/flant/werf/issues/1682) обеспечить поддержку top-10 популярных CI систем.
 
 Чтобы использовать Werf с любой CI/CD системой которая пока не поддерживается, необходимо выполнить шаги описанные [здесь]({{ site.baseurl }}/ru/documentation/reference/plugging_into_cicd/overview.html#what-is-ci-env), с помощью собственного скрипта. Запуск такого скрипта нужно производить вместо вызова команды `werf ci-env`, но поведение скрипта должно быть похожим на результат выполнения команды `werf ci-env`. Запуск скрипта также должен осуществляться перед выполнением любых других команд werf, вначале задания CI/CD.
 

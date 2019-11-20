@@ -120,7 +120,7 @@ image-stage-hotel-booking  f27efaf9...1456b0b4   0bf71cb34076      10 minutes ag
 
 ### Сборка
 
-Замените имеющийся фаил `werf.yaml` следующим содержимым:
+Замените имеющийся файл `werf.yaml` следующим содержимым:
 {% raw %}
 ```yaml
 project: hotel-booking

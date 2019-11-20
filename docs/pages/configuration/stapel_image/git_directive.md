@@ -2,6 +2,7 @@
 title: Adding source code from git repositories
 sidebar: documentation
 permalink: documentation/configuration/stapel_image/git_directive.html
+ref: documentation_configuration_stapel_image_git_directive
 summary: |
   <a class="google-drawings" href="https://docs.google.com/drawings/d/e/2PACX-1vRUYmRNmeuP14OcChoeGzX_4soCdXx7ZPgNqm5ePcz9L_ItMUqyolRoJyPL7baMNoY7P6M0B08eMtsb/pub?w=2031&amp;h=144" data-featherlight="image">
       <img src="https://docs.google.com/drawings/d/e/2PACX-1vRUYmRNmeuP14OcChoeGzX_4soCdXx7ZPgNqm5ePcz9L_ItMUqyolRoJyPL7baMNoY7P6M0B08eMtsb/pub?w=1016&amp;h=72">
@@ -108,8 +109,7 @@ The _git mapping_ configuration for a local repository has the following paramet
 
 The _git mapping_ configuration for a remote repository has some additional parameters:
 - `url` — remote repository address;
-- `branch`, `tag`, `commit` — a name of branch, tag or commit hash that will be used. If these parameters are not specified, the master branch is used;
-- `as` — defines an alias to simplify the retrieval of remote repository-related information in helm templates. Details are available in the [Deployment to kubernetes]({{ site.baseurl }}/documentation/reference/deploy_process/deploy_into_kubernetes.html) reference.
+- `branch`, `tag`, `commit` — a name of branch, tag or commit hash that will be used. If these parameters are not specified, the master branch is used.
 
 ## Uses of git mappings
 
@@ -417,6 +417,6 @@ You can reset the _gitArchive_ stage specifying the **[werf reset]** or **[reset
 
 ### _git stages_ and rebasing
 
-Each _git stage_ stores service labels with commits SHA from which this _stage_ was built. 
-These commits are used for creating patches on the next _git stage_ (in a nutshell, `git diff COMMIT_FROM_PREVIOUS_GIT_STAGE LATEST_COMMIT` for each described _git mapping_). 
+Each _git stage_ stores service labels with commits SHA from which this _stage_ was built.
+These commits are used for creating patches on the next _git stage_ (in a nutshell, `git diff COMMIT_FROM_PREVIOUS_GIT_STAGE LATEST_COMMIT` for each described _git mapping_).
 So, if any saved commit is not in a git repository (e.g., after rebasing) then werf rebuilds that stage with latest commits at the next build.

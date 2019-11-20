@@ -3,6 +3,7 @@ title: Stapel artifact configuration
 sidebar: documentation
 permalink: documentation/configuration/stapel_artifact.html
 author: Alexey Igrychev <alexey.igrychev@flant.com>
+ref: documentation_configuration_stapel_artifact
 summary: |
   <a class="google-drawings" href="https://docs.google.com/drawings/d/e/2PACX-1vRD-K_z7KEoliEVT4GpTekCkeaFMbSPWZpZkyTDms4XLeJAWEnnj4EeAxsdwnU3OtSW_vuKxDaaFLgD/pub?w=1800&amp;h=850" data-featherlight="image">
   <img src="https://docs.google.com/drawings/d/e/2PACX-1vRD-K_z7KEoliEVT4GpTekCkeaFMbSPWZpZkyTDms4XLeJAWEnnj4EeAxsdwnU3OtSW_vuKxDaaFLgD/pub?w=640&amp;h=301">

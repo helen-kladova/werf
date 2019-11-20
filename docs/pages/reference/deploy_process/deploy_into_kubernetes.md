@@ -2,6 +2,7 @@
 title: Deploy into kubernetes
 sidebar: documentation
 permalink: documentation/reference/deploy_process/deploy_into_kubernetes.html
+ref: documentation_reference_deploy_process_deploy_into_kubernetes
 author: Timofey Kirillov <timofey.kirillov@flant.com>
 ---
 
@@ -70,7 +71,7 @@ With go templates user can:
  * define common text parts as named golang templates and reuse them in several places;
  * etc.
 
-[Sprig functions](https://masterminds.github.io/sprig/) and [advanced functions](https://docs.helm.sh/developing_charts/#chart-development-tips-and-tricks), like `include` and `required`, can be used in templates. 
+[Sprig functions](https://masterminds.github.io/sprig/) and [advanced functions](https://docs.helm.sh/developing_charts/#chart-development-tips-and-tricks), like `include` and `required`, can be used in templates.
 
 Also user can place `*.tpl` files, which will not be rendered into kubernetes specs. These files can be used to store arbitrary custom golang templates and definitions. All templates and definitions from `*.tpl` files will be available for the use in the `*.yaml` files.
 
@@ -176,8 +177,8 @@ Secret files are placed in the directory `.helm/secret`. User can create arbitra
 
 ##### werf_secret_file
 
-`werf_secret_file` is runtime template function helper for user to fetch secret file content in chart templates. 
-This template function reads file context, which usually placed in the resource yaml manifest of such resources as Secrets. 
+`werf_secret_file` is runtime template function helper for user to fetch secret file content in chart templates.
+This template function reads file context, which usually placed in the resource yaml manifest of such resources as Secrets.
 Template function requires relative path to the file inside `.helm/secret` directory as an argument.
 
 For example to read `.helm/secret/backend-saml/stage/tls.key` and `.helm/secret/backend-saml/stage/tls.crt` files decrypted content into templates:
@@ -589,6 +590,3 @@ werf deploy \
 There are cases when separate Kubernetes clusters are needed for a different environments. You can [configure access to multiple clusters](https://kubernetes.io/docs/tasks/access-application-cluster/configure-access-multiple-clusters) using kube contexts in a single kube config.
 
 In that case deploy option `--kube-context=CONTEXT` should be specified manually along with the environment.
-
-
-

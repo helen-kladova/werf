@@ -2,6 +2,7 @@
 title: Introduction
 sidebar: documentation
 permalink: documentation/configuration/introduction.html
+ref: documentation_configuration_introduction
 author: Alexey Igrychev <alexey.igrychev@flant.com>, Timofey Kirillov <timofey.kirillov@flant.com>
 ---
 
@@ -12,7 +13,7 @@ Application should be configured to use Werf. This configuration includes:
 1. Definition of project meta information such as project name, which will affect build, deploy and other commands.
 2. Definition of the images to be built.
 
-Werf uses YAML configuration file `werf.yaml` placed in the root folder of your application. The config is a collection of config sections -- parts of YAML file separated by three hyphens (http://yaml.org/spec/1.2/spec.html#id2800132):
+Werf uses YAML configuration file `werf.yaml` placed in the root folder of your application. The config is a collection of config sections -- parts of YAML file separated by [three hyphens](http://yaml.org/spec/1.2/spec.html#id2800132):
 
 ```yaml
 CONFIG_SECTION

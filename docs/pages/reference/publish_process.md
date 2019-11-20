@@ -2,6 +2,7 @@
 title: Publish process
 sidebar: documentation
 permalink: documentation/reference/publish_process.html
+ref: documentation_reference_publish_process
 author: Timofey Kirillov <timofey.kirillov@flant.com>
 ---
 
@@ -63,7 +64,7 @@ To publish an [image]({{ site.baseurl }}/documentation/reference/stages_and_imag
 
 This procedure will be referred as **images publish procedure**.
 
-The result of this procedure is an image named by the [*image naming rules*](#image-naming-rules) pushed into the Docker registry. All of these steps are performed with [werf publish command]({{ site.baseurl }}/documentation/cli/main/publish.html) or [werf build-and-publish command]({{ site.baseurl }}/documentation/cli/main/build_and_publish.html).
+The result of this procedure is an image named by the [*image naming rules*](#images-naming) pushed into the Docker registry. All of these steps are performed with [werf publish command]({{ site.baseurl }}/documentation/cli/main/publish.html) or [werf build-and-publish command]({{ site.baseurl }}/documentation/cli/main/build_and_publish.html).
 
 ## Images naming
 
@@ -75,11 +76,11 @@ During images publish procedure Werf constructs resulting images names using:
 
 Resulting docker image name constructed as [`DOCKER_REPOSITORY`](https://docs.docker.com/glossary/?term=repository)`:`[`TAG`](https://docs.docker.com/engine/reference/commandline/tag).
 
-There are _images repo_ and _images repo mode_ params defined where and how to store images. 
+There are _images repo_ and _images repo mode_ params defined where and how to store images.
 If werf project contains single nameless image, then _images repo_ used as docker repository without changes and resulting docker image name costructed by the following pattern: `IMAGES_REPO:TAG`.
 
 Otherwise, werf constructs resulting docker image name for each image based on _images repo mode_:  
-- `IMAGES_REPO:IMAGE_NAME-TAG` pattern for `monorepo` mode; 
+- `IMAGES_REPO:IMAGE_NAME-TAG` pattern for `monorepo` mode;
 - `IMAGES_REPO/IMAGE_NAME:TAG` pattern for `multirepo` mode.
 
 _Images repo_ param should be specified by `--images-repo` option or `$WERF_IMAGES_REPO`.

@@ -2,6 +2,7 @@
 title: Lint And Render Chart
 sidebar: documentation
 permalink: documentation/reference/development_and_debug/lint_and_render_chart.html
+ref: documentation_reference_development_and_debug_lint_and_render_chart
 author: Timofey Kirillov <timofey.kirillov@flant.com>
 ---
 

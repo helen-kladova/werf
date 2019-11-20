@@ -83,7 +83,7 @@
                        {% assign pages=site.pages | where:"ref", page.ref | sort: 'lang' %}
                        {% if pages.size > 1 %}
                          {% for _page in pages %}
-                            <a href="{{ _page.url }}" class="publications__btn {% if _page.url == page.url %}active{% endif %}">{{ _page.lang }}</a>
+                            <a href="{{ site.baseurl }}{{ _page.url }}" class="publications__btn {% if _page.url == page.url %}active{% endif %}">{{ _page.lang }}</a>
                          {% endfor %}
                        {% endif %}
                      {% endif %}

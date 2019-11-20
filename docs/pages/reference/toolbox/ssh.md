@@ -2,6 +2,7 @@
 title: SSH
 sidebar: documentation
 permalink: documentation/reference/toolbox/ssh.html
+ref: documentation_reference_toolbox_ssh
 author: Timofey Kirillov <timofey.kirillov@flant.com>
 ---
 

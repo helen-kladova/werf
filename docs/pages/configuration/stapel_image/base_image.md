@@ -2,6 +2,7 @@
 title: Base image
 sidebar: documentation
 permalink: documentation/configuration/stapel_image/base_image.html
+ref: documentation_configuration_stapel_image_base_image
 author: Alexey Igrychev <alexey.igrychev@flant.com>
 summary: |
   <a class="google-drawings" href="https://docs.google.com/drawings/d/e/2PACX-1vReDSY8s7mMtxuxwDTwtPLFYjEXePaoIB-XbEZcunJGNEHrLbrb9aFxyOoj_WeQe0XKQVhq7RWnG3Eq/pub?w=2031&amp;h=144" data-featherlight="image">
@@ -36,20 +37,20 @@ The `from` directive defines the name and tag of a _base image_. If absent, tag 
 from: <image>[:<tag>]
 ```
 
-By default, the assembly process does not depend on actual _base image_ digest in the repository, only on _from_ directive value. 
+By default, the assembly process does not depend on actual _base image_ digest in the repository, only on _from_ directive value.
 Thus, changing _base image_ locally or in the repository does not matter if _from_ stage is already exists in _stages storage_.
 
-If you want always build the image with actual _base image_ you should use _fromLatest_ directive. 
+If you want always build the image with actual _base image_ you should use _fromLatest_ directive.
 _fromLatest_ directive allows connecting the assembly process with the _base image_ digest getting from the repository.
 ```yaml
 fromLatest: true
 ```
 
-> Pay attention, werf uses actual _base image_ digest as extra _from_ stage dependency if _fromLatest_ is true. 
+> Pay attention, werf uses actual _base image_ digest as extra _from_ stage dependency if _fromLatest_ is true.
 Therefore, using this directive implies not reproducible signatures:
-after changing _base image_ in repository, all previously built stages, also like related images, become not usable. 
+after changing _base image_ in repository, all previously built stages, also like related images, become not usable.
 The problem might occur:
-- between jobs of one pipeline (e.g. build and deploy) or 
+- between jobs of one pipeline (e.g. build and deploy) or
 - when you rerun the previous job (e.g. deploy)
 
 ## fromImage and fromImageArtifact

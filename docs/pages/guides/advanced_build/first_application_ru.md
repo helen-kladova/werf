@@ -1,5 +1,5 @@
 ---
-title: First application
+title: Первое приложение
 sidebar: documentation
 permalink: ru/documentation/guides/advanced_build/first_application.html
 author: Ivan Mikheykin <ivan.mikheykin@flant.com>
@@ -17,7 +17,7 @@ lang: ru
 1. Установка других зависимостей проекта с помощью composer.
 1. Добавление кода приложения в папку `/app` конечного образа и установка владельца `app:app` на файлы и папки.
 1. Установка IP адресов, на которых web-сервер будет принимать запросы. Это делается в скрипте  `/opt/start.sh`, который запускается во время старта контейнера.
-1. Выполнение других действий по настройке приложения. В качестве примера таких действий, мы будем записывать текущую дату в фаил `version.txt`.
+1. Выполнение других действий по настройке приложения. В качестве примера таких действий, мы будем записывать текущую дату в файл `version.txt`.
 
 Также, мы проверим что приложение работает и запушим образ в Docker-регистри.
 
@@ -211,7 +211,7 @@ source <(multiwerf use 1.0 beta)
     werf build --stages-storage :local
     ```
 
-    > При работе с composer может возникать известная [ошибка](https://github.com/composer/composer/issues/945). Если вы получили при сборке ошибку `proc_open(): fork failed - Cannot allocate memory`, добавьте 1ГБ swap-фаил. Как это сделать, например, читай [тут](https://www.digitalocean.com/community/tutorials/how-to-add-swap-space-on-ubuntu-16-04).
+    > При работе с composer может возникать известная [ошибка](https://github.com/composer/composer/issues/945). Если вы получили при сборке ошибку `proc_open(): fork failed - Cannot allocate memory`, добавьте 1ГБ swap-файл. Как это сделать, например, читай [тут](https://www.digitalocean.com/community/tutorials/how-to-add-swap-space-on-ubuntu-16-04).
 
 3.  Запустите контейнер из собранного образа:
 
@@ -244,8 +244,8 @@ source <(multiwerf use 1.0 beta)
 ## Что можно улучшить
 
 В приведенном примере есть что улучшить:
-* Набор комманд создания скрипта `start.sh` можно легко заменить на одну команду — git, а сам фаил `start.sh` хранить в git-репозитории.
-* Если хранить фаил в git-репозитории, то при его копировании можно сразу же (в той-же команде) указывать необходимые права.
+* Набор комманд создания скрипта `start.sh` можно легко заменить на одну команду — git, а сам файл `start.sh` хранить в git-репозитории.
+* Если хранить файл в git-репозитории, то при его копировании можно сразу же (в той-же команде) указывать необходимые права.
 * Лучше использовать `composer install` вместо `composer update` чобы устанавливать зависимости согласно версий, закрепленных в файлах `composer.lock`, `package.json` и `yarn.lock`. Также, при сборке необходима проверка этих файлов и запуск `composer install` при их изменении. Чтобы добиться этого, в Werf есть директива `stageDependencies`.
 
 Решение этих задач рассматривается в [соответствующем разделе]({{ site.baseurl }}/ru/documentation/configuration/stapel_image/git_directive.html) документации.

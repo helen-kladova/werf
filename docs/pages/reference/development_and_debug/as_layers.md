@@ -2,6 +2,7 @@
 title: Caching each instruction separately with asLayers
 sidebar: documentation
 permalink: documentation/reference/development_and_debug/as_layers.html
+ref: documentation_reference_development_and_debug_as_layers
 author: Alexey Igrychev <alexey.igrychev@flant.com>
 summary: |
   <div class="language-yaml highlighter-rouge"><pre class="highlight"><code><span class="s">asLayers</span><span class="pi">:</span> <span class="s">true</span>

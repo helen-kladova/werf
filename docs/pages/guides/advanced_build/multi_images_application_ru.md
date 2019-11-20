@@ -9,38 +9,38 @@ lang: ru
 
 ## Обзор задачи
 
-Often a single application consists of several microservices. It can be microservices built using different technologies and programming languages. E.g., a Yii application which has logic application and worker application. The common practice is to place Dockerfiles into separate directories. So, with Dockerfile, you can't describe all components of the application in one file. As you need to describe image configuration in separate files, you can't share a part of configuration between images.
+Довольно часто, приложение не является монолитным, а состоит из нескольких микросервисов. Это могут быть микросервисы написанные с использованием разных технологий, фреймворков, языков программирования и т.д.
+Сложившийся подход в таких случаях — положить Dockerfile для сборки образа каждого микросервиса в отдельную папку, т.к. в одном Dockerfile вы не можете описать все компоненты вашего приложения. И, т.к. вам нужно описывать сборку каждого образа микросервиса в отдельном файле, вы не можете использовать, например, какие-либо общие части конфигурации сборки.
 
-Werf allows describing all images of a project in a one config. This approach gives you more convenience.
+Werf же, позволяет описать все образы проекта в одном конфигурационном файле, и это действительно удобно.
 
-In this article, we will build an example application — [AtSea Shop](https://github.com/dockersamples/atsea-sample-shop-app), to demonstrate how to describe multiple images in a one config.
+В данной статье рассматривается сборка тестового приложения [AtSea Shop](https://github.com
+/dockersamples/atsea-sample-shop-app) и демонстрируется сборка нескольких образом компоннетов приложения в одном конфигурационном файле.
 
-## Requirements
+## Требования
 
-* Installed [Werf dependencies]({{ site.baseurl }}/documentation/guides/installation.html#install-dependencies) on the host system.
-* Installed [Multiwerf](https://github.com/flant/multiwerf) on the host system.
+* Установленные [зависимости Werf]({{ site.baseurl }}/ru/documentation/guides/installation.html#install-dependencies).
+* Установленный [Multiwerf](https://github.com/flant/multiwerf).
 
-### Select werf version
+### Выбор версии Werf
 
-This command should be run prior running any werf command in your shell session:
+Перед началом работы с Werf, нужно выбрать версию Werf, которую вы будете использовать. Для выбора актуальной версии Werf в канале beta, релиза 1.0, выполните в вашей shell-сессии:
 
 ```shell
 source <(multiwerf use 1.0 beta)
 ```
 
-## Building the application
+## Сборка приложения
 
-The example application is the [AtSea Shop](https://github.com/dockersamples/atsea-sample-shop-app) Demonstration Application from the [Official Docker Samples repository](https://github.com/dockersamples). The application is a prototype of a small shop application consisting of several components.
+В качестве тестового приложения будет рассматриваться приложение [AtSea Shop](https://github.com/dockersamples/atsea-sample-shop-app) из оффициального [репозитория примеров Docker](https://github.com/dockersamples). Это приложение — прототип небольшого интернет-магазина, оно состоит из нескольких компонентов — frontend (написан на ReactJS) и backend (Java Spring Boot). Также, для большей правдоподобности, в проект добавлены reverse-прокси на базе nginx и платежный шлюз.
 
-It's frontend written in React and backend written in Java Spring Boot. There will be nginx reverse proxy and payment gateway added in the project to make it more real.
-
-## Application components
+## Компоненты приложения
 
 ### Backend
 
-It is the `app` image. The backend container handles HTTP requests from the frontend container. The source code of the application is in the `/app` directory. It consists of Java application and ReactJS application. To build the backend image there are two artifact images (read more about artifacts [here]({{ site.baseurl }}/documentation/configuration/stapel_artifact.html)) - `storefront` and `appserver`.
+Образ с именем `app`. Контейнер с backend принимает HTTP-запросы от контейнера frontend. Исходный код приложения находится в папке `/app`, и состоит из приложения на Java и приложения на ReactJS. Для сборки образа backend, будем использовать два артефакта (читай подробней об артефактах [здесь]({{ site.baseurl }}/ru/documentation/configuration/stapel_artifact.html)) — `storefront` и `appserver`.
 
-Image of the backend base on the official java image. It uses files from artifacts and doesn't need any steps for downloading packages or building.
+Образ самого backend основан на официальном образе Java. Он использует файлы из артефактов и не требует дополнительных шагов по скачиванию и сборке чего-либо.
 
 ```yaml
 image: app
@@ -63,9 +63,9 @@ import:
   after: install
 ```
 
-#### Storefront artifact
+#### Артефакт Storefront
 
-Builds assets. After building werf imports assets into the `/static` directory of the `app` image. To increase the efficiency of the building `storefront` image, build instructions divided into two stages — _install_ and _setup_.
+В артефакте выполняется сборка asset'ов, после чего, ассет'ы импортируются в папку `/static` в backend-образ `app`. Для эффективности, сборка образа `storefront` разделена на две стадии — _install_ и _setup_.
 
 ```yaml
 artifact: storefront
@@ -88,9 +88,9 @@ shell:
   - npm run build
 ```
 
-#### Appserver artifact
+#### Артефакт Appserver
 
-Builds a Java code. Werf imports the resulting jarfile `AtSea-0.0.1-SNAPSHOT.jar` into the `/app` directory of the `app` image. To increase the efficiency of the building `appserver` image, build instructions divided into two stages — _install_ and _setup_. Also, the `/usr/share/maven/ref/repository` directory mounts with the `build_dir` directives to allow some caching (read more about mount directives [here]({{ site.baseurl }}/documentation/configuration/stapel_image/mount_directive.html)).
+В артефакте выполняется сборка Java-кода, после чего результат — jar-файл `AtSea-0.0.1-SNAPSHOT.jar` импортируется в папку `/app` в backend-образ `app`. Для эффективности, сборка образа `appserver` разделена на две стадии — _install_ и _setup_. А также, папка `/usr/share/maven/ref/repository` монтируется с помощью инструкции `build_dir`, чтобы заработало кеширование (читай подробнее об инструкциях монтирования [здесь]({{ site.baseurl }}/ru/documentation/configuration/stapel_image/mount_directive.html)).
 
 ```yaml
 artifact: appserver
@@ -117,7 +117,7 @@ shell:
 
 ### Frontend
 
-It is the `reverse_proxy` image. This image base on the official image of the [NGINX](https://www.nginx.com) server. It acts as a frontend and is configured as a reverse proxy. The frontend container handles all incoming traffic, cache it and pass requests to the backend container.
+Образ с именем `reverse_proxy`, базирующийся на оффициальном образе сервера [NGINX](https://www.nginx.com). Выступает в качестве точки приема входящего трафика в приложение (frontend) и настроен как реверсный прокси. Т.е. его роль — прием внешнего траффика, кеширование и передача соответствующего траффика на backend-контейнер.
 
 {% raw %}
 ```yaml
@@ -148,7 +148,7 @@ ansible:
 
 ### Database
 
-It is the `database` image. This image base on the official image of the PostgreSQL server. Werf adds configs and SQL file for bootstrap in this image. The backend container uses the database to store its data.
+Образ базы данных с именем `database`, базирующийся на официальном образе СУБД PostgreSQL. В образ добавлены инструкции и SQL-файлы для конфигурации сервера PostgreSQL. БД нужна, т.к. backend-контейнер использует её для хранения данных.
 
 {% raw %}
 ```yaml
@@ -178,7 +178,7 @@ git:
 
 ### Payment gateway
 
-It is the `payment_gw` image. This image is an example of the payment gateway application. It does nothing except infinitely writes messages to stdout. Payment gateway acts as another component of the application.
+Образ с именем `payment_gw`, — образ демонстрационного приложения платежного шлюза. По сути он не делает ничего, кроме того, что пишет в stdout сообщения. Его роль в настоящем примере — быть еще одним компонентом (микросервисом) приложения.
 
 {% raw %}
 ```yaml
@@ -209,20 +209,20 @@ git:
 ```
 {% endraw %}
 
-## Step 1: Clone the application repository
+## Шаг 1: Клонирование репозитория кода приложения
 
-Clone the [AtSea Shop](https://github.com/dockersamples/atsea-sample-shop-app) repository:
+Клонируйте репозиторий кода приложения [AtSea Shop](https://github.com/dockersamples/atsea-sample-shop-app):
 
 ```bash
 git clone https://github.com/dockersamples/atsea-sample-shop-app.git
 ```
 
-## Step 2: Create a config
+## Шаг 2: Создание конфигурации
 
-To build an application with all of its components create the following `werf.yaml` **in the root folder** of the repository:
+Для сборки приложения со всеми его компонентами, в **корневой папке** репозитория создайте файл `werf.yaml` следующего содержания:
 
 <div class="details active">
-<a href="javascript:void(0)" class="details__summary">The complete <i>werf.yaml</i> file...</a>
+<a href="javascript:void(0)" class="details__summary">Полный файл <i>werf.yaml</i>...</a>
 <div class="details__content" markdown="1">
 
 {% raw %}
@@ -369,35 +369,34 @@ git:
 </div>
 </div>
 
-## Step 3: Create SSL certificates
+## Step 3: Создание SSL-сертификата
 
-The NGINX in the `reverse_proxy` image listen on SSL ports and need a key and certificate.
+Т.к. в образе `reverse_proxy` NGINX принимает запросы по SSL — ему нужен соответствующий ключ и сертификат.
 
-Execute the following command in the root folder of the project to create them:
+Для создания ключа и сертификата выполните следующую команду в корневой папке проекта:
 
 ```bash
 mkdir -p reverse_proxy/certs && openssl req -newkey rsa:4096 -nodes -subj "/CN=atseashop.com;" -sha256 -keyout reverse_proxy/certs/revprox_key -x509 -days 365 -out reverse_proxy/certs/revprox_cert
 ```
 
-## Step 4: Build images
+## Step 4: Сборка образов
 
-Execute the following command in the root folder of the project to build all images:
+Для сборки всех образов проекта, выполните следующую команду в корневой папке проекта:
 
 ```bash
 werf build --stages-storage :local
 ```
 
-## Step 5: Modify /etc/hosts file
+## Step 5: Добавление информации в файл /etc/hosts
 
-To have an ability to open the example by the `http://atseashop.com` URL, add the `atseashop.com` name pointing to the address of your local interface into your `/etc/hosts` file. E.g.:
-
+Чтобы пример открывался в браузере по имени `http://atseashop.com`, добавьте в файл `etc/hosts` строку для `atseashop.com` с адресом локального интерфейса. Например вот так:
 ```bash
 sudo sed -ri 's/^(127.0.0.1)(\s)+/\1\2atseashop.com /' /etc/hosts
 ```
 
-## Step 6: Run the application
+## Step 6: Запуск приложения
 
-To run the application images, execute the following commands from the root folder of the project:
+Для запуска приложения, выполните следующие команды в корневой папке проекта:
 
 ```bash
 werf run --stages-storage :local --docker-options="-d --name payment_gw" payment_gw  &&
@@ -406,28 +405,26 @@ werf run --stages-storage :local --docker-options="-d --name app -p 8080:8080 --
 werf run --stages-storage :local --docker-options="-d --name reverse_proxy -p 80:80 -p 443:443 --link app:appserver" reverse_proxy
 ```
 
-Check that all containers are running, by executing:
+Проверьте что все контейнеры запустились, выполнив:
 ```bash
 docker ps
 ```
 
-You should see running containers with names: reverse_proxy, app, database, payment_gw and registry.
+В выводе команды должны присутствовать запущенные контейнеры с именами: `reverse_proxy`, `app`, `database`, `payment_gw` и `registry`.
 
-Wait for about 30 seconds or a bit more for all the containers to be ready, then open the [atseashop.com](http://atseashop.com) in your browser. You will be redirected by NGINX to `https://atseashop.com` and you will get a warning message from your browser about the security of the connection, because there is a self-signed certificate used in the example. You need to add an exception to open the `https://atseashop.com` page.
+Подождите около 30 секунд, чтобы все контейнеры успели успели после старта перейти в режим готовности, затем откройте в браузере адрес [atseashop.com](http://atseashop.com). Произойдет перенаправление на адерс `https://atseashop.com` и вы получите предупреждение безопасности от браузера, — следствие использования самоподписанного SSL-сертификата. Добавьте в браузере исключение для `https://atseashop.com` page.
 
-## Stopping the application
+## Остановка приложения
 
-To stop application containers execute the following command:
+Для остановки контейнеров приложения выполните следующую команду:
 
 ```bash
 docker stop reverse_proxy app database payment_gw
 ```
 
-## Conclusions
+## Выводы
 
-We've described all project images in a one config.
-
-The example above shows the benefits:
-* If your project has similar images, you can share some piece of images by mounting their folder with the `build_dir` directive (read more about mounts [here]({{ site.baseurl }}/documentation/configuration/stapel_image/mount_directive.html)).
-* You can share artifacts between images in single config.
-* Common templates can be used in single config to describe configuration of multiple images.
+Мы описали инструкции по сборке всех образов приложения в одном файле. Приведенный пример иллюстрирует следующие возможности:
+* Если в вашем проекте есть схожие образы, вы можете обеспечить совместное использование каких либо частей в образах с помощью монтирования папок директивой  `build_dir` (читайте подробнее об этом [здесь]({{ site.baseurl }}/ru/documentation/configuration/stapel_image/mount_directive.html)).
+* Вы можете использовать общие артефакты в разных образах, описав все это в одном файле конфигураций.
+* Вы можете использовать шаблоны в файле конфигураций, для описания образов со схожими инструкциями.
