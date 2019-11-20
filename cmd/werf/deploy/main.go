@@ -37,7 +37,7 @@ func NewCmd() *cobra.Command {
 
 Command will create Helm Release and wait until all resources of the release are become ready.
 
-Deploy needs the same parameters as push to construct image names: repo and tags. Docker images names are constructed from paramters as IMAGES_REPO/IMAGE_NAME:TAG. Deploy will fetch built image ids from Docker repo. So images should be published prior running deploy.
+Deploy needs the same parameters as push to construct image names: repo and tags. Docker images names are constructed from parameters as IMAGES_REPO/IMAGE_NAME:TAG. Deploy will fetch built image ids from Docker repo. So images should be published prior running deploy.
 
 Helm chart directory .helm should exists and contain valid Helm chart.
 
@@ -89,7 +89,8 @@ Read more info about Helm chart structure, Helm Release name, Kubernetes Namespa
 	common.SetupImagesRepo(&CommonCmdData, cmd)
 	common.SetupImagesRepoMode(&CommonCmdData, cmd)
 	common.SetupDockerConfig(&CommonCmdData, cmd, "Command needs granted permissions to read and pull images from the specified stages storage and images repo")
-	common.SetupInsecureRepo(&CommonCmdData, cmd)
+	common.SetupInsecureRegistry(&CommonCmdData, cmd)
+	common.SetupSkipTlsVerifyRegistry(&CommonCmdData, cmd)
 
 	common.SetupLogOptions(&CommonCmdData, cmd)
 	common.SetupLogProjectDir(&CommonCmdData, cmd)
@@ -99,6 +100,8 @@ Read more info about Helm chart structure, Helm Release name, Kubernetes Namespa
 	common.SetupValues(&CommonCmdData, cmd)
 	common.SetupSecretValues(&CommonCmdData, cmd)
 	common.SetupIgnoreSecretKey(&CommonCmdData, cmd)
+
+	common.SetupThreeWayMergeMode(&CommonCmdData, cmd)
 
 	cmd.Flags().IntVarP(&CmdData.Timeout, "timeout", "t", 0, "Resources tracking timeout in seconds")
 
@@ -123,6 +126,11 @@ func runDeploy() error {
 		return err
 	}
 
+	threeWayMergeMode, err := common.GetThreeWayMergeMode(*CommonCmdData.ThreeWayMergeMode)
+	if err != nil {
+		return err
+	}
+
 	deployInitOptions := deploy.InitOptions{
 		HelmInitOptions: helm.InitOptions{
 			KubeConfig:                  *CommonCmdData.KubeConfig,
@@ -137,7 +145,7 @@ func runDeploy() error {
 		return err
 	}
 
-	if err := docker_registry.Init(docker_registry.Options{AllowInsecureRepo: *CommonCmdData.InsecureRepo}); err != nil {
+	if err := docker_registry.Init(docker_registry.Options{InsecureRegistry: *CommonCmdData.InsecureRegistry, SkipTlsVerifyRegistry: *CommonCmdData.SkipTlsVerifyRegistry}); err != nil {
 		return err
 	}
 
@@ -254,5 +262,6 @@ func runDeploy() error {
 		UserExtraAnnotations: userExtraAnnotations,
 		UserExtraLabels:      userExtraLabels,
 		IgnoreSecretKey:      *CommonCmdData.IgnoreSecretKey,
+		ThreeWayMergeMode:    threeWayMergeMode,
 	})
 }

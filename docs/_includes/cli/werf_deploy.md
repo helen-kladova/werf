@@ -8,7 +8,7 @@ Deploy application into Kubernetes.
 Command will create Helm Release and wait until all resources of the release are become ready.
 
 Deploy needs the same parameters as push to construct image names: repo and tags. Docker images     
-names are constructed from paramters as IMAGES_REPO/IMAGE_NAME:TAG. Deploy will fetch built image   
+names are constructed from parameters as IMAGES_REPO/IMAGE_NAME:TAG. Deploy will fetch built image  
 ids from Docker repo. So images should be published prior running deploy.
 
 Helm chart directory .helm should exists and contain valid Helm chart.
@@ -89,15 +89,15 @@ werf deploy [options]
       --images-repo-mode='multirepo':
             Define how to store images in Repo: multirepo or monorepo (defaults to                  
             $WERF_IMAGES_REPO_MODE or multirepo)
-      --insecure-repo=false:
-            Allow usage of insecure docker repos (default $WERF_INSECURE_REPO)
+      --insecure-registry=false:
+            Use plain HTTP requests when accessing a registry (default $WERF_INSECURE_REGISTRY)
       --kube-config='':
             Kubernetes config file path
       --kube-context='':
             Kubernetes config context (default $WERF_KUBE_CONTEXT)
       --log-color-mode='auto':
             Set log color mode.
-            Supported on, off and auto (based on the stdout's file descriptor referring to a        
+            Supported on, off and auto (based on the stdout’s file descriptor referring to a        
             terminal) modes.
             Default $WERF_LOG_COLOR_MODE or auto mode.
       --log-pretty=true:
@@ -124,6 +124,9 @@ werf deploy [options]
       --set-string=[]:
             Set STRING helm values on the command line (can specify multiple or separate values     
             with commas: key1=val1,key2=val2)
+      --skip-tls-verify-registry=false:
+            Skip TLS certificate validation when accessing a registry (default                      
+            $WERF_SKIP_TLS_VERIFY_REGISTRY)
       --ssh-key=[]:
             Use only specific ssh keys (Defaults to system ssh-agent or ~/.ssh/{id_rsa|id_dsa}, see 
             https://werf.io/documentation/reference/toolbox/ssh.html).
@@ -149,6 +152,10 @@ werf deploy [options]
       --tag-git-tag='':
             Use git-tag tagging strategy and tag by the specified git tag (option can be enabled by 
             specifying git tag in the $WERF_TAG_GIT_TAG)
+      --three-way-merge-mode='':
+            Set three way merge mode for release.
+            Supported 'enabled', 'disabled' and 'onlyNewReleases', see docs for more info           
+            https://werf.io/documentation/reference/deploy_process/experimental_three_way_merge.html
   -t, --timeout=0:
             Resources tracking timeout in seconds
       --tmp-dir='':

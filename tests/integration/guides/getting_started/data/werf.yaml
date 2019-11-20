@@ -1,5 +1,0 @@
-project: getting-started
-configVersion: 1
----
-image: ~
-dockerfile: Dockerfile

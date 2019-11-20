@@ -2,20 +2,18 @@ package builder
 
 import (
 	"fmt"
-	"path/filepath"
-
-	"github.com/flant/logboek_py"
-	"github.com/flant/werf/pkg/stapel"
+	"path"
 
 	"github.com/flant/werf/pkg/build/builder/ansible"
+	"github.com/flant/werf/pkg/stapel"
 )
 
 func (b *Ansible) assetsAnsibleCfg() string {
-	hostsPath := filepath.Join(b.containerWorkDir(), "hosts")
-	callbackPluginsPath := filepath.Join(b.containerWorkDir(), "lib", "callback")
+	hostsPath := path.Join(b.containerWorkDir(), "hosts")
+	callbackPluginsPath := path.Join(b.containerWorkDir(), "lib", "callback")
 	sudoBinPath := stapel.SudoBinPath()
-	localTmpDirPath := filepath.Join(b.containerTmpDir(), "local")
-	remoteTmpDirPath := filepath.Join(b.containerTmpDir(), "remote")
+	localTmpDirPath := path.Join(b.containerTmpDir(), "local")
+	remoteTmpDirPath := path.Join(b.containerTmpDir(), "remote")
 
 	format := `[defaults]
 inventory = %[1]s
@@ -77,12 +75,4 @@ func (b *Ansible) assetsWerfLiveStdoutPy() string {
 
 func (b *Ansible) assetsWerfTeePopenPy() string {
 	return ansible.FSMustString(false, "/ansible/werf/tee_popen.py")
-}
-
-func (b *Ansible) assetsLogboekPy() string {
-	return logboek_py.FSMustString(false, "/logboek.py")
-}
-
-func (b *Ansible) assetsLogboekSo() []byte {
-	return logboek_py.FSMustByte(false, "/logboek.so")
 }

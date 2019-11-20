@@ -4,7 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"os"
-	"path"
+	"path/filepath"
 	"strconv"
 	"strings"
 	"time"
@@ -58,14 +58,17 @@ type CmdData struct {
 	ImagesRepo     *string
 	ImagesRepoMode *string
 
-	DockerConfig *string
-	InsecureRepo *bool
-	DryRun       *bool
+	DockerConfig          *string
+	InsecureRegistry      *bool
+	SkipTlsVerifyRegistry *bool
+	DryRun                *bool
 
 	GitTagStrategyLimit         *int64
 	GitTagStrategyExpiryDays    *int64
 	GitCommitStrategyLimit      *int64
 	GitCommitStrategyExpiryDays *int64
+
+	WithoutKube *bool
 
 	StagesToIntrospect *[]string
 
@@ -73,6 +76,8 @@ type CmdData struct {
 	LogColorMode     *string
 	LogProjectDir    *bool
 	LogTerminalWidth *int64
+
+	ThreeWayMergeMode *string
 }
 
 const (
@@ -113,6 +118,11 @@ func SetupImagesCleanupPolicies(cmdData *CmdData, cmd *cobra.Command) {
 	cmd.Flags().Int64VarP(cmdData.GitTagStrategyExpiryDays, "git-tag-strategy-expiry-days", "", -1, "Keep images published with the git-tag tagging strategy in the images repo for the specified maximum days since image published. Republished image will be kept specified maximum days since new publication date. No days limit by default, -1 disables the limit. Value can be specified by the $WERF_GIT_TAG_STRATEGY_EXPIRY_DAYS")
 	cmd.Flags().Int64VarP(cmdData.GitCommitStrategyLimit, "git-commit-strategy-limit", "", -1, "Keep max number of images published with the git-commit tagging strategy in the images repo. No limit by default, -1 disables the limit. Value can be specified by the $WERF_GIT_COMMIT_STRATEGY_LIMIT")
 	cmd.Flags().Int64VarP(cmdData.GitCommitStrategyExpiryDays, "git-commit-strategy-expiry-days", "", -1, "Keep images published with the git-commit tagging strategy in the images repo for the specified maximum days since image published. Republished image will be kept specified maximum days since new publication date. No days limit by default, -1 disables the limit. Value can be specified by the $WERF_GIT_COMMIT_STRATEGY_EXPIRY_DAYS")
+}
+
+func SetupWithoutKube(cmdData *CmdData, cmd *cobra.Command) {
+	cmdData.WithoutKube = new(bool)
+	cmd.Flags().BoolVarP(cmdData.WithoutKube, "without-kube", "", GetBoolEnvironment("WERF_WITHOUT_KUBE"), "Do not skip deployed kubernetes images (default $WERF_KUBE_CONTEXT)")
 }
 
 func SetupTag(cmdData *CmdData, cmd *cobra.Command) {
@@ -278,9 +288,14 @@ func SetupImagesRepoMode(cmdData *CmdData, cmd *cobra.Command) {
 	cmd.Flags().StringVarP(cmdData.ImagesRepoMode, "images-repo-mode", "", defaultValue, fmt.Sprintf(`Define how to store images in Repo: %[1]s or %[2]s (defaults to $WERF_IMAGES_REPO_MODE or %[1]s)`, MultirepoImagesRepoMode, MonorepoImagesRepoMode))
 }
 
-func SetupInsecureRepo(cmdData *CmdData, cmd *cobra.Command) {
-	cmdData.InsecureRepo = new(bool)
-	cmd.Flags().BoolVarP(cmdData.InsecureRepo, "insecure-repo", "", GetBoolEnvironment("WERF_INSECURE_REPO"), "Allow usage of insecure docker repos (default $WERF_INSECURE_REPO)")
+func SetupInsecureRegistry(cmdData *CmdData, cmd *cobra.Command) {
+	cmdData.InsecureRegistry = new(bool)
+	cmd.Flags().BoolVarP(cmdData.InsecureRegistry, "insecure-registry", "", GetBoolEnvironment("WERF_INSECURE_REGISTRY"), "Use plain HTTP requests when accessing a registry (default $WERF_INSECURE_REGISTRY)")
+}
+
+func SetupSkipTlsVerifyRegistry(cmdData *CmdData, cmd *cobra.Command) {
+	cmdData.SkipTlsVerifyRegistry = new(bool)
+	cmd.Flags().BoolVarP(cmdData.SkipTlsVerifyRegistry, "skip-tls-verify-registry", "", GetBoolEnvironment("WERF_SKIP_TLS_VERIFY_REGISTRY"), "Skip TLS certificate validation when accessing a registry (default $WERF_SKIP_TLS_VERIFY_REGISTRY)")
 }
 
 func SetupDryRun(cmdData *CmdData, cmd *cobra.Command) {
@@ -323,7 +338,7 @@ func SetupLogColor(cmdData *CmdData, cmd *cobra.Command) {
 	}
 
 	cmd.Flags().StringVarP(cmdData.LogColorMode, "log-color-mode", "", defaultValue, `Set log color mode.
-Supported on, off and auto (based on the stdout's file descriptor referring to a terminal) modes.
+Supported on, off and auto (based on the stdout’s file descriptor referring to a terminal) modes.
 Default $WERF_LOG_COLOR_MODE or auto mode.`)
 }
 
@@ -397,6 +412,29 @@ func allStagesNames() []string {
 	}
 
 	return stageNames
+}
+
+func SetupThreeWayMergeMode(cmdData *CmdData, cmd *cobra.Command) {
+	cmdData.ThreeWayMergeMode = new(string)
+
+	modeEnvironmentValue := os.Getenv("WERF_THREE_WAY_MERGE_MODE")
+
+	defaultValue := ""
+	if modeEnvironmentValue != "" {
+		defaultValue = modeEnvironmentValue
+	}
+
+	cmd.Flags().StringVarP(cmdData.ThreeWayMergeMode, "three-way-merge-mode", "", defaultValue, `Set three way merge mode for release.
+Supported 'enabled', 'disabled' and 'onlyNewReleases', see docs for more info https://werf.io/documentation/reference/deploy_process/experimental_three_way_merge.html`)
+}
+
+func GetThreeWayMergeMode(threeWayMergeModeParam string) (helm.ThreeWayMergeModeType, error) {
+	switch threeWayMergeModeParam {
+	case "enabled", "disabled", "onlyNewReleases", "":
+		return helm.ThreeWayMergeModeType(threeWayMergeModeParam), nil
+	}
+
+	return "", fmt.Errorf("bad three-way-merge-mode '%s': enabled, disabled or  onlyNewReleases modes can be specified", threeWayMergeModeParam)
 }
 
 func GetBoolEnvironment(environmentName string) bool {
@@ -580,7 +618,7 @@ func GetWerfConfig(projectDir string) (*config.WerfConfig, error) {
 
 func GetWerfConfigPath(projectDir string) (string, error) {
 	for _, werfConfigName := range []string{"werf.yml", "werf.yaml"} {
-		werfConfigPath := path.Join(projectDir, werfConfigName)
+		werfConfigPath := filepath.Join(projectDir, werfConfigName)
 		if exist, err := util.FileExists(werfConfigPath); err != nil {
 			return "", err
 		} else if exist {
@@ -598,10 +636,10 @@ func GetProjectDir(cmdData *CmdData) (string, error) {
 	}
 
 	if *cmdData.Dir != "" {
-		if path.IsAbs(*cmdData.Dir) {
+		if filepath.IsAbs(*cmdData.Dir) {
 			return *cmdData.Dir, nil
 		} else {
-			return path.Clean(path.Join(currentDir, *cmdData.Dir)), nil
+			return filepath.Clean(filepath.Join(currentDir, *cmdData.Dir)), nil
 		}
 	}
 
@@ -758,18 +796,9 @@ func LogVersion() {
 }
 
 func TerminateWithError(errMsg string, exitCode int) {
-	_ = logboek.WithoutIndent(func() error {
-		msg := fmt.Sprintf("Error: %s", errMsg)
-		msg = strings.TrimSuffix(msg, "\n")
+	msg := fmt.Sprintf("Error: %s", errMsg)
+	msg = strings.TrimSuffix(msg, "\n")
 
-		_ = logboek.WithFitMode(false, func() error {
-			logboek.LogErrorLn(msg)
-
-			return nil
-		})
-
-		return nil
-	})
-
+	_, _ = fmt.Fprintln(os.Stderr, logboek.ColorizeWarning(msg))
 	os.Exit(exitCode)
 }

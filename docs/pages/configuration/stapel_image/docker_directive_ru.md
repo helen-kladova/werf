@@ -23,7 +23,6 @@ summary: |
     <span class="na">CMD</span><span class="pi">:</span> <span class="s">&lt;cmd&gt;</span>
     <span class="na">WORKDIR</span><span class="pi">:</span> <span class="s">&lt;workdir&gt;</span>
     <span class="na">USER</span><span class="pi">:</span> <span class="s">&lt;user&gt;</span>
-    <span class="na">STOPSIGNAL</span><span class="pi">:</span> <span class="s">&lt;stopsignal&gt;</span>
     <span class="na">HEALTHCHECK</span><span class="pi">:</span> <span class="s">&lt;healthcheck&gt;</span></code></pre></div></div>
 ---
 
@@ -39,7 +38,6 @@ Werf поддерживает некоторые инструкции Dockerfile
 * `EXPOSE` указывает, какие сетевые порты будут прослушиваться в запущенном контейнере ([подробнее](https://docs.docker.com/engine/reference/builder/#expose))
 * `ENTRYPOINT` задает команду по умолчанию, которая будет выполнена при запуске контейнера ([подробнее](https://docs.docker.com/engine/reference/builder/#entrypoint))
 * `CMD` задает аргументы по умолчанию для `ENTRYPOINT` ([подробнее](https://docs.docker.com/engine/reference/builder/#cmd))
-* `STOPSIGNAL` определяет системный сигнал, который будет использоваться при остановке контейнера ([подробнее](https://docs.docker.com/engine/reference/builder/#stopsignal))
 * `HEALTHCHECK` определяет инструкции, которые Docker может использовать для проверки работоспособности запущенного контейнера ([подробнее](https://docs.docker.com/engine/reference/builder/#healthcheck))
 
 Эти инструкции могут быть указаны с помощью директивы `docker` в конфигурации.

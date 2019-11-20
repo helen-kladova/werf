@@ -112,12 +112,17 @@ Werf использует код из [Helm](helm.sh) *для применени
 
 {% raw %}
 ```yaml
-apiVersion: apps/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ .Chart.Name }}-backend
+  labels:
+    service: {{ .Chart.Name }}-backend
 spec:
   replicas: 4
+  selector:
+    matchLabels:
+      service: {{ .Chart.Name }}-backend
   template:
     metadata:
       labels:

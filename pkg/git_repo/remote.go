@@ -6,7 +6,7 @@ import (
 	"path/filepath"
 	"time"
 
-	"github.com/flant/werf/pkg/util"
+	"github.com/flant/werf/pkg/slug"
 
 	"gopkg.in/ini.v1"
 	"gopkg.in/src-d/go-git.v4"
@@ -16,21 +16,20 @@ import (
 
 	"github.com/flant/logboek"
 	"github.com/flant/werf/pkg/lock"
-	"github.com/flant/werf/pkg/werf"
-	uuid "github.com/satori/go.uuid"
 )
-
-const RemoteGitRepoCacheVersion = 4
 
 type Remote struct {
 	Base
-	Url       string
-	ClonePath string // TODO: move CacheVersion & path construction here
-	IsDryRun  bool
+	Url      string
+	IsDryRun bool
+}
+
+func (repo *Remote) GetClonePath() string {
+	return filepath.Join(GetGitRepoCacheDir(), "remote", slug.Slug(repo.Url))
 }
 
 func (repo *Remote) RemoteOriginUrl() (string, error) {
-	return repo.remoteOriginUrl(repo.ClonePath)
+	return repo.remoteOriginUrl(repo.GetClonePath())
 }
 
 func (repo *Remote) FindCommitIdByMessage(regex string) (string, error) {
@@ -38,11 +37,11 @@ func (repo *Remote) FindCommitIdByMessage(regex string) (string, error) {
 	if err != nil {
 		return "", fmt.Errorf("error getting head commit: %s", err)
 	}
-	return repo.findCommitIdByMessage(repo.ClonePath, regex, head)
+	return repo.findCommitIdByMessage(repo.GetClonePath(), regex, head)
 }
 
 func (repo *Remote) IsEmpty() (bool, error) {
-	return repo.isEmpty(repo.ClonePath)
+	return repo.isEmpty(repo.GetClonePath())
 }
 
 func (repo *Remote) CloneAndFetch() error {
@@ -58,7 +57,7 @@ func (repo *Remote) CloneAndFetch() error {
 }
 
 func (repo *Remote) isCloneExists() (bool, error) {
-	_, err := os.Stat(repo.ClonePath)
+	_, err := os.Stat(repo.GetClonePath())
 	if err == nil {
 		return true, nil
 	}
@@ -96,9 +95,19 @@ func (repo *Remote) Clone() (bool, error) {
 
 		logboek.LogInfoF("Clone %s\n", repo.Url)
 
-		path := filepath.Join(werf.GetTmpDir(), fmt.Sprintf("werf-git-repo-%s", uuid.NewV4().String()))
+		if err := os.MkdirAll(filepath.Dir(repo.GetClonePath()), 0755); err != nil {
+			return fmt.Errorf("unable to create dir %s: %s", filepath.Dir(repo.GetClonePath()), err)
+		}
 
-		_, err = git.PlainClone(path, true, &git.CloneOptions{
+		tmpPath := fmt.Sprintf("%s.tmp", repo.GetClonePath())
+		// Remove previously created possibly existing dir
+		if err := os.RemoveAll(tmpPath); err != nil {
+			return fmt.Errorf("unable to prepare tmp path %s: failed to remove: %s", tmpPath, err)
+		}
+		// Ensure cleanup on failure
+		defer os.RemoveAll(tmpPath)
+
+		_, err = git.PlainClone(tmpPath, true, &git.CloneOptions{
 			URL:               repo.Url,
 			RecurseSubmodules: git.DefaultSubmoduleRecursionDepth,
 		})
@@ -106,16 +115,8 @@ func (repo *Remote) Clone() (bool, error) {
 			return err
 		}
 
-		defer os.RemoveAll(path)
-
-		err = os.MkdirAll(filepath.Dir(repo.ClonePath), 0755)
-		if err != nil {
-			return err
-		}
-
-		err = os.Rename(path, repo.ClonePath)
-		if err != nil {
-			return err
+		if err := os.Rename(tmpPath, repo.GetClonePath()); err != nil {
+			return fmt.Errorf("rename %s to %s failed: %s", tmpPath, repo.GetClonePath(), err)
 		}
 
 		return nil
@@ -127,7 +128,7 @@ func (repo *Remote) Fetch() error {
 		return nil
 	}
 
-	cfgPath := filepath.Join(repo.ClonePath, "config")
+	cfgPath := filepath.Join(repo.GetClonePath(), "config")
 
 	cfg, err := ini.Load(cfgPath)
 	if err != nil {
@@ -146,7 +147,7 @@ func (repo *Remote) Fetch() error {
 	}
 
 	return repo.withRemoteRepoLock(func() error {
-		rawRepo, err := git.PlainOpen(repo.ClonePath)
+		rawRepo, err := git.PlainOpen(repo.GetClonePath())
 		if err != nil {
 			return fmt.Errorf("cannot open repo: %s", err)
 		}
@@ -163,7 +164,7 @@ func (repo *Remote) Fetch() error {
 }
 
 func (repo *Remote) HeadCommit() (string, error) {
-	repoPath := repo.ClonePath
+	repoPath := repo.GetClonePath()
 
 	repository, err := git.PlainOpen(repoPath)
 	if err != nil {
@@ -186,7 +187,7 @@ func (repo *Remote) HeadCommit() (string, error) {
 }
 
 func (repo *Remote) HeadBranchName() (string, error) {
-	return repo.getHeadBranchName(repo.ClonePath)
+	return repo.getHeadBranchName(repo.GetClonePath())
 }
 
 func (repo *Remote) findReference(rawRepo *git.Repository, reference string) (string, error) {
@@ -215,7 +216,7 @@ func (repo *Remote) findReference(rawRepo *git.Repository, reference string) (st
 func (repo *Remote) LatestBranchCommit(branch string) (string, error) {
 	var err error
 
-	rawRepo, err := git.PlainOpen(repo.ClonePath)
+	rawRepo, err := git.PlainOpen(repo.GetClonePath())
 	if err != nil {
 		return "", fmt.Errorf("cannot open repo: %s", err)
 	}
@@ -236,7 +237,7 @@ func (repo *Remote) LatestBranchCommit(branch string) (string, error) {
 func (repo *Remote) TagCommit(tag string) (string, error) {
 	var err error
 
-	rawRepo, err := git.PlainOpen(repo.ClonePath)
+	rawRepo, err := git.PlainOpen(repo.GetClonePath())
 	if err != nil {
 		return "", fmt.Errorf("cannot open repo: %s", err)
 	}
@@ -265,42 +266,40 @@ func (repo *Remote) TagCommit(tag string) (string, error) {
 }
 
 func (repo *Remote) CreatePatch(opts PatchOptions) (Patch, error) {
-	workTreeCacheDir, err := repo.getWorkTreeCacheDir()
+	workTreeDir, err := repo.getWorkTreeDir()
 	if err != nil {
 		return nil, err
 	}
-	return repo.createPatch(repo.ClonePath, repo.ClonePath, workTreeCacheDir, opts)
+	return repo.createPatch(repo.GetClonePath(), repo.GetClonePath(), workTreeDir, opts)
 }
 
 func (repo *Remote) CreateArchive(opts ArchiveOptions) (Archive, error) {
-	workTreeCacheDir, err := repo.getWorkTreeCacheDir()
+	workTreeDir, err := repo.getWorkTreeDir()
 	if err != nil {
 		return nil, err
 	}
-	return repo.createArchive(repo.ClonePath, repo.ClonePath, workTreeCacheDir, opts)
+	return repo.createArchive(repo.GetClonePath(), repo.GetClonePath(), workTreeDir, opts)
 }
 
 func (repo *Remote) Checksum(opts ChecksumOptions) (Checksum, error) {
-	workTreeCacheDir, err := repo.getWorkTreeCacheDir()
+	workTreeDir, err := repo.getWorkTreeDir()
 	if err != nil {
 		return nil, err
 	}
-	return repo.checksum(repo.ClonePath, repo.ClonePath, workTreeCacheDir, opts)
+	return repo.checksum(repo.GetClonePath(), repo.GetClonePath(), workTreeDir, opts)
 }
 
 func (repo *Remote) IsCommitExists(commit string) (bool, error) {
-	return repo.isCommitExists(repo.ClonePath, repo.ClonePath, commit)
+	return repo.isCommitExists(repo.GetClonePath(), repo.GetClonePath(), commit)
 }
 
-func (repo *Remote) getWorkTreeCacheDir() (string, error) {
+func (repo *Remote) getWorkTreeDir() (string, error) {
 	ep, err := transport.NewEndpoint(repo.Url)
 	if err != nil {
 		return "", fmt.Errorf("bad endpoint url `%s`: %s", repo.Url, err)
 	}
 
-	repoId := util.Sha256Hash(filepath.Join(ep.Host, ep.Path))
-
-	return filepath.Join(GetBaseWorkTreeDir(), "remote", repoId), nil
+	return filepath.Join(GetWorkTreeCacheDir(), "remote", ep.Host, ep.Path), nil
 }
 
 func (repo *Remote) withRemoteRepoLock(f func() error) error {
@@ -309,9 +308,9 @@ func (repo *Remote) withRemoteRepoLock(f func() error) error {
 }
 
 func (repo *Remote) TagsList() ([]string, error) {
-	return repo.tagsList(repo.ClonePath)
+	return repo.tagsList(repo.GetClonePath())
 }
 
 func (repo *Remote) RemoteBranchesList() ([]string, error) {
-	return repo.remoteBranchesList(repo.ClonePath)
+	return repo.remoteBranchesList(repo.GetClonePath())
 }

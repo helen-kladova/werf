@@ -49,7 +49,7 @@ author: Timofey Kirillov <timofey.kirillov@flant.com>
 
    {% raw %}
    ```
-   kubectl -n kube-system expose rc/registry --type=ClusterIP --port=5000 --target-port=5000 --name=werf-registry
+   kubectl -n kube-system expose rc/registry --type=ClusterIP --port=5000 --target-port=5000 --name=werf-registry --selector='actual-registry=true'
    ```
    {% endraw %}
 

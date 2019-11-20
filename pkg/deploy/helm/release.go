@@ -3,7 +3,6 @@ package helm
 import (
 	"fmt"
 	"os"
-	"path"
 	"path/filepath"
 	"strings"
 	"time"
@@ -11,6 +10,8 @@ import (
 	apierrors "k8s.io/apimachinery/pkg/api/errors"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/dynamic"
+
+	helm_kube "k8s.io/helm/pkg/kube"
 
 	"github.com/flant/kubedog/pkg/kube"
 	"github.com/flant/logboek"
@@ -52,6 +53,8 @@ var (
 		ShowLogsUntilAnnoName,
 		ShowEventsAnnoName,
 		RecreateAnnoName,
+		helm_kube.SetReplicasOnlyOnCreationAnnotation,
+		helm_kube.SetResourcesOnlyOnCreationAnnotation,
 	}
 
 	werfAnnoPrefixList = []string{
@@ -138,7 +141,7 @@ func doPurgeHelmRelease(releaseName, namespace string, withNamespace, withHooks 
 		}
 	}
 
-	if err := logboek.LogProcessInline("Deleting release", logboek.LogProcessInlineOptions{}, func() error {
+	if err := logboek.LogProcess("Deleting release", logboek.LogProcessOptions{}, func() error {
 		return releaseDelete(releaseName, releaseDeleteOptions{Purge: true})
 	}); err != nil {
 		return fmt.Errorf("release delete failed: %s", err)
@@ -163,8 +166,9 @@ type ChartValuesOptions struct {
 type ChartOptions struct {
 	Timeout time.Duration
 
-	DryRun bool
-	Debug  bool
+	DryRun            bool
+	Debug             bool
+	ThreeWayMergeMode ThreeWayMergeModeType
 
 	ChartValuesOptions
 }
@@ -188,6 +192,7 @@ func doDeployHelmChart(chartPath, releaseName, namespace string, opts ChartOptio
 		var latestReleaseRevisionStatus string
 		var releaseShouldBeDeleted bool
 		var releaseShouldBeRolledBack bool
+		var latestReleaseThreeWayMergeEnabled bool
 
 		logProcessOptions := logboek.LogProcessOptions{
 			SuccessInfoSectionFunc: func() {
@@ -226,6 +231,7 @@ func doDeployHelmChart(chartPath, releaseName, namespace string, opts ChartOptio
 
 				latestReleaseRevision = resp.Releases[0].Version
 				latestReleaseRevisionStatus = resp.Releases[0].Info.Status.Code.String()
+				latestReleaseThreeWayMergeEnabled = resp.Releases[0].ThreeWayMergeEnabled
 			}
 
 			switch latestReleaseRevisionStatus {
@@ -245,7 +251,13 @@ func doDeployHelmChart(chartPath, releaseName, namespace string, opts ChartOptio
 				if exist {
 					releaseShouldBeDeleted = true
 				} else if latestReleaseRevisionStatus == "FAILED" {
-					releaseShouldBeRolledBack = true
+					threeWayMergeMode := getActualThreeWayMergeMode(opts.ThreeWayMergeMode)
+
+					if threeWayMergeMode == threeWayMergeDisabled {
+						releaseShouldBeRolledBack = true
+					} else if threeWayMergeMode == threeWayMergeOnlyNewReleases && !latestReleaseThreeWayMergeEnabled {
+						releaseShouldBeRolledBack = true
+					}
 				}
 			default:
 				if exist, err := util.FileExists(autoPurgeTriggerFilePath(releaseName)); err != nil {
@@ -270,7 +282,7 @@ func doDeployHelmChart(chartPath, releaseName, namespace string, opts ChartOptio
 		}
 
 		if releaseShouldBeDeleted {
-			if err := logboek.LogProcessInline("Deleting release", logboek.LogProcessInlineOptions{}, func() error {
+			if err := logboek.LogProcess("Deleting release", logboek.LogProcessOptions{}, func() error {
 				return releaseDelete(releaseName, releaseDeleteOptions{Purge: true})
 			}); err != nil {
 				return fmt.Errorf("release delete failed: %s", err)
@@ -347,6 +359,7 @@ func doDeployHelmChart(chartPath, releaseName, namespace string, opts ChartOptio
 						err = ReleaseRollback(
 							releaseName,
 							latestSuccessfullyDeployedRevision,
+							opts.ThreeWayMergeMode,
 							releaseRollbackOpts,
 						)
 
@@ -399,6 +412,7 @@ func doDeployHelmChart(chartPath, releaseName, namespace string, opts ChartOptio
 				opts.Values,
 				opts.Set,
 				opts.SetString,
+				opts.ThreeWayMergeMode,
 				releaseUpdateOpts,
 			); err != nil {
 				if strings.HasSuffix(err.Error(), "has no deployed releases") {
@@ -441,6 +455,7 @@ func doDeployHelmChart(chartPath, releaseName, namespace string, opts ChartOptio
 				opts.Values,
 				opts.Set,
 				opts.SetString,
+				opts.ThreeWayMergeMode,
 				releaseInstallOpts,
 			); err != nil {
 				if err := createAutoPurgeTriggerFilePath(releaseName); err != nil {
@@ -639,7 +654,7 @@ func removeResource(name, kind, namespace string) error {
 
 func createAutoPurgeTriggerFilePath(releaseName string) error {
 	filePath := autoPurgeTriggerFilePath(releaseName)
-	dirPath := path.Dir(filePath)
+	dirPath := filepath.Dir(filePath)
 
 	if fileExist, err := util.FileExists(filePath); err != nil {
 		return err

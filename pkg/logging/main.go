@@ -3,8 +3,11 @@ package logging
 import (
 	"fmt"
 	"log"
+	"os"
+	"runtime"
 
 	"github.com/flant/logboek"
+	"github.com/mattn/go-isatty"
 )
 
 var (
@@ -17,11 +20,21 @@ func Init() error {
 		return err
 	}
 
+	if runtime.GOOS == "windows" && !isatty.IsCygwinTerminal(os.Stdout.Fd()) {
+		DisableLogColor()
+	}
+
 	logboek.EnableFitMode()
 
 	log.SetOutput(logboek.GetOutStream())
 
 	return nil
+}
+
+func Mute() {
+	logboek.MuteOut()
+	logboek.MuteErr()
+	log.SetOutput(logboek.GetOutStream())
 }
 
 func EnableLogColor() {

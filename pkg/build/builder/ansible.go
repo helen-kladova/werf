@@ -5,6 +5,7 @@ package builder
 import (
 	"fmt"
 	"os"
+	"path"
 	"path/filepath"
 	"strings"
 
@@ -63,12 +64,15 @@ func (b *Ansible) stage(userStageName string, container Container) error {
 
 	container.AddEnv(
 		map[string]string{
-			"ANSIBLE_CONFIG":              filepath.Join(b.containerWorkDir(), "ansible.cfg"),
-			"WERF_DUMP_CONFIG_DOC_PATH":   filepath.Join(b.containerWorkDir(), "dump_config.json"),
-			"PYTHONPATH":                  "",
-			"LOGBOEK_SO_PATH":             filepath.Join(b.containerWorkDir(), "lib", "werf", ".logboek.so"),
+			"ANSIBLE_CONFIG":              path.Join(b.containerWorkDir(), "ansible.cfg"),
+			"WERF_DUMP_CONFIG_DOC_PATH":   path.Join(b.containerWorkDir(), "dump_config.json"),
 			"PYTHONIOENCODING":            "utf-8",
-			"ANSIBLE_PREPEND_SYSTEM_PATH": stapel.SystemPATH(),
+			"ANSIBLE_PREPEND_SYSTEM_PATH": stapel.AnsibleToolsOverlayPATH(),
+			"ANSIBLE_APPEND_SYSTEM_PATH":  stapel.SystemPATH(),
+			"LD_LIBRARY_PATH":             stapel.AnsibleLibsOverlayLDPATH(),
+			"LANG":                        "C.UTF-8",
+			"LC_ALL":                      "C.UTF-8",
+			"LOGBOEK_SO_PATH":             "/.werf/stapel/embedded/lib/python2.7/_logboek.so",
 		},
 	)
 
@@ -94,8 +98,8 @@ func (b *Ansible) stage(userStageName string, container Container) error {
 	container.AddVolumeFrom(fmt.Sprintf("%s:ro", containerName))
 
 	commandParts := []string{
-		filepath.Join(b.containerWorkDir(), "ansible-playbook"),
-		filepath.Join(b.containerWorkDir(), "playbook.yml"),
+		path.Join(b.containerWorkDir(), "ansible-playbook"),
+		path.Join(b.containerWorkDir(), "playbook.yml"),
 	}
 
 	if value, exist := os.LookupEnv("WERF_DEBUG_ANSIBLE_ARGS"); exist {
@@ -194,11 +198,11 @@ func (b *Ansible) configFieldValue(fieldName string) interface{} {
 }
 
 func (b *Ansible) stageHostWorkDir(userStageName string) (string, error) {
-	path := filepath.Join(b.extra.TmpPath, fmt.Sprintf("ansible-workdir-%s", userStageName))
+	p := filepath.Join(b.extra.TmpPath, fmt.Sprintf("ansible-workdir-%s", userStageName))
 
-	if err := mkdirP(path); err != nil {
+	if err := mkdirP(p); err != nil {
 		return "", err
 	}
 
-	return path, nil
+	return p, nil
 }

@@ -80,7 +80,7 @@ func (repo *Local) getRepoWorkTreeCacheDir() string {
 	fullPath := filepath.Clean(absPath)
 	repoId := util.Sha256Hash(fullPath)
 
-	return filepath.Join(GetBaseWorkTreeDir(), "local", repoId)
+	return filepath.Join(GetWorkTreeCacheDir(), "local", repoId)
 }
 
 func (repo *Local) IsBranchState() bool {

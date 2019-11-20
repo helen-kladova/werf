@@ -37,13 +37,16 @@ Templates are placed in the `.helm/templates` directory.
 Directory contains YAML files `*.yaml`. Each YAML file describes one or several kubernetes resources specs separated by three hyphens `---`, for example:
 
 ```yaml
-apiVersion: apps/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: mydeploy
   labels:
     service: mydeploy
 spec:
+  selector:
+    matchLabels:
+      service: mydeploy
   template:
     metadata:
       labels:
@@ -128,11 +131,16 @@ To specify image named `backend` from `werf.yaml`:
 
 {% raw %}
 ```yaml
-apiVersion: apps/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: backend
+  labels:
+    service: backend
 spec:
+  selector:
+    matchLabels:
+      service: backend
   template:
     metadata:
       labels:
@@ -151,11 +159,16 @@ To specify single unnamed image from `werf.yaml`:
 
 {% raw %}
 ```yaml
-apiVersion: apps/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: backend
+  labels:
+    service: backend
 spec:
+  selector:
+    matchLabels:
+      service: backend
   template:
     metadata:
       labels:
@@ -584,6 +597,49 @@ werf deploy \
   --env dev \
   --images-repo :minikube \
   --stages-storage :local
+```
+
+### Resources manifests validation
+
+If resource manifest in the chart contains logical or syntax errors then werf will write validation warning to the output during deploy process. Also all validation errors will be written to the `debug.werf.io/validation-messages`. These errors typically does not affect deploy process exit status, because kubernetes apiserver can accept wrong manifests with certain typos or errors without reporting errors.
+
+For example, having following typos in the chart templates (`envs` instead of `env` and `redinessProbe` instead of `readinessProbe`):
+
+```
+      containers:
+      - name: main
+        command: [ "/bin/bash", "-c", "while true; do date ; sleep 1 ; done" ]
+        image: ubuntu:18.04
+        redinessProbe:
+          tcpSocket:
+            port: 8080
+          initialDelaySeconds: 5
+          periodSeconds: 10
+      envs:
+      - name: MYVAR
+        value: myvalue
+```
+
+Validation output will be like:
+
+```
+│   WARNING ### Following problems detected during deploy process ###
+│   WARNING Validation of target data failed: deployment/mydeploy1: [ValidationError(Deployment.spec.template.spec.containers[0]): unknown field               ↵
+│ "redinessProbe" in io.k8s.api.core.v1.Container, ValidationError(Deployment.spec.template.spec): unknown field "envs" in io.k8s.api.core.v1.PodSpec]
+```
+
+And resource will contain `debug.werf.io/validation-messages` annotation:
+
+```
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    debug.werf.io/validation-messages: 'Validation of target data failed: deployment/mydeploy1:
+      [ValidationError(Deployment.spec.template.spec.containers[0]): unknown field
+      "redinessProbe" in io.k8s.api.core.v1.Container, ValidationError(Deployment.spec.template.spec):
+      unknown field "envs" in io.k8s.api.core.v1.PodSpec]'
+...
 ```
 
 ## Multiple Kubernetes clusters

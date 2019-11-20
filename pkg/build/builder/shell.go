@@ -2,8 +2,6 @@ package builder
 
 import (
 	"fmt"
-	"io/ioutil"
-	"os"
 	"path"
 	"path/filepath"
 	"strings"
@@ -57,15 +55,10 @@ func (b *Shell) stage(userStageName string, container Container) error {
 		fmt.Sprintf("%s:%s:rw", stageHostTmpDir, b.containerTmpDir()),
 	)
 
-	stageHostTmpScriptFilePath := path.Join(stageHostTmpDir, scriptFileName)
+	stageHostTmpScriptFilePath := filepath.Join(stageHostTmpDir, scriptFileName)
 	containerTmpScriptFilePath := path.Join(b.containerTmpDir(), scriptFileName)
 
-	var scriptLines []string
-	scriptLines = append(scriptLines, fmt.Sprintf("#!%s -e", stapel.BashBinPath()))
-	scriptLines = append(scriptLines, "")
-	scriptLines = append(scriptLines, b.stageCommands(userStageName)...)
-
-	if err := writeExecutableFile(stageHostTmpScriptFilePath, strings.Join(scriptLines, "\n")+"\n"); err != nil {
+	if err := stapel.CreateScript(stageHostTmpScriptFilePath, b.stageCommands(userStageName)); err != nil {
 		return err
 	}
 
@@ -156,9 +149,5 @@ func (b *Shell) stageHostTmpDir(userStageName string) (string, error) {
 }
 
 func (b *Shell) containerTmpDir() string {
-	return filepath.Join(b.extra.ContainerWerfPath, "shell")
-}
-
-func writeExecutableFile(path string, content string) error {
-	return ioutil.WriteFile(path, []byte(content), os.FileMode(0667))
+	return path.Join(b.extra.ContainerWerfPath, "shell")
 }

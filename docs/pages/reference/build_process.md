@@ -48,16 +48,19 @@ All generated instructions to build current stage are supposed to be run in a co
 
 To build a stage werf runs prepared instructions list in the build container based on the previous stage. The resulting container state is then committed as a new stage and saved into the [stages storage]({{ site.baseurl }}/documentation/reference/stages_and_images.html#stages-storage).
 
-Werf has a special service image called `flant/werf-stapel` which contains a chroot `/.werf/stapel` with all tools and libraries needed to build images with stapel builder, such as:
- * Glibc.
- * Gnu cli tools (install, patch, find, wget, grep, rsync and other).
- * Git cli util.
- * Bash.
- * Python interpreter and ansible.
-
-All these tools are compiled with an independent glibc, which allows running these tools in arbitrary environment independently of used base image.
+Werf has a special service image called `flant/werf-stapel` which contains a chroot `/.werf/stapel` with all tools and libraries needed to build images with stapel builder. More info about stapel image are available [in the article]({{ site.baseurl }}/documentation/development/stapel.html).
 
 `flant/werf-stapel` is mounted into every build container so that all precompiled tools are available in every stage build and may be used in instructions list.
+
+### How stapel builder processes CMD and ENTRYPOINT
+
+To build stage image werf launches a container with service `CMD` and `ENTRYPOINT` and then substitutes ones with the [base image]({{ site.baseurl }}/documentation/configuration/stapel_image/base_image.html) values. If the base image does not have the value werf resets service to the special empty value: 
+* `[]` for `CMD`;  
+* `[""]` for `ENTRYPOINT`. 
+
+Also, werf uses the special empty value instead of base image `ENTRYPOINT` if a user specifies `CMD` (`docker.CMD`).
+
+Otherwise, werf works like docker according to [documentation](https://docs.docker.com/engine/reference/builder/#understand-how-cmd-and-entrypoint-interact). 
 
 ## Multiple builds on the same host
 

@@ -18,7 +18,6 @@ type StageImageContainerOptions struct {
 	Workdir     string
 	User        string
 	Entrypoint  string
-	StopSignal  string
 	HealthCheck string
 }
 
@@ -63,10 +62,6 @@ func (co *StageImageContainerOptions) AddWorkdir(workdir string) {
 
 func (co *StageImageContainerOptions) AddUser(user string) {
 	co.User = user
-}
-
-func (co *StageImageContainerOptions) AddStopSignal(signal string) {
-	co.StopSignal = signal
 }
 
 func (co *StageImageContainerOptions) AddHealthCheck(check string) {
@@ -119,12 +114,6 @@ func (co *StageImageContainerOptions) merge(co2 *StageImageContainerOptions) *St
 		mergedCo.Entrypoint = co.Entrypoint
 	} else {
 		mergedCo.Entrypoint = co2.Entrypoint
-	}
-
-	if co2.StopSignal == "" {
-		mergedCo.StopSignal = co.StopSignal
-	} else {
-		mergedCo.StopSignal = co2.StopSignal
 	}
 
 	if co2.HealthCheck == "" {
@@ -205,10 +194,6 @@ func (co *StageImageContainerOptions) toCommitChanges() []string {
 		args = append(args, fmt.Sprintf("ENTRYPOINT %s", co.Entrypoint))
 	}
 
-	if co.StopSignal != "" {
-		args = append(args, fmt.Sprintf("STOPSIGNAL %s", co.StopSignal))
-	}
-
 	if co.HealthCheck != "" {
 		args = append(args, fmt.Sprintf("HEALTHCHECK %s", co.HealthCheck))
 	}
@@ -262,10 +247,6 @@ func (co *StageImageContainerOptions) prepareCommitChanges() ([]string, error) {
 		args = append(args, "CMD []")
 	}
 
-	if co.StopSignal != "" {
-		args = append(args, fmt.Sprintf("STOPSIGNAL %s", co.StopSignal))
-	}
-
 	if co.HealthCheck != "" {
 		args = append(args, fmt.Sprintf("HEALTHCHECK %s", co.HealthCheck))
 	}
@@ -285,15 +266,13 @@ func getEmptyEntrypointInstructionValue() (string, error) {
 	}
 
 	serverVersionMajor := serverVersion.Segments()[0]
-	serverVersionMinor := serverVersion.Segments()[1]
-
-	isLessMajorVersion := serverVersionMajor < 17
-	isLessMinorVersion := serverVersionMajor == 17 && serverVersionMinor < 10
-	isOldValueFormat := isLessMajorVersion || isLessMinorVersion
-
-	if isOldValueFormat {
-		return "[]", nil
-	} else {
-		return "[\"\"]", nil
+	if serverVersionMajor >= 17 {
+		serverVersionMinor := serverVersion.Segments()[1]
+		isOldValueFormat := serverVersionMajor == 17 && serverVersionMinor < 10
+		if isOldValueFormat {
+			return "[]", nil
+		}
 	}
+
+	return "[\"\"]", nil
 }

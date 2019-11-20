@@ -1,18 +1,21 @@
 #!/bin/bash
 
 werf_home_init() {
-  WERF_HOME=$BATS_TMPDIR/werf-test-home-$(generate_random_string)
-  mkdir $WERF_HOME
+# TODO: all tests have to use common werf locks that are stored in the service directory, $WERF_HOME/service
+#  export WERF_HOME=$BATS_TMPDIR/werf-test-home-$(generate_random_string)
+#  mkdir $WERF_HOME
+  /bin/true
 }
 
 werf_home_deinit() {
-  docker run \
-    --rm \
-    --volume $WERF_HOME:$WERF_HOME \
-    alpine \
-    rm -rf $WERF_HOME/*
-
-  rmdir $WERF_HOME
+#  docker run \
+#    --rm \
+#    --volume $WERF_HOME:$WERF_HOME \
+#    alpine \
+#    rm -rf $WERF_HOME/*
+#
+#  rmdir $WERF_HOME
+  /bin/true
 }
 
 test_dir_create() {
@@ -38,9 +41,13 @@ test_dir_werf_stages_purge() {
 docker_registry_run() {
   WERF_TEST_DOCKER_REGISTRY_CONTAINER_NAME=werf_test_docker_registry-$(generate_random_string)
   container_host_port=$(get_unused_port)
-  docker run -d -p $container_host_port:5000 --name $WERF_TEST_DOCKER_REGISTRY_CONTAINER_NAME registry:2
+  docker run \
+    -d -p $container_host_port:5000 \
+    -e REGISTRY_STORAGE_DELETE_ENABLED=true \
+    --name $WERF_TEST_DOCKER_REGISTRY_CONTAINER_NAME registry:2
 
   WERF_TEST_DOCKER_REGISTRY=localhost:$container_host_port
+  wait_till_host_ready_to_respond $WERF_TEST_DOCKER_REGISTRY 30
 }
 
 docker_registry_rm() {
@@ -48,7 +55,7 @@ docker_registry_rm() {
 }
 
 generate_random_string() {
-  cat /dev/urandom | tr -dc 'a-z0-9' | fold -w 8 | head -n 1
+  date +%s.%N | sha256sum | cut -c 1-10
 }
 
 get_unused_port() {

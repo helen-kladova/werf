@@ -3,13 +3,12 @@ package true_git
 import (
 	"bytes"
 	"fmt"
+	"io/ioutil"
 	"os"
 	"os/exec"
 	"path/filepath"
 	"strings"
 	"time"
-
-	uuid "github.com/satori/go.uuid"
 
 	"github.com/flant/logboek"
 	"github.com/flant/werf/pkg/lock"
@@ -55,66 +54,65 @@ func withWorkTreeCacheLock(workTreeCacheDir string, f func() error) error {
 }
 
 func prepareWorkTree(repoDir, workTreeCacheDir string, commit string, withSubmodules bool) (string, error) {
-	workTreeDirByCommit := filepath.Join(workTreeCacheDir, commit)
+	if err := os.MkdirAll(workTreeCacheDir, os.ModePerm); err != nil {
+		return "", fmt.Errorf("unable to create dir %s: %s", workTreeCacheDir, err)
+	}
 
-	workTreeExists := true
-	if _, err := os.Stat(workTreeDirByCommit); os.IsNotExist(err) {
-		workTreeExists = false
+	gitDirPath := filepath.Join(workTreeCacheDir, "git_dir")
+	if _, err := os.Stat(gitDirPath); os.IsNotExist(err) {
+		if err := ioutil.WriteFile(gitDirPath, []byte(repoDir+"\n"), 0644); err != nil {
+			return "", fmt.Errorf("error writing %s: %s", gitDirPath)
+		}
 	} else if err != nil {
-		return "", fmt.Errorf("unable to access %s: %s", workTreeDirByCommit, err)
-	}
-	if workTreeExists {
-		return workTreeDirByCommit, nil
+		return "", fmt.Errorf("unable to access %s: %s", gitDirPath, err)
 	}
 
-	tmpWorkTreeDir := filepath.Join(workTreeCacheDir, uuid.NewV4().String())
-
-	currentWorkTreeDirLink := filepath.Join(workTreeCacheDir, "current")
-	currentLinkExists := true
+	currentCommitPath := filepath.Join(workTreeCacheDir, "current_commit")
+	worktreePath := filepath.Join(workTreeCacheDir, "worktree")
 	currentCommit := ""
-	if _, err := os.Stat(currentWorkTreeDirLink); os.IsNotExist(err) {
-		currentLinkExists = false
+
+	currentCommitExists := true
+	if _, err := os.Stat(currentCommitPath); os.IsNotExist(err) {
+		currentCommitExists = false
 	} else if err != nil {
-		return "", fmt.Errorf("unable to access %s: %s", currentWorkTreeDirLink, err)
+		return "", fmt.Errorf("unable to access %s: %s", currentCommitPath, err)
 	}
-	if currentLinkExists {
-		// NOTICE: Ignore readlink and rename errors.
-		// NOTICE: Work tree will be created from scratch
-		// NOTICE: in the specified tmp dir in that case.
-		if currentWorkTreeDir, err := os.Readlink(currentWorkTreeDirLink); err == nil {
-			currentCommit = filepath.Base(currentWorkTreeDir)
-			_ = os.Rename(currentWorkTreeDir, tmpWorkTreeDir)
+	if currentCommitExists {
+		if data, err := ioutil.ReadFile(currentCommitPath); err == nil {
+			currentCommit = strings.TrimSpace(string(data))
+
+			if currentCommit == commit {
+				return worktreePath, nil
+			}
+		} else {
+			return "", fmt.Errorf("error reading %s: %s", currentCommitPath, err)
 		}
 
-		if err := os.RemoveAll(currentWorkTreeDirLink); err != nil {
-			return "", fmt.Errorf("unable to remove current work tree link %s: %s", currentWorkTreeDirLink, err)
+		if err := os.RemoveAll(currentCommitPath); err != nil {
+			return "", fmt.Errorf("unable to remove %s: %s", currentCommitPath, err)
 		}
 	}
 
-	logProcessMsg := fmt.Sprintf("Switch work tree to commit %s", commit)
+	// Switch worktree state to the desired commit.
+	// If worktree already exists — it will be used as a cache.
+	workTreeDir := filepath.Join(workTreeCacheDir, "worktree")
+	logProcessMsg := fmt.Sprintf("Switch work tree %s to commit %s", workTreeDir, commit)
 	if err := logboek.LogProcess(logProcessMsg, logboek.LogProcessOptions{}, func() error {
-		logboek.LogInfoF("Work tree dir: %s\n", tmpWorkTreeDir)
+		logboek.LogInfoF("Work tree dir: %s\n", workTreeDir)
 		if currentCommit != "" {
 			logboek.LogInfoF("Current commit: %s\n", currentCommit)
 		}
 
-		return switchWorkTree(repoDir, tmpWorkTreeDir, commit, withSubmodules)
+		return switchWorkTree(repoDir, workTreeDir, commit, withSubmodules)
 	}); err != nil {
-		return "", fmt.Errorf("unable to switch work tree %s to commit %s: %s", tmpWorkTreeDir, commit, err)
+		return "", fmt.Errorf("unable to switch work tree %s to commit %s: %s", workTreeDir, commit, err)
 	}
 
-	if err := os.RemoveAll(workTreeDirByCommit); err != nil {
-		return "", fmt.Errorf("unable to remove old dir %s: %s", workTreeDirByCommit, err)
-	}
-	if err := os.Rename(tmpWorkTreeDir, workTreeDirByCommit); err != nil {
-		return "", fmt.Errorf("unable to rename %s to %s: %s", tmpWorkTreeDir, workTreeDirByCommit, err)
+	if err := ioutil.WriteFile(currentCommitPath, []byte(commit+"\n"), 0644); err != nil {
+		return "", fmt.Errorf("error writing %s: %s", currentCommitPath, err)
 	}
 
-	if err := os.Symlink(workTreeDirByCommit, currentWorkTreeDirLink); err != nil {
-		return "", fmt.Errorf("unable to create symlink %s to %s: %s", currentWorkTreeDirLink, workTreeDirByCommit, err)
-	}
-
-	return workTreeDirByCommit, nil
+	return workTreeDir, nil
 }
 
 func debugWorktreeSwitch() bool {

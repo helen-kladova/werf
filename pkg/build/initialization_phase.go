@@ -4,8 +4,6 @@ import (
 	"bytes"
 	"fmt"
 	"io/ioutil"
-	"net/url"
-	"os"
 	"path"
 	"path/filepath"
 	"reflect"
@@ -24,9 +22,7 @@ import (
 	"github.com/flant/werf/pkg/config"
 	"github.com/flant/werf/pkg/git_repo"
 	"github.com/flant/werf/pkg/logging"
-	"github.com/flant/werf/pkg/slug"
 	"github.com/flant/werf/pkg/util"
-	"github.com/flant/werf/pkg/werf"
 )
 
 type InitializationPhase struct{}
@@ -118,7 +114,7 @@ func handleImageFromName(from string, fromLatest bool, image *Image, c *Conveyor
 	image.baseImageName = from
 
 	if fromLatest {
-		if _, err := image.getFromBaseImageIdFromRegistry(c); err != nil {
+		if _, err := image.getFromBaseImageIdFromRegistry(c, image.baseImageName); err != nil {
 			return err
 		}
 	}
@@ -209,14 +205,18 @@ func initStages(image *Image, imageInterfaceConfig config.StapelImageInterface, 
 
 	gitArchiveStageOptions := &stage.NewGitArchiveStageOptions{
 		ArchivesDir:          getImageArchivesDir(imageName, c),
+		ScriptsDir:           getImageScriptsDir(imageName, c),
 		ContainerArchivesDir: getImageArchivesContainerDir(c),
+		ContainerScriptsDir:  getImageScriptsContainerDir(c),
 	}
 
 	gitPatchStageOptions := &stage.NewGitPatchStageOptions{
 		PatchesDir:           getImagePatchesDir(imageName, c),
 		ArchivesDir:          getImageArchivesDir(imageName, c),
+		ScriptsDir:           getImageScriptsDir(imageName, c),
 		ContainerPatchesDir:  getImagePatchesContainerDir(c),
 		ContainerArchivesDir: getImageArchivesContainerDir(c),
+		ContainerScriptsDir:  getImageScriptsContainerDir(c),
 	}
 
 	gitMappings, err := generateGitMappings(imageBaseConfig, c)
@@ -271,7 +271,7 @@ func generateGitMappings(imageBaseConfig *config.StapelImageBase, c *Conveyor) (
 		localGitRepo = &git_repo.Local{
 			Base:   git_repo.Base{Name: "own"},
 			Path:   c.projectDir,
-			GitDir: path.Join(c.projectDir, ".git"),
+			GitDir: filepath.Join(c.projectDir, ".git"),
 		}
 	}
 
@@ -282,19 +282,9 @@ func generateGitMappings(imageBaseConfig *config.StapelImageBase, c *Conveyor) (
 	for _, remoteGitMappingConfig := range imageBaseConfig.Git.Remote {
 		remoteGitRepo, exist := c.remoteGitRepos[remoteGitMappingConfig.Name]
 		if !exist {
-			clonePath, err := getRemoteGitRepoClonePath(remoteGitMappingConfig, c)
-			if err != nil {
-				return nil, err
-			}
-
-			if err := os.MkdirAll(filepath.Dir(clonePath), os.ModePerm); err != nil {
-				return nil, fmt.Errorf("unable to mkdir %s: %s", filepath.Dir(clonePath), err)
-			}
-
 			remoteGitRepo = &git_repo.Remote{
-				Base:      git_repo.Base{Name: remoteGitMappingConfig.Name},
-				Url:       remoteGitMappingConfig.Url,
-				ClonePath: clonePath,
+				Base: git_repo.Base{Name: remoteGitMappingConfig.Name},
+				Url:  remoteGitMappingConfig.Url,
 			}
 
 			if err := logboek.LogProcess(fmt.Sprintf("Refreshing %s repository", remoteGitMappingConfig.Name), logboek.LogProcessOptions{}, func() error {
@@ -392,11 +382,6 @@ func getNonEmptyGitMappings(gitMappings []*stage.GitMapping) ([]*stage.GitMappin
 				return fmt.Errorf("unable to get commit of repo '%s': %s", gitMapping.GitRepo().GetName(), err)
 			}
 
-			cwd := gitMapping.Cwd
-			if cwd == "" {
-				cwd = "/"
-			}
-
 			if empty, err := gitMapping.IsEmpty(); err != nil {
 				return err
 			} else if !empty {
@@ -413,41 +398,6 @@ func getNonEmptyGitMappings(gitMappings []*stage.GitMapping) ([]*stage.GitMappin
 	}
 
 	return nonEmptyGitMappings, nil
-}
-
-func getRemoteGitRepoClonePath(remoteGitMappingConfig *config.GitRemote, c *Conveyor) (string, error) {
-	scheme, err := urlScheme(remoteGitMappingConfig.Url)
-	if err != nil {
-		return "", err
-	}
-
-	clonePath := path.Join(
-		werf.GetLocalCacheDir(),
-		"remote_git_repos",
-		"projects",
-		c.werfConfig.Meta.Project,
-		fmt.Sprintf("%v", git_repo.RemoteGitRepoCacheVersion),
-		slug.Slug(remoteGitMappingConfig.Name),
-		scheme,
-	)
-
-	return clonePath, nil
-}
-
-func urlScheme(urlString string) (string, error) {
-	u, err := url.Parse(urlString)
-	if err != nil {
-		if strings.HasSuffix(err.Error(), "first path segment in URL cannot contain colon") {
-			for _, protocol := range []string{"git", "ssh"} {
-				if strings.HasPrefix(urlString, fmt.Sprintf("%s@", protocol)) {
-					return "ssh", nil
-				}
-			}
-		}
-		return "", err
-	}
-
-	return u.Scheme, nil
 }
 
 func gitRemoteArtifactInit(remoteGitMappingConfig *config.GitRemote, remoteGitRepo *git_repo.Remote, imageName string, c *Conveyor) *stage.GitMapping {
@@ -483,7 +433,7 @@ func gitLocalPathInit(localGitMappingConfig *config.GitLocal, localGitRepo *git_
 func baseGitMappingInit(local *config.GitLocalExport, imageName string, c *Conveyor) *stage.GitMapping {
 	var stageDependencies map[stage.StageName][]string
 	if local.StageDependencies != nil {
-		stageDependencies = stageDependenciesToMap(local.StageDependencies)
+		stageDependencies = stageDependenciesToMap(local.GitMappingStageDependencies())
 	}
 
 	gitMapping := &stage.GitMapping{
@@ -491,13 +441,15 @@ func baseGitMappingInit(local *config.GitLocalExport, imageName string, c *Conve
 		ContainerPatchesDir:  getImagePatchesContainerDir(c),
 		ArchivesDir:          getImageArchivesDir(imageName, c),
 		ContainerArchivesDir: getImageArchivesContainerDir(c),
+		ScriptsDir:           getImageScriptsDir(imageName, c),
+		ContainerScriptsDir:  getImageScriptsContainerDir(c),
 
-		RepoPath: path.Join("/", local.Add),
+		RepoPath: local.GitMappingAdd(),
 
-		Cwd:                local.Add,
-		To:                 local.To,
-		ExcludePaths:       local.ExcludePaths,
-		IncludePaths:       local.IncludePaths,
+		Cwd:                local.GitMappingAdd(),
+		To:                 local.GitMappingTo(),
+		ExcludePaths:       local.GitMappingExcludePath(),
+		IncludePaths:       local.GitMappingIncludePaths(),
 		Owner:              local.Owner,
 		Group:              local.Group,
 		StagesDependencies: stageDependencies,
@@ -507,7 +459,7 @@ func baseGitMappingInit(local *config.GitLocalExport, imageName string, c *Conve
 }
 
 func getImagePatchesDir(imageName string, c *Conveyor) string {
-	return path.Join(c.tmpDir, imageName, "patch")
+	return filepath.Join(c.tmpDir, imageName, "patch")
 }
 
 func getImagePatchesContainerDir(c *Conveyor) string {
@@ -515,11 +467,19 @@ func getImagePatchesContainerDir(c *Conveyor) string {
 }
 
 func getImageArchivesDir(imageName string, c *Conveyor) string {
-	return path.Join(c.tmpDir, imageName, "archive")
+	return filepath.Join(c.tmpDir, imageName, "archive")
 }
 
 func getImageArchivesContainerDir(c *Conveyor) string {
 	return path.Join(c.containerWerfDir, "archive")
+}
+
+func getImageScriptsDir(imageName string, c *Conveyor) string {
+	return filepath.Join(c.tmpDir, imageName, "scripts")
+}
+
+func getImageScriptsContainerDir(c *Conveyor) string {
+	return path.Join(c.containerWerfDir, "scripts")
 }
 
 func stageDependenciesToMap(sd *config.StageDependencies) map[stage.StageName][]string {
@@ -545,7 +505,7 @@ func prepareImageBasedOnImageFromDockerfile(imageFromDockerfileConfig *config.Im
 	image := &Image{}
 	image.name = imageFromDockerfileConfig.Name
 
-	contextDir := path.Join(c.projectDir, imageFromDockerfileConfig.Context)
+	contextDir := filepath.Join(c.projectDir, imageFromDockerfileConfig.Context)
 
 	rel, err := filepath.Rel(c.projectDir, contextDir)
 	if err != nil || strings.HasPrefix(rel, "../") {
@@ -559,7 +519,7 @@ func prepareImageBasedOnImageFromDockerfile(imageFromDockerfileConfig *config.Im
 		return nil, fmt.Errorf("context folder %s is not found", contextDir)
 	}
 
-	dockerfilePath := path.Join(c.projectDir, imageFromDockerfileConfig.Dockerfile)
+	dockerfilePath := filepath.Join(c.projectDir, imageFromDockerfileConfig.Dockerfile)
 	rel, err = filepath.Rel(c.projectDir, dockerfilePath)
 	if err != nil || strings.HasPrefix(rel, "../") {
 		return nil, fmt.Errorf("unsupported dockerfile %s.\n Only dockerfile specified inside project directory %s supported", dockerfilePath, c.projectDir)

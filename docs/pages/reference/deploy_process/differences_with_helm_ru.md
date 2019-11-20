@@ -9,9 +9,9 @@ author: Timofey Kirillov <timofey.kirillov@flant.com>
 
 ## Builtin Helm client and Tiller
 
-Helm 2 uses server component called [tiller](https://helm.sh/docs/glossary/#tiller). The tiller manages [releases]({{ site.baseurl }}/documentation/reference/deploy_process/deploy_into_kubernetes.html#release): creates, updates, deletes and lists them.
+Helm 2 uses server component called [Tiller](https://helm.sh/docs/glossary/#tiller). Tiller manages [releases]({{ site.baseurl }}/documentation/reference/deploy_process/deploy_into_kubernetes.html#release): performs create, update, delete and list releases operations.
 
-In the werf tiller is built into main werf deploy process. Thus it runs in the user space without need to connect to tiller server.
+Deploying with werf does not require a Tiller installed in Kubernetes cluster. Helm client and Tiller is fully embedded into werf, and Tiller is operating locally (without grpc network requests) within single werf process during execution of deploy commands.
 
 Yet werf is [fully compatible]({{ site.baseurl }}/documentation/reference/deploy_process/deploy_into_kubernetes.html#helm-compatibility-notice) with already existing helm 2 installations.
 
@@ -19,7 +19,7 @@ This architecture gives werf following advantages.
 
 ### Ability to implement resources tracking properly
 
-Werf imports helm codebase and redefines key points of helm standard deploy process. These changes making it possible to [track resources with logs](#proper-tracking-of-deployed-resources) without complex architectural solutions such as streaming of logs over grpc when using helm client with tiller server.
+Werf imports helm codebase and redefines key points of helm standard deploy process. These changes making it possible to [track resources with logs](#proper-tracking-of-deployed-resources) without complex architectural solutions such as streaming of logs over grpc when using helm client with Tiller server.
 
 ### Security advantage
 
@@ -29,7 +29,7 @@ In contrast to Tiller, releases storage in Werf is not a static configuration of
 
 ### Installation advantage
 
-As helm client and tiller is built into werf there is no need for helm client installed on the host nor tiller installed in the cluster.
+As helm client and Tiller is built into werf there is no need for helm client installed on the host nor Tiller installed in the cluster.
 
 ## Proper tracking of deployed resources
 
@@ -101,3 +101,13 @@ If user have created `Chart.yaml` by itself, then werf will overwrite it in the 
 Werf requires [chart]({{ site.baseurl }}/documentation/reference/deploy_process/deploy_into_kubernetes.html#chart) to be placed in the `.helm` directory in the same directory where `werf.yaml` config is placed.
 
 Helm does not define a static place in the project where helm chart should be stored.
+
+## Chart resource validation
+
+Errors like non-existing fields in resource configuration of chart templates are not shown by standard helm. No feedback is given to the user.
+
+Werf writes all validation errors as WARNINGS and also writes these warnings into the resource annotation (so that all these warnings can easily be fetched by cli scripts from multiple clusters). See more info [here]({{ site.baseurl }}/documentation/reference/deploy_process/deploy_into_kubernetes.html#resources-manifests-validation).
+
+## Three way merge
+
+Werf is now in the process of migrating to three-way-merge based resources updates. See more into [in the article]({{ site.baseurl }}/documentation/reference/deploy_process/resources_update_methods_and_adoption.html).

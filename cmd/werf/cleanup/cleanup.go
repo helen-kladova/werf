@@ -2,7 +2,7 @@ package cleanup
 
 import (
 	"fmt"
-	"path"
+	"path/filepath"
 
 	"github.com/flant/kubedog/pkg/kube"
 	"github.com/flant/logboek"
@@ -18,10 +18,6 @@ import (
 
 	"github.com/spf13/cobra"
 )
-
-var CmdData struct {
-	WithoutKube bool
-}
 
 var CommonCmdData common.CmdData
 
@@ -57,7 +53,8 @@ It is safe to run this command periodically (daily is enough) by automated clean
 	common.SetupImagesRepo(&CommonCmdData, cmd)
 	common.SetupImagesRepoMode(&CommonCmdData, cmd)
 	common.SetupDockerConfig(&CommonCmdData, cmd, "Command needs granted permissions to read, pull and delete images from the specified stages storage and images repo")
-	common.SetupInsecureRepo(&CommonCmdData, cmd)
+	common.SetupInsecureRegistry(&CommonCmdData, cmd)
+	common.SetupSkipTlsVerifyRegistry(&CommonCmdData, cmd)
 	common.SetupImagesCleanupPolicies(&CommonCmdData, cmd)
 
 	common.SetupKubeConfig(&CommonCmdData, cmd)
@@ -68,7 +65,7 @@ It is safe to run this command periodically (daily is enough) by automated clean
 	common.SetupLogOptions(&CommonCmdData, cmd)
 	common.SetupLogProjectDir(&CommonCmdData, cmd)
 
-	cmd.Flags().BoolVarP(&CmdData.WithoutKube, "without-kube", "", false, "Do not skip deployed kubernetes images")
+	common.SetupWithoutKube(&CommonCmdData, cmd)
 
 	return cmd
 }
@@ -82,7 +79,7 @@ func runCleanup() error {
 		return err
 	}
 
-	if err := docker_registry.Init(docker_registry.Options{AllowInsecureRepo: *CommonCmdData.InsecureRepo}); err != nil {
+	if err := docker_registry.Init(docker_registry.Options{InsecureRegistry: *CommonCmdData.InsecureRegistry, SkipTlsVerifyRegistry: *CommonCmdData.SkipTlsVerifyRegistry}); err != nil {
 		return err
 	}
 
@@ -148,7 +145,7 @@ func runCleanup() error {
 	}
 
 	var localGitRepo cleaning.GitRepo
-	gitDir := path.Join(projectDir, ".git")
+	gitDir := filepath.Join(projectDir, ".git")
 	if exist, err := util.DirExists(gitDir); err != nil {
 		return err
 	} else if exist {
@@ -176,7 +173,7 @@ func runCleanup() error {
 		},
 		LocalGit:                  localGitRepo,
 		KubernetesContextsClients: kubernetesContextsClients,
-		WithoutKube:               CmdData.WithoutKube,
+		WithoutKube:               *CommonCmdData.WithoutKube,
 		Policies:                  policies,
 	}
 
