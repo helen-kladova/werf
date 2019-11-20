@@ -7,7 +7,7 @@ lang: ru
 author: Timofey Kirillov <timofey.kirillov@flant.com>
 ---
 
-According to [ci-env description]({{ site.baseurl }}/documentation/reference/plugging_into_cicd/overview.html#what-is-ci-env) werf should define a set of `WERF_*` variables and perform some actions to integrate with CI/CD system.
+According to [ci-env description]({{ site.baseurl }}/ru/documentation/reference/plugging_into_cicd/overview.html#what-is-ci-env) werf should define a set of `WERF_*` variables and perform some actions to integrate with CI/CD system.
 
 Werf uses following values for werf environment variables:
 

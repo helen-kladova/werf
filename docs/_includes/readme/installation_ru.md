@@ -41,7 +41,7 @@ curl -L https://raw.githubusercontent.com/flant/multiwerf/master/get.sh | bash
 source <(multiwerf use 1.0 beta)
 ```
 
-> _Замечание:_ Если вы используете bash версии < 4.0 (например для MacOS версия версия bash по умочанию — 3.2), вы должны использовать команду `source /dev/stdin <<<"$(multiwerf use 1.0 beta)"` вместо `source <(multiwerf use 1.0 beta)`.
+> _Замечание:_ Если вы используете bash версии < 4.0 (например для MacOS версия версия bash по умолчанию — 3.2), вы должны использовать команду `source /dev/stdin <<<"$(multiwerf use 1.0 beta)"` вместо `source <(multiwerf use 1.0 beta)`.
 
 ### Метод 2: скачать исполняемый файл
 
