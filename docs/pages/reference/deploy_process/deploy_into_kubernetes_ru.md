@@ -89,45 +89,47 @@ kind: ConfigMap
 
 ##### werf_container_image
 
-The template function generates `image` and `imagePullPolicy` keys for the pod container.
+Данная функция генерирует ключи `image` и `imagePullPolicy` со значениями, необходимыми для соответствующего контейнера пода.
 
-A specific feature of the function is that `imagePullPolicy` is generated based on the `.Values.global.werf.is_branch` value, if tags are used, `imagePullPolicy: Always` is not set. So in the result images are pulled always only for the images tagged by git-branch names (because docker image id can be changed for the same docker image name).
+Особенность функции в том, что значение `imagePullPolicy` формируется исходя из значения `.Values.global.werf.is_branch`. Если не используется тэг, то функция возвращает `imagePullPolicy: Always`, иначе (если используется тэг) — ключ `imagePullPolicy` не возвращается. В результате, образ будет всегда скачиваться если он был собран для git-ветки, т.к. у Docker-образа с тем-же именем мог измениться ID.
 
-The function may return multiple strings, which is why it must be used together with the `indent` construction.
+Функция может возвращать несколько строк, поэтому она должна использоваться совместно с конструкцией `indent`.
 
-The logic of generating the `imagePullPolicy` key:
-* The `.Values.global.werf.is_branch=true` value means that an image is being deployed based on the `latest` logic for a branch.
-  * In this case, the image for an appropriate docker tag must be updated through docker pull, even if it already exists, to get the current `latest` version of the respective tag.
-  * In this case – `imagePullPolicy=Always`.
-* The `.Values.global.werf.is_branch=false` value means that a tag or a specific image commit is being deployed.
-  * In this case, the image for an appropriate docker tag doesn't need to be updated through docker pull if it already exists.
-  * In this case, `imagePullPolicy` is not specified, which is consistent with the default value currently adopted in kubernetes: `imagePullPolicy=IfNotPresent`.
+Логика генерации ключа `imagePullPolicy`:
+* Значение `.Values.global.werf.is_branch=true` подразумевает, что развертывается образ для git-ветки, с расчетом на использование самого свежего образа.
+  * В этом случае, образ с соответствующим тэгом должен быть принудительно скачан, даже если он уже есть в локальном хранилище Docker-образов. Это необходимо, чтобы получить самый "свежий" образ, соответствующий образу с таким Docker-тэгом.
+  * В этом случае – `imagePullPolicy=Always`.
+* Значение `.Values.global.werf.is_branch=false` подразумеваеи, что развертывается образ для git-тэга или конкретного git-коммита.
+  * В этом случае, образ для соответствующего Docker-тэга можно не обновлять, если он уже находится в локальном хранилище Docker-образов.
+  * В этом случае, `imagePullPolicy` не устанавливается, т.е. итоговое значение у объекта в кластере будет соответствовать значению по умолчанию — `imagePullPolicy=IfNotPresent`.
 
-> The images tagged by custom tag strategy (`--tag-custom`) processed like the images tagged by git branch tag strategy (`--tag-git-branch`)
+> Образы, протэгированные с использованием пользовательской стратегии тэгирования (`--tag-custom`) обрабатываются аналогично образам протэгированным стратегией тэгирования *git-branch* (`--tag-git-branch`).
 
-An example of using the function in case multiple images exist in the `werf.yaml` config:
+Пример использования функции в случае нескольких описанных в файле конфигурации `werf.yaml` образов:
 * `tuple <image-name> . | werf_container_image | indent <N-spaces>`
 
-An example of using the function in case a single unnamed image exists in the config:
+Пример использования функции в случае описанного в файле конфигурации `werf.yaml` безымянного образа:
 * `tuple . | werf_container_image | indent <N-spaces>`
-* `werf_container_image . | indent <N-spaces>` (additional simplified entry format)
+* `werf_container_image . | indent <N-spaces>` (дополнительный упрощенный формат использования)
 
 ##### werf_container_env
 
-Enables streamlining the release process if the image remains unchanged. Generates a block with the `DOCKER_IMAGE_ID` environment variable for the pod container. Image id will be set to real value only if `.Values.global.werf.is_branch=true`, because in this case the image for an appropriate docker tag might have been updated through its name remained unchanged. The `DOCKER_IMAGE_ID` variable contains a new id docker for an image, which forces kubernetes to update an asset. The template may return multiple strings, which is why it must be used together with `indent`.
+Позволяет упростить процесс релиза, в случае если образ остается неизменным. Возвращает блок с переменной окружения `DOCKER_IMAGE_ID` контейнера пода. Значение переменной будет установлено только если `.Values.global.werf.is_branch=true`, т.к. в этом случае Docker-образ для соответствующего имени и тэга может быть обновлен, а имя и тэг останутся неизменными. Значение переменной `DOCKER_IMAGE_ID` содержит новый ID Docker-образа, что вынуждает Kubernetes обновить объект.
 
-> The images tagged by custom tag strategy (`--tag-custom`) processed like the images tagged by git branch tag strategy (`--tag-git-branch`)
+Функция может возвращать несколько строк, поэтому она должна использоваться совместно с конструкцией `indent`.
 
-An example of using the function in case multiple images exist in the `werf.yaml` config:
+> Образы, протэгированные с использованием пользовательской стратегии тэгирования (`--tag-custom`) обрабатываются аналогично образам протэгированным стратегией тэгирования *git-branch* (`--tag-git-branch`).
+
+Пример использования функции в случае нескольких описанных в файле конфигурации `werf.yaml` образов:
 * `tuple <image-name> . | werf_container_env | indent <N-spaces>`
 
-An example of using the function in case a single unnamed image exists in the config:
+Пример использования функции в случае описанного в файле конфигурации `werf.yaml` безымянного образа:
 * `tuple . | werf_container_env | indent <N-spaces>`
-* `werf_container_env . | indent <N-spaces>` (additional simplified entry format)
+* `werf_container_env . | indent <N-spaces>` (дополнительный упрощенный формат использования)
 
-##### Examples
+##### Примеры
 
-To specify image named `backend` from `werf.yaml`:
+Пример использования образа `backend`, описанного в `werf.yaml`:
 
 {% raw %}
 ```yaml
@@ -155,7 +157,7 @@ spec:
 ```
 {% endraw %}
 
-To specify single unnamed image from `werf.yaml`:
+Пример использования безымянного образа, описанного в `werf.yaml`:
 
 {% raw %}
 ```yaml
@@ -183,19 +185,19 @@ spec:
 ```
 {% endraw %}
 
-#### Secret files
+#### Файлы секретов
 
-Secret files are useful to store sensitive data such as certificates and private keys directly in the project repo.
+Файлы секретов удобны для хранения непосредственно в репозитории проекта конфиденциальных данных, таких как сертификаты и закрытые ключи.
 
-Secret files are placed in the directory `.helm/secret`. User can create arbitrary files structure in this directory. To encrypt your files [see article about secrets]({{ site.baseurl }}/documentation/reference/deploy_process/working_with_secrets.html#secret-file-encryption).
+Файлы секретов размещаются в папке `.helm/secret`, где пользователь может создать произвольную структуру файлов. Читайте подробнее о том как шифровать файлы в соответствующей [статье]({{ site.baseurl }}/ru/documentation/reference/deploy_process/working_with_secrets.html#шифрование-файлов-секретов)
 
 ##### werf_secret_file
 
-`werf_secret_file` is runtime template function helper for user to fetch secret file content in chart templates.
-This template function reads file context, which usually placed in the resource yaml manifest of such resources as Secrets.
-Template function requires relative path to the file inside `.helm/secret` directory as an argument.
+`werf_secret_file` — это функция, используемая в шаблонах чартов, предназначена для удобной работы с секретами, — она возвращает содержимое файла секрета.
+Обычно она используется при формировании манифестов секретов в Kubernetes (`Kind: Secret`).
+Функции в качестве аргумента необходимо передать путь к файлу относительно папки `.helm/secret`.
 
-For example to read `.helm/secret/backend-saml/stage/tls.key` and `.helm/secret/backend-saml/stage/tls.crt` files decrypted content into templates:
+Пример использования расшифрованного содержимого файлов `.helm/secret/backend-saml/stage/tls.key` и `.helm/secret/backend-saml/stage/tls.crt` в шаблоне:
 
 {% raw %}
 ```yaml
@@ -210,14 +212,14 @@ data:
 ```
 {% endraw %}
 
-Note that `backend-saml/stage/` — is an arbitrary files structure, user can place all files into single directory `.helm/secret` or create subdirectories on own needs.
+Обратите внимание, что `backend-saml/stage/` — произвольная структура файлов, и пользователь может размещать все файлы в одной папке `.helm/secret` либо создавать структуру со своему усмотрению.
 
-#### Builtin templates and params
+#### Встроенные шаблоны и параметры
 
 {% raw %}
- * `{{ .Chart.Name }}` — contains [project name] from `werf.yaml` config.
- * `{{ .Release.Name }}` — contains [release name](#release).
- * `{{ .Files.Get }}` — function to read file content into templates, requires file path argument. Path should be relative to `.helm` directory (files outside `.helm` cannot be used).
+ * `{{ .Chart.Name }}` — возвращает имя проекта, указанное в `werf.yaml` (ключ `project`).
+ * `{{ .Release.Name }}` — возвращает [имя релиза](#релиз).
+ * `{{ .Files.Get }}` — функция для получения содержимого файла в шаблон, требует указания пути к файлу в качестве аргумента. Путь указыватеся относительно папки `.helm` (файлы вне папки `.helm` недоступны).
 {% endraw %}
 
 ### Values
