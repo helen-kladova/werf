@@ -1,5 +1,5 @@
 ---
-title: Gitlab CI
+title: GitLab CI
 sidebar: documentation
 permalink: ru/documentation/reference/plugging_into_cicd/gitlab_ci.html
 ref: documentation_reference_plugging_into_cicd_gitlab_ci
@@ -7,25 +7,25 @@ lang: ru
 author: Timofey Kirillov <timofey.kirillov@flant.com>
 ---
 
-According to [ci-env description]({{ site.baseurl }}/ru/documentation/reference/plugging_into_cicd/overview.html#what-is-ci-env) werf should define a set of `WERF_*` variables and perform some actions to integrate with CI/CD system.
+Согласно общему описанию [использования ci-env переменных]({{ site.baseurl }}/ru/documentation/reference/plugging_into_cicd/overview.html#что-такое-ci-env-переменные), для интеграции с системой CI/CD Werf должен установить набор переменных `WERF_*` и выполнить некоторые действия.
 
-Werf uses following values for werf environment variables:
+Для получения данных, необходимых при интеграции с GitLab CI, Werf использует переменные окружения CI-задания приведенные далее.
 
 ### WERF_IMAGES_REPO
 
-[`WERF_IMAGES_REPO`]({{ site.baseurl }}/documentation/reference/plugging_into_cicd/overview.html#werf_images_repo) value is taken from [`CI_REGISTRY_IMAGE`](https://docs.gitlab.com/ee/ci/variables/) gitlab environment variable.
+Значение для установки переменной окружения [`WERF_IMAGES_REPO`]({{ site.baseurl }}/ru/documentation/reference/plugging_into_cicd/overview.html#werf_images_repo) формируется на основе переменной окружения GitLab [`CI_REGISTRY_IMAGE`](https://docs.gitlab.com/ee/ci/variables/).
 
 ### WERF_TAG_GIT_TAG
 
-[`WERF_TAG_GIT_TAG`]({{ site.baseurl }}/documentation/reference/plugging_into_cicd/overview.html#werf_tag_git_tag) value is taken from [`CI_COMMIT_TAG`](https://docs.gitlab.com/ee/ci/variables/) gitlab environment variable.
+Значение для установки переменной окружения [`WERF_TAG_GIT_TAG`]({{ site.baseurl }}/ru/documentation/reference/plugging_into_cicd/overview.html#werf_tag_git_tag) формируется на основе переменной окружения GitLab [`CI_COMMIT_TAG`](https://docs.gitlab.com/ee/ci/variables/).
 
 ### WERF_TAG_GIT_BRANCH
 
-[`WERF_TAG_GIT_BRANCH`]({{ site.baseurl }}/documentation/reference/plugging_into_cicd/overview.html#werf_tag_git_branch) value is taken from [`CI_COMMIT_REF_NAME`](https://docs.gitlab.com/ee/ci/variables/) gitlab environment variable.
+Значение для установки переменной окружения [`WERF_TAG_GIT_BRANCH`]({{ site.baseurl }}/ru/documentation/reference/plugging_into_cicd/overview.html#werf_tag_git_branch) формируется на основе переменной окружения GitLab [`CI_COMMIT_REF_NAME`](https://docs.gitlab.com/ee/ci/variables/).
 
 ### WERF_ADD_ANNOTATION_PROJECT_GIT
 
-[`WERF_ADD_ANNOTATION_PROJECT_GIT`]({{ site.baseurl }}/documentation/reference/plugging_into_cicd/overview.html#werf_add_annotation_project_git) value is taken from [`CI_PROJECT_URL`](https://docs.gitlab.com/ee/ci/variables/) gitlab environment variable and constructed as:
+Значение для установки переменной окружения [`WERF_ADD_ANNOTATION_PROJECT_GIT`]({{ site.baseurl }}/ru/documentation/reference/plugging_into_cicd/overview.html#werf_add_annotation_project_git) формируется на основе переменной окружения GitLab [`CI_PROJECT_URL`](https://docs.gitlab.com/ee/ci/variables/) следующим образом:
 
 ```
 project.werf.io/git=$CI_PROJECT_URL
@@ -33,7 +33,7 @@ project.werf.io/git=$CI_PROJECT_URL
 
 ### WERF_ADD_ANNOTATION_CI_COMMIT
 
-[`WERF_ADD_ANNOTATION_CI_COMMIT`]({{ site.baseurl }}/documentation/reference/plugging_into_cicd/overview.html#werf_add_annotation_ci_commit) value is taken from [`CI_COMMIT_SHA`](https://docs.gitlab.com/ee/ci/variables/) gitlab environment variable and constructed as:
+Значение для установки переменной окружения [`WERF_ADD_ANNOTATION_CI_COMMIT`]({{ site.baseurl }}/ru/documentation/reference/plugging_into_cicd/overview.html#werf_add_annotation_ci_commit) формируется на основе переменной окружения GitLab [`CI_COMMIT_SHA`](https://docs.gitlab.com/ee/ci/variables/) следующим образом:
 
 ```
 ci.werf.io/commit=$CI_COMMIT_SHA
@@ -41,7 +41,7 @@ ci.werf.io/commit=$CI_COMMIT_SHA
 
 ### WERF_ADD_ANNOTATION_GITLAB_CI_PIPELINE_URL
 
-`WERF_ADD_ANNOTATION_GITLAB_CI_PIPELINE_URL` value is taken from [`CI_PIPELINE_ID`](https://docs.gitlab.com/ee/ci/variables/) gitlab environment variable and constructed as:
+Значение для установки переменной окружения `WERF_ADD_ANNOTATION_GITLAB_CI_PIPELINE_URL` формируется на основе переменной окружения GitLab [`CI_PIPELINE_ID`](https://docs.gitlab.com/ee/ci/variables/) следующим образом:
 
 ```
 gitlab.ci.werf.io/pipeline-url=$CI_PROJECT_URL/pipelines/$CI_PIPELINE_ID
@@ -49,7 +49,7 @@ gitlab.ci.werf.io/pipeline-url=$CI_PROJECT_URL/pipelines/$CI_PIPELINE_ID
 
 ### WERF_ADD_ANNOTATION_GITLAB_CI_JOB_URL
 
-`WERF_ADD_ANNOTATION_GITLAB_CI_JOB_URL` value is taken from [`CI_JOB_ID`](https://docs.gitlab.com/ee/ci/variables/) gitlab environment variable and constructed as:
+Значение для установки переменной окружения `WERF_ADD_ANNOTATION_GITLAB_CI_JOB_URL` формируется на основе переменной окружения GitLab [`CI_JOB_ID`](https://docs.gitlab.com/ee/ci/variables/) следующим образом:
 
 ```
 gitlab.ci.werf.io/job-url=$CI_PROJECT_URL/-/jobs/$CI_JOB_ID
@@ -57,24 +57,24 @@ gitlab.ci.werf.io/job-url=$CI_PROJECT_URL/-/jobs/$CI_JOB_ID
 
 ### WERF_ENV
 
-Gitlab has [environments support](https://docs.gitlab.com/ce/ci/environments.html). Werf will detect current environment for the pipeline in gitlab and use it as environment parameter.
+В GitLab реализована [поддержка окружений](https://docs.gitlab.com/ce/ci/environments.html). Werf определяет название текущего окружения из CI-задания GitLab.
 
-[`WERF_ENV`]({{ site.baseurl }}/documentation/reference/plugging_into_cicd/overview.html#werf_env) value is taken from [`CI_ENVIRONMENT_SLUG`](https://docs.gitlab.com/ee/ci/variables/) gitlab environment variable.
+Значение для установки переменной окружения [`WERF_ENV`]({{ site.baseurl }}/ru/documentation/reference/plugging_into_cicd/overview.html#werf_env) формируется на основе переменной окружения GitLab [`CI_ENVIRONMENT_SLUG`](https://docs.gitlab.com/ee/ci/variables/).
 
-### Other variables
+### Другие переменные
 
-Other variables are configured in the common way described in the [overview article]({{ site.baseurl }}/documentation/reference/plugging_into_cicd/overview.html):
- * [`DOCKER_CONFIG`]({{ site.baseurl }}/documentation/reference/plugging_into_cicd/overview.html#docker_config);
- * [`WERF_GIT_TAG_STRATEGY_LIMIT`]({{ site.baseurl }}/documentation/reference/plugging_into_cicd/overview.html#werf_git_tag_strategy_limit);
- * [`WERF_GIT_TAG_STRATEGY_EXPIRY_DAYS`]({{ site.baseurl }}/documentation/reference/plugging_into_cicd/overview.html#werf_git_tag_strategy_expiry_days);
- * [`WERF_LOG_COLOR_MODE`]({{ site.baseurl }}/documentation/reference/plugging_into_cicd/overview.html#werf_log_color_mode);
- * [`WERF_LOG_PROJECT_DIR`]({{ site.baseurl }}/documentation/reference/plugging_into_cicd/overview.html#werf_log_project_dir);
- * [`WERF_ENABLE_PROCESS_EXTERMINATOR`]({{ site.baseurl }}/documentation/reference/plugging_into_cicd/overview.html#werf_enable_process_exterminator);
- * [`WERF_LOG_TERMINAL_WIDTH`]({{ site.baseurl }}/documentation/reference/plugging_into_cicd/overview.html#werf_log_terminal_width).
+Значения остальных переменных окружения формируются стандартным способом, описанным в [соответствующей статье]({{ site.baseurl }}/ru/documentation/reference/plugging_into_cicd/overview.html):
+ * [`DOCKER_CONFIG`]({{ site.baseurl }}/ru/documentation/reference/plugging_into_cicd/overview.html#docker_config);
+ * [`WERF_GIT_TAG_STRATEGY_LIMIT`]({{ site.baseurl }}/ru/documentation/reference/plugging_into_cicd/overview.html#werf_git_tag_strategy_limit);
+ * [`WERF_GIT_TAG_STRATEGY_EXPIRY_DAYS`]({{ site.baseurl }}/ru/documentation/reference/plugging_into_cicd/overview.html#werf_git_tag_strategy_expiry_days);
+ * [`WERF_LOG_COLOR_MODE`]({{ site.baseurl }}/ru/documentation/reference/plugging_into_cicd/overview.html#werf_log_color_mode);
+ * [`WERF_LOG_PROJECT_DIR`]({{ site.baseurl }}/ru/documentation/reference/plugging_into_cicd/overview.html#werf_log_project_dir);
+ * [`WERF_ENABLE_PROCESS_EXTERMINATOR`]({{ site.baseurl }}/ru/documentation/reference/plugging_into_cicd/overview.html#werf_enable_process_exterminator);
+ * [`WERF_LOG_TERMINAL_WIDTH`]({{ site.baseurl }}/ru/documentation/reference/plugging_into_cicd/overview.html#werf_log_terminal_width).
 
-## How to use
+## Как использовать
 
-Gitlab CI is turned on in [`werf ci-env` command]({{ site.baseurl }}/documentation/cli/toolbox/ci_env.html) by required positional argument:
+Интеграция с GitLab CI включается указанием параметра `gitlab` в команде [`werf ci-env`]({{ site.baseurl }}/ru/documentation/cli/toolbox/ci_env.html):
 
 ```
 werf ci-env gitlab --tagging-strategy ...
