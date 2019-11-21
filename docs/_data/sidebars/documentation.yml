@@ -383,6 +383,9 @@ entries:
             - title: Деплой в Kubernetes
               url: /ru/documentation/reference/deploy_process/deploy_into_kubernetes.html
 
+            - title: Работа с зависимостями чартов
+              url: /ru/documentation/reference/deploy_process/working_with_chart_dependencies.html
+
             - title: Работа с секретами
               url: /ru/documentation/reference/deploy_process/working_with_secrets.html
 
@@ -390,7 +393,7 @@ entries:
               url: /ru/documentation/reference/deploy_process/differences_with_helm.html
 
             - title: Методы обновления ресурсов
-              url: /documentation/reference/deploy_process/resources_update_methods_and_adoption.html
+              url: /ru/documentation/reference/deploy_process/resources_update_methods_and_adoption.html
 
         - title: Очистка
           url: /ru/documentation/reference/cleaning_process.html

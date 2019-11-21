@@ -1,5 +1,5 @@
 ---
-title: Deploy into kubernetes
+title: Deploy в Kubernetes
 sidebar: documentation
 permalink: ru/documentation/reference/deploy_process/deploy_into_kubernetes.html
 ref: documentation_reference_deploy_process_deploy_into_kubernetes
@@ -7,17 +7,17 @@ lang: ru
 author: Timofey Kirillov <timofey.kirillov@flant.com>
 ---
 
-Werf is a compatible alternative to [Helm 2](https://helm.sh), which uses improved deploy process.
+Werf дает совместимую альтернативу [Helm 2](https://helm.sh), но предлагает улучшенный процесс деплоя.
 
-Werf has 2 main commands to work with kubernetes: [deploy]({{ site.baseurl }}/documentation/cli/main/deploy.html) — to install or upgrade app in the cluster, and [dismiss]({{ site.baseurl }}/documentation/cli/main/dismiss.html)  — to uninstall app from cluster.
+Для работы Kubernetes у Werf есть 2 основные команды: [deploy]({{ site.baseurl }}/documentation/cli/main/deploy.html) — для установки или обновления приложения в кластере, и [dismiss]({{ site.baseurl }}/documentation/cli/main/dismiss.html) — для удаления приложения из кластера.
 
-Deployed resources are tracked with different configurable modes, logs and kubernetes events are shown for the resources, images built by werf are integrated into deploy configuration [templates](#templates) seamlessly. Werf can set arbitrary annotations and labels to all kubernetes resources of the project being deployed.
+В Werf есть нескольких настраиваемых режимов отслеживания развернутых ресурсов, с отслеживанием в том числе журналов и событий. Образы, собранные Werf легко интегрируются в [шаблоны](#шаблоны) helm-чартов. Werf может устанавливать аннотации и метки с произвольной информацией всем разворачиваемым в Kubernetes ресурсам проекта.
 
-Configuration is described with Helm compatible [chart](#chart).
+Конфигурация описывается в формате аналогичном фомату [Helm-чарта](#чарт).
 
-## Chart
+## Чарт
 
-The chart is a collection of configuration files which describe an application. Chart files reside in the `.helm` directory in the root directory of the project:
+Чарт — набор конфигурационных файлов описывающих приложение. Файлы чарта находятся в папке `.helm`, в корневой папке проекта:
 
 ```
 .helm/
@@ -30,11 +30,11 @@ The chart is a collection of configuration files which describe an application. 
   secret-values.yaml
 ```
 
-### Templates
+### Шаблоны
 
-Templates are placed in the `.helm/templates` directory.
+Шаблоны находятся в папке `.helm/templates`.
 
-Directory contains YAML files `*.yaml`. Each YAML file describes one or several kubernetes resources specs separated by three hyphens `---`, for example:
+В этой папке находятся YAML-файлы `*.yaml`, каждый из который описывает один или несколько ресурсов Kubernetes, разделенных тремя дефисами `---`, например:
 
 ```yaml
 apiVersion: apps/v1
@@ -67,25 +67,25 @@ kind: ConfigMap
       loglevel notice
 ```
 
-Each YAML file also preprocessed using [go templates](https://golang.org/pkg/text/template/#hdr-Actions).
+Каждый YAML-файл предварительно обрабатывается как [Go-шаблон](https://golang.org/pkg/text/template/#hdr-Actions).
 
-With go templates user can:
- * generate different kubernetes specs for different cases;
- * parametrize templates with [values](#values) for different environments;
- * define common text parts as named golang templates and reuse them in several places;
- * etc.
+Использование Go-шаблонов дает следующие возможности:
+ * генерирование разных спецификаций объекта Kubernetes в зависимости от какого-либо условия;
+ * передача разных [параметров](#переменные) в шаблон в зависимости от окружения;
+ * выделение общих частей шаблона в блоки и их переиспользование в нескольких местах;
+ * и т.д..
 
-[Sprig functions](https://masterminds.github.io/sprig/) and [advanced functions](https://docs.helm.sh/developing_charts/#chart-development-tips-and-tricks), like `include` and `required`, can be used in templates.
+[Функции Sprig](https://masterminds.github.io/sprig/) и [дополнительные функции](https://docs.helm.sh/developing_charts/#chart-development-tips-and-tricks), такие как `include` и `required`, также могут быть использованы в шаблонах.
 
-Also user can place `*.tpl` files, which will not be rendered into kubernetes specs. These files can be used to store arbitrary custom golang templates and definitions. All templates and definitions from `*.tpl` files will be available for the use in the `*.yaml` files.
+Пользователь также может размещать `*.tpl` файлы, которые не будут рендериться в обзект Kubernetes. Эти файлы могут быть использованы для хранения произвольных Go-шаблонов и выражений. Все шаблоны и выражения из `*.tpl` файлов доступны для использования в `*.yaml` файлах.
 
-#### Integration with built images
+#### Интеграция с собранными образами
 
-To use docker images in the chart resources specs user must specify full docker images names including docker repo and docker tag. But how to specify images from `werf.yaml` given that full docker images names for these images depends on the selected tagging strategy and specified images repo?
+Чтобы использовать Docker-образы в шаблонах чарта, необходимо указать полное имя Docker-образа, включая Docker-репозиторий и Docker-тэг. Но как указать данные образа из файла конфигурации `werf.yaml` учитывая то, что полное имя Docker-образа зависит от выбранной стратегии тэгирования и указанного Docker-репозитория?
 
-The second question is how to use [`imagePullPolicy` kubernetes parameter](https://kubernetes.io/docs/concepts/containers/images/#updating-images) together with images from `werf.yaml`: should user set `imagePullPolicy` to `Always`, how to pull images only when there is a need to pull?
+Второй вопрос, — как использовать параметр [`imagePullPolicy`](https://kubernetes.io/docs/concepts/containers/images/#updating-images) вместе с образом из  `werf.yaml`: указывать `imagePullPolicy: Always`? А как добиться скачивания образа только когда это действительно необходимо?
 
-To answer these questions werf has runtime functions, `werf_container_image` and `werf_container_env`.  User must use these template functions to specify images from `werf.yaml` in the chart templates safely and correctly.
+Для ответа на эти вопросы в Werf есть две функции: [`werf_container_image`](#werf_container_image) и [`werf_container_env`](#werf_container_env). Пользователь может использовать эти функции в шаблонах чарта для корректного и безопасносго указания образов описанных в файле конфигурации `werf.yaml`.
 
 ##### werf_container_image
 
