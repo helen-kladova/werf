@@ -375,6 +375,12 @@ shell:
 
 * Функция `.Files.Get` для получения содержимого какого-либо файла проекта:<a id="files-get" href="#files-get" class="anchorjs-link " aria-label="Anchor link for: .Files.Get" data-anchorjs-icon=""></a>
 
+  <div class="tabs">
+    <a href="javascript:void(0)" class="tabs__btn active" onclick="openTab(event, 'tabs__btn', 'tabs__content', 'ansible')">Ansible</a>
+    <a href="javascript:void(0)" class="tabs__btn" onclick="openTab(event, 'tabs__btn', 'tabs__content', 'shell')">Shell</a>
+  </div>
+
+  <div id="ansible" class="tabs__content active" markdown="1">
   {% raw %}
   ```yaml
   project: my-project
@@ -392,3 +398,23 @@ shell:
         dest: /etc/nginx/nginx.conf
   ```
   {% endraw %}
+  </div>
+
+  <div id="shell" class="tabs__content" markdown="1">
+  {% raw %}
+  ```yaml
+  project: my-project
+  configVersion: 1
+  ---
+
+  image: app
+  from: alpine
+  shell:
+    setup:
+    - |
+      head -c -1 <<EOF | tee file > /etc/nginx/nginx.conf
+  {{ .Files.Get ".werf/nginx.conf" | indent 4 }}
+      EOF
+  ```
+  {% endraw %}
+  </div>
