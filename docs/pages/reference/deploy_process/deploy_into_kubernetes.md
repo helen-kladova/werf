@@ -221,7 +221,7 @@ Note that `backend-saml/stage/` — is an arbitrary files structure, user can pl
 
 ### Values
 
-Values is an arbitrary yaml map, filled with the parameters, which can be used in (templates)[#templates].
+Values is an arbitrary yaml map, filled with the parameters, which can be used in [templates](#templates).
 
 There are different types of values in the werf:
 
