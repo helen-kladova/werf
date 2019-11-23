@@ -345,17 +345,17 @@ global:
 
 ## Релиз
 
-While chart is a collection of configuration files of your application, release is a runtime object representing running instance of your application deployed with werf.
+В то время как чарт — набор конфигурационных файлов вашего приложения, релиз (release) — это объект времени выполнения, экземпляр вашего приложения, развернутого с помощью Werf.
 
-Each release have a single name and multiple versions. On each werf deploy invocation a new release version is created.
+У каждого релиза есть одно имя и несколько версий. При каждом деплое с помощтю Werf создается новая версия релиза.
 
-### Releases storage
+### Хранение релизов
 
-Each release version is stored in the kubernetes cluster itself. Werf can store releases in ConfigMaps or Secrets in arbitrary namespaces.
+Информация о каждой версии релиза хранится в самом кластере Kubernetes. Werf может хранить ее в объеках ConfigMap или Secret, в любых namespace.
 
-By default werf stores releases in the ConfigMaps in the `kube-system` namespace to be fully compatible with [Helm 2](https://helm.sh) default installations. Releases storage can be configured by werf deploy cli options: `--helm-release-storage-namespace=NS` and `--helm-release-storage-type=configmap|secret`.
+По умолчанию, Werf хранит информацию о релизах в объектах ConfigMap в namespace `kube-system`, что полностью совместимо с конфигурацией [Helm 2](https://helm.sh) по умолчанию. Место хранения информации о релизах может быть указано при деплое с помощью параметров: `--helm-release-storage-namespace=NS` иd `--helm-release-storage-type=configmap|secret` Werf.
 
-To inspect all created releases user can run: `kubectl -n kube-system get cm`. ConfigMaps names are constructed as `RELEASE_NAME.RELEASE_VERSION`. The biggest `RELEASE_VERSION` number is the last deployed version. ConfigMaps also have labels by which release status can be inspected:
+Для получения информации обо всех созданных релизах, нужно использовать команду: `kubectl -n kube-system get cm`. Имена объектов ConfigMap, содержащих информацию о релизах, имеют следующих шаблон имени — `RELEASE_NAME.RELEASE_VERSION`. Наибольший номер `RELEASE_VERSION` соответствует последней развернутой версии. В ConfigMap, содержащих информацию о релизах, также есть метки (labels) по которым можно получить информацию о статусе релиза:
 
 ```yaml
 kind: ConfigMap
@@ -369,28 +369,28 @@ metadata:
     VERSION: "165"
 ```
 
-NOTE: Changing release status in ConfigMap labels will not affect real release status, because ConfigMap labels serve only for informational and filtration purposes, the real release status is stored in the ConfigMap data.
+ЗАМЕЧАНИЕ: Изменение статуса релиза в метках ConfigMap не повлияет на реальный статус релиза, так как метки содержат информацию только для справочных целей и поиска/фильтрации объектов. Реальное состояние релиза хранится в ключ `data` ConfigMap.
 
-#### Helm compatibility notice
+#### Замечание о совместимости с Helm
 
-Werf is fully compatible with already existing Helm 2 installations as long as releases storage is configured the same way as in helm. User might need to configure release storage with options `--helm-release-storage-namespace` and `--helm-release-storage-type` if existing helm installation uses non default releases storage.
+Werf полностью совместим с уже установленным Helm 2, т.к. хранение информации о релизах осуществляется одинаковым образом как и в Helm, и в одном и том-же месте. Если вы используете в Helm специфичное место хранения информации о релизах а не значение по умолчанию, то вам нужно указывать место хранения с помощью опций Werf `--helm-release-storage-namespace` и `--helm-release-storage-type`.
 
-Releases created by werf can be inspected and viewed with helm commands, such as `helm list` and `helm get`. Werf can also upgrade already existing releases originally created by helm.
+Информация о релизах, созданных с помощью Werf, может быть получена с помощью helm, например командами `helm list` и `helm get`. С помощью Werf также можно обновлять релизы, развернутые ранее с помощью Helm.
 
-Furthermore werf and Helm 2 installation could work in the same cluster at the same time.
+Более того, вы можете работать в одном кластере Kubernetes одновременно и с Werf и с Helm 2.
 
-### Environment
+### Окружение
 
-By default werf assumes that each release should be tainted with some environment, such as `staging`, `test` or `production`.
+По умолчанию, Werf предполагает что каждый релиз должен относиться к какому-либо окружению, например `staging`, `test` или `production`.
 
-Based on the environment werf will determine:
+На основании окружения Werf определяет:
 
- 1. Release name.
- 2. Kubernetes namespace.
+ 1. Имя релиза.
+ 2. Namespace в Kubernetes.
 
-Environment is a required parameter for deploy and should be specified either with option `--env` or automatically determined for the used CI/CD system, see [CI/CD configuration integration]({{ site.baseurl }}/documentation/reference/plugging_into_cicd/overview.html#ci-cd-configuration-integration) for more info.
+Передача имени окружения является обязательной для операции деплоя, и должна быть выполнена либо с помощью параметра `--env` Werf либо автоматически определяться на основании данных используемой CI/CD системы (читай подробнее про [интеграцию c CI/CD системами]({{ site.baseurl }}/ru/documentation/reference/plugging_into_cicd/overview.html#интеграция-с-настройками-ci-cd)).
 
-### Release name
+### Имя релиза
 
 By default release name will be constructed by template `[[ project ]]-[[ env ]]`. Where `[[ project ]]` refers to the [project name]({{ site.baseurl }}/documentation/configuration/introduction.html#project-name) and `[[ env ]]` refers to the specified or detected environment.
 
