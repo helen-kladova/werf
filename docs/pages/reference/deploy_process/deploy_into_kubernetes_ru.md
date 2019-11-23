@@ -392,56 +392,56 @@ Werf полностью совместим с уже установленным 
 
 ### Имя релиза
 
-By default release name will be constructed by template `[[ project ]]-[[ env ]]`. Where `[[ project ]]` refers to the [project name]({{ site.baseurl }}/documentation/configuration/introduction.html#project-name) and `[[ env ]]` refers to the specified or detected environment.
+По умолчанию название релиза формируется по шаблону `[[project]]-[[env]]`. Где `[[ project ]]` — имя [проекта]({{ site.baseurl }}/ru/documentation/configuration/introduction.html#имя-проекта), а `[[ env ]]` имя [окружения](#окружения).
 
-For example for project named `symfony-demo` there will be following Helm Release names depending on the specified environment:
-* `symfony-demo-stage` for the `stage` environment;
-* `symfony-demo-test` for the `test` environment;
-* `symfony-demo-prod` for the `prod` environment.
+Например, для проекта с именем `symfony-demo` будет сформировано следующее имя релиза в зависимости от имени окружения:
+* `symfony-demo-stage` для окружения `stage`;
+* `symfony-demo-test` для окружения `test`;
+* `symfony-demo-prod` для окружения `prod`.
 
-Release name could be redefined by deploy option `--release NAME`. In that case Werf will use specified name as is.
+Имя релиза может быть переопределено с помощью параметра `--release NAME` при деплое. В этом случае Werf будет использовать указанное имя как есть, без каких либо преобразований и использования шаблонов.
 
-Custom release name can also be defined in the werf.yaml configuration [by setting `deploy.helmRelease`]({{ site.baseurl }}/documentation/configuration/deploy_into_kubernetes.html#release-name).
+Имя релиза также можно явно определить в файле конфигурации `werf.yaml`, установив параметр [`deploy.helmRelease`]({{ site.baseurl }}/ru/documentation/configuration/deploy_into_kubernetes.html#имя-релиза).
 
-#### Release name slug
+#### Слагификация имени релиза
 
-Helm Release name constructed by template will be slugified to fit release name requirements by [*release slug procedure*]({{ site.baseurl }}/documentation/reference/toolbox/slug.html#basic-algorithm), which generates unique valid Helm Release name.
+Сформированное по шаблону имя Helm-релиза [слагифицируется]({{ site.baseurl }}/documentation/reference/toolbox/slug.html#базовый-алгоритм), в результате чего получается уникальное имя Helm-релиза.
 
-This is default behaviour, which can be disabled by [setting `deploy.helmReleaseSlug=false`]({{ site.baseurl }}/documentation/configuration/deploy_into_kubernetes.html#release-name).
+Слагификация имени Helm-релиза включена по умолчанию, но может быть отключена указанием параметра [`deploy.helmReleaseSlug=false`]({{ site.baseurl }}/ru/documentation/configuration/deploy_into_kubernetes.html#имя-релиза) в файле конфигурации `werf.yaml`.
 
 ### Kubernetes namespace
 
-By default Kubernetes Namespace will be constructed by template `[[ project ]]-[[ env ]]`. Where `[[ project ]]` refers to the [project name]({{ site.baseurl }}/documentation/configuration/introduction.html#meta-configuration-doc) and `[[ env ]]` refers to the determined environment.
+По умолчанию namespace, используемый в Kubernetes, формируется по шаблону `[[ project ]]-[[ env ]]`, где `[[ project ]]` — [имя проекта]({{ site.baseurl }}/ru/documentation/configuration/introduction.html#meta-configuration-doc), а `[[ env ]]` — имя [окружения](#окружения).
 
-For example for project named `symfony-demo` there will be following Kubernetes Namespaces depending on the specified environment:
-* `symfony-demo-stage` for the `stage` environment;
-* `symfony-demo-test` for the `test` environment;
-* `symfony-demo-prod` for the `prod` environment.
+Например, для проекта с именем `symfony-demo` будет сформировано следующее имя namespace в Kubernetes, в зависимости от имени окружения:
+* `symfony-demo-stage` для окружения `stage`;
+* `symfony-demo-test` для окружения `test`;
+* `symfony-demo-prod` для окружения `prod`.
 
-Kubernetes Namespace could be redefined by deploy option `--namespace NAMESPACE`. In that case Werf will use specified name as is.
+Имя namespace в Kubernetes может быть переопределено с помощью параметра `--namespace NAMESPACE` при деплое. В этом случае Werf будет использовать указанное имя как есть, без каких либо преобразований и использования шаблонов.
 
-Custom Kubernetes Namespace can also be defined in the werf.yaml configuration [by setting `deploy.namespace`]({{ site.baseurl }}/documentation/configuration/deploy_into_kubernetes.html#kubernetes-namespace).
+Имя namespace также можно явно определить в файле конфигурации `werf.yaml`, установив параметр [`deploy.namespace`]({{ site.baseurl }}/ru/documentation/configuration/deploy_into_kubernetes.html#kubernetes-namespace).
 
-#### Kubernetes namespace slug
+#### Слагификация Kubernetes namespace slug
 
-Kubernetes Namespace constructed by template will be slugified to fit [DNS Label](https://www.ietf.org/rfc/rfc1035.txt) requirements by [*namespace slug procedure*]({{ site.baseurl }}/documentation/reference/toolbox/slug.html#basic-algorithm), which generates unique valid Kubernetes Namespace.
+Сформированное по шаблону имя namespace [слагифицируется]({{ site.baseurl }}/documentation/reference/toolbox/slug.html#базовый-алгоритм) чтобы удовлетворять требованиям к [DNS именам](https://www.ietf.org/rfc/rfc1035.txt), результате чего получается уникальное имя namespace в Kubernetes.
 
-This is default behaviour, which can be disabled by [setting `deploy.namespaceSlug=false`]({{ site.baseurl }}/documentation/configuration/deploy_into_kubernetes.html#kubernetes-namespace).
+Слагификация имени namespace включена по умолчанию, но может быть отключена указанием параметра [`deploy.namespaceSlug=false`]({{ site.baseurl }}/ru/documentation/configuration/deploy_into_kubernetes.html#kubernetes-namespace) в файле конфигурации `werf.yaml`.
 
-## Deploy process
+## Процесс деплоя
 
-When running `werf deploy` command werf starts deploy process which includes following steps:
+Во время запуска команды `werf deploy` Werf запускает процесс деплоя, включающий следующие этапы:
 
- 1. Render chart templates into single list of kubernetes resources manifests and validate them.
- 2. Run `pre-install` or `pre-upgrade` [hooks](#helm-hooks) and track each of the hooks till successful or failed termination printing logs and other info along the way.
- 3. Apply changes to kubernetes resources: create new, delete old, update existing.
- 4. Create new release version and save current resources manifests state into this release.
- 5. Track all release resources till readiness state reached printing logs and other info along the way.
- 6. Run `post-install` or `post-upgrade` [hooks](#helm-hooks) and track each of the hooks till successful or failed termination printing logs and other info along the way.
+ 1. Рендеринг шаблонов чартов в единый список манифестов объектов Kubernetes и их проверка.
+ 2. Запуск [хуков](#helm-hooks) `pre-install` или `pre-upgrade`, отслеживание их работы вплоть до успешного или неуспешного завершения, вывод логов и другой информации.
+ 3. Применение изменений к ресурсам Kubernetes: создание новых, удаление старых, обновление существующих.
+ 4. Создание новых версий релизов и сохранение состояния манифестов ресурсов в данные этого релиза.
+ 5. Отслеживание всех ресурсов релиза (для тех, у кого есть пробы, — до готовности readiness-проб), вывод их логов и другой информации.
+ 6. Запуск [хуков](#helm-hooks) `post-install` или `post-upgrade`, отслеживание их работы вплоть до успешного или неуспешного завершения, вывод логов и другой информации.
 
-NOTE: Werf will delete all newly created resources immediately during current deploy process if this deploy process fails at any step specified above!
+ЗАМЕЧАНИЕ: Werf удалит все созданные им при деплое ресурсы сразу же, во время процесса деплоя если он завершится неудачей на любом указанном выше этапе!
 
-During execution of helm hooks on the steps 2 and 6 werf will track these hooks resources until successful termination. Tracking [can be configured](#resource-tracking-configuration) for each hook resource.
+Во время выполнения Helm-хуков на шагах 2 и 6 Werf будет отслеживать ресурсы хуков до их успешного завершения. Отслеживание может быть [настроено](#настройка-отслеживания-ресурсов) для каждого хука ресурса.
 
 On the step 5 werf tracks all release resources until each resource reaches "ready" state. All resources are tracked at the same time. During tracking werf unifies info from all release resources in realtime into single text output and periodically prints so called status progress table. Tracking [can be configured](#resource-tracking-configuration) for each resource.
 
