@@ -473,7 +473,7 @@ metadata:
 
 There are a lot of different helm hooks which come into play during deploy process. We have already seen `pre|post-install|upgade` hooks in the [deploy process](#deploy-process), which are the most usually needed hooks to run such tasks as migrations (in `pre-uprade` hooks) or some post deploy actions. The full list of available hooks can be found in the [helm docs](https://github.com/helm/helm/blob/master/docs/charts_hooks.md#the-available-hooks).
 
-Hooks are sorted in the ascending order specified by `helm.sh/hook-weight` annotation (hooks with the same weight are sorted by the names), then created and executed sequentially. Werf recreates kuberntes resource for each of the hook in the case when resource already exists in the cluster. Hooks kubernetes resources are not deleted after execution.
+Hooks are sorted in the ascending order specified by `helm.sh/hook-weight` annotation (hooks with the same weight are sorted by the names), then created and executed sequentially. Werf recreates kubernetes resource for each of the hook in the case when resource already exists in the cluster. Hooks kubernetes resources are not deleted after execution.
 
 ### Resource tracking configuration
 

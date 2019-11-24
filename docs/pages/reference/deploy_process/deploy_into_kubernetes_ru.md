@@ -11,9 +11,9 @@ Werf дает совместимую альтернативу [Helm 2](https://h
 
 Для работы Kubernetes у Werf есть 2 основные команды: [deploy]({{ site.baseurl }}/documentation/cli/main/deploy.html) — для установки или обновления приложения в кластере, и [dismiss]({{ site.baseurl }}/documentation/cli/main/dismiss.html) — для удаления приложения из кластера.
 
-В Werf есть нескольких настраиваемых режимов отслеживания развернутых ресурсов, с отслеживанием в том числе журналов и событий. Образы, собранные Werf легко интегрируются в [шаблоны](#шаблоны) helm-чартов. Werf может устанавливать аннотации и метки с произвольной информацией всем разворачиваемым в Kubernetes ресурсам проекта.
+В Werf есть несколько настраиваемых режимов отслеживания развернутых ресурсов, в том числе с возможностью отслеживания журналов и событий. Образы, собранные Werf легко интегрируются в [шаблоны](#шаблоны) helm-чартов. Werf может устанавливать аннотации и метки с произвольной информацией всем разворачиваемым в Kubernetes ресурсам проекта.
 
-Конфигурация описывается в формате аналогичном фомату [Helm-чарта](#чарт).
+Конфигурация описывается в формате аналогичном формату [Helm-чарта](#чарт).
 
 ## Чарт
 
@@ -71,13 +71,13 @@ kind: ConfigMap
 
 Использование Go-шаблонов дает следующие возможности:
  * генерирование разных спецификаций объекта Kubernetes в зависимости от какого-либо условия;
- * передача [данных](#данные) в шаблон зависящих от окружения;
+ * передача [данных](#данные) в шаблон, в зависимости от окружения;
  * выделение общих частей шаблона в блоки и их переиспользование в нескольких местах;
  * и т.д..
 
-[Функции Sprig](https://masterminds.github.io/sprig/) и [дополнительные функции](https://docs.helm.sh/developing_charts/#chart-development-tips-and-tricks), такие как `include` и `required`, также могут быть использованы в шаблонах.
+В шаблонах чарта также могут быть использованы [функции Sprig](https://masterminds.github.io/sprig/) и [дополнительные функции](https://docs.helm.sh/developing_charts/#chart-development-tips-and-tricks), такие как `include` и `required`.
 
-Пользователь также может размещать `*.tpl` файлы, которые не будут рендериться в обзект Kubernetes. Эти файлы могут быть использованы для хранения произвольных Go-шаблонов и выражений. Все шаблоны и выражения из `*.tpl` файлов доступны для использования в `*.yaml` файлах.
+Пользователь также может размещать `*.tpl` файлы, которые не будут рендериться в объект Kubernetes. Эти файлы могут быть использованы для хранения произвольных Go-шаблонов и выражений. Все шаблоны и выражения из `*.tpl` файлов доступны для использования в `*.yaml` файлах.
 
 #### Интеграция с собранными образами
 
@@ -85,7 +85,7 @@ kind: ConfigMap
 
 Второй вопрос, — как использовать параметр [`imagePullPolicy`](https://kubernetes.io/docs/concepts/containers/images/#updating-images) вместе с образом из  `werf.yaml`: указывать `imagePullPolicy: Always`? А как добиться скачивания образа только когда это действительно необходимо?
 
-Для ответа на эти вопросы в Werf есть две функции: [`werf_container_image`](#werf_container_image) и [`werf_container_env`](#werf_container_env). Пользователь может использовать эти функции в шаблонах чарта для корректного и безопасносго указания образов описанных в файле конфигурации `werf.yaml`.
+Для ответа на эти вопросы в Werf есть две функции: [`werf_container_image`](#werf_container_image) и [`werf_container_env`](#werf_container_env). Пользователь может использовать эти функции в шаблонах чарта для корректного и безопасного указания образов описанных в файле конфигурации `werf.yaml`.
 
 ##### werf_container_image
 
@@ -99,7 +99,7 @@ kind: ConfigMap
 * Значение `.Values.global.werf.is_branch=true` подразумевает, что развертывается образ для git-ветки, с расчетом на использование самого свежего образа.
   * В этом случае, образ с соответствующим тэгом должен быть принудительно скачан, даже если он уже есть в локальном хранилище Docker-образов. Это необходимо, чтобы получить самый "свежий" образ, соответствующий образу с таким Docker-тэгом.
   * В этом случае – `imagePullPolicy=Always`.
-* Значение `.Values.global.werf.is_branch=false` подразумеваеи, что развертывается образ для git-тэга или конкретного git-коммита.
+* Значение `.Values.global.werf.is_branch=false` подразумевает, что развертывается образ для git-тэга или конкретного git-коммита.
   * В этом случае, образ для соответствующего Docker-тэга можно не обновлять, если он уже находится в локальном хранилище Docker-образов.
   * В этом случае, `imagePullPolicy` не устанавливается, т.е. итоговое значение у объекта в кластере будет соответствовать значению по умолчанию — `imagePullPolicy=IfNotPresent`.
 
@@ -189,11 +189,11 @@ spec:
 
 Файлы секретов удобны для хранения непосредственно в репозитории проекта конфиденциальных данных, таких как сертификаты и закрытые ключи.
 
-Файлы секретов размещаются в папке `.helm/secret`, где пользователь может создать произвольную структуру файлов. Читайте подробнее о том как шифровать файлы в соответствующей [статье]({{ site.baseurl }}/ru/documentation/reference/deploy_process/working_with_secrets.html#шифрование-файлов-секретов)
+Файлы секретов размещаются в папке `.helm/secret`, где пользователь может создать произвольную структуру файлов. Читайте подробнее о том, как шифровать файлы в соответствующей [статье]({{ site.baseurl }}/ru/documentation/reference/deploy_process/working_with_secrets.html#шифрование-файлов-секретов).
 
 ##### werf_secret_file
 
-`werf_secret_file` — это функция, используемая в шаблонах чартов, предназначена для удобной работы с секретами, — она возвращает содержимое файла секрета.
+`werf_secret_file` — это функция используемая в шаблонах чартов, предназначеная для удобной работы с секретами, — она возвращает содержимое файла секрета.
 Обычно она используется при формировании манифестов секретов в Kubernetes (`Kind: Secret`).
 Функции в качестве аргумента необходимо передать путь к файлу относительно папки `.helm/secret`.
 
@@ -212,14 +212,14 @@ data:
 ```
 {% endraw %}
 
-Обратите внимание, что `backend-saml/stage/` — произвольная структура файлов, и пользователь может размещать все файлы в одной папке `.helm/secret` либо создавать структуру со своему усмотрению.
+Обратите внимание, что `backend-saml/stage/` — произвольная структура файлов, и пользователь может либо размещать все файлы в одной папке `.helm/secret`, либо создавать структуру со своему усмотрению.
 
 #### Встроенные шаблоны и параметры
 
 {% raw %}
  * `{{ .Chart.Name }}` — возвращает имя проекта, указанное в `werf.yaml` (ключ `project`).
  * `{{ .Release.Name }}` — возвращает [имя релиза](#релиз).
- * `{{ .Files.Get }}` — функция для получения содержимого файла в шаблон, требует указания пути к файлу в качестве аргумента. Путь указыватеся относительно папки `.helm` (файлы вне папки `.helm` недоступны).
+ * `{{ .Files.Get }}` — функция для получения содержимого файла в шаблон, требует указания пути к файлу в качестве аргумента. Путь указывается относительно папки `.helm` (файлы вне папки `.helm` недоступны).
 {% endraw %}
 
 ### Данные
@@ -252,9 +252,9 @@ global:
       password: mysql-dev
 ```
 
-Данные, размещенные внутри ключа `global`, будут доступны как в текущем чарте, так и всех [вложенных чартах]({{ site.baseurl }}/ru/documentation/reference/deploy_process/working_with_chart_dependencies.html) (сабчарты, subcharts).
+Данные, размещенные внутри ключа `global`, будут доступны как в текущем чарте, так и во всех [вложенных чартах]({{ site.baseurl }}/ru/documentation/reference/deploy_process/working_with_chart_dependencies.html) (сабчарты, subcharts).
 
-Данные, размещенные внутри произвольного ключа `SOMEKEY` будут доступны в текущем чарте и [вложенном чарте]({{ site.baseurl }}/ru/documentation/reference/deploy_process/working_with_chart_dependencies.html) с именем `SOMEKEY`.
+Данные, размещенные внутри произвольного ключа `SOMEKEY` будут доступны в текущем чарте и во [вложенном чарте]({{ site.baseurl }}/ru/documentation/reference/deploy_process/working_with_chart_dependencies.html) с именем `SOMEKEY`.
 
 Файл `.helm/values.yaml` — файл по умолчанию для хранения данных. Данные также могут передаваться следующими способами:
 
@@ -347,15 +347,15 @@ global:
 
 В то время как чарт — набор конфигурационных файлов вашего приложения, релиз (release) — это объект времени выполнения, экземпляр вашего приложения, развернутого с помощью Werf.
 
-У каждого релиза есть одно имя и несколько версий. При каждом деплое с помощтю Werf создается новая версия релиза.
+У каждого релиза есть одно имя и несколько версий. При каждом деплое с помощью Werf создается новая версия релиза.
 
 ### Хранение релизов
 
-Информация о каждой версии релиза хранится в самом кластере Kubernetes. Werf может хранить ее в объеках ConfigMap или Secret, в любых namespace.
+Информация о каждой версии релиза хранится в самом кластере Kubernetes. Werf может хранить ее в объектах ConfigMap или Secret, в любых namespace.
 
-По умолчанию, Werf хранит информацию о релизах в объектах ConfigMap в namespace `kube-system`, что полностью совместимо с конфигурацией [Helm 2](https://helm.sh) по умолчанию. Место хранения информации о релизах может быть указано при деплое с помощью параметров: `--helm-release-storage-namespace=NS` иd `--helm-release-storage-type=configmap|secret` Werf.
+По умолчанию, Werf хранит информацию о релизах в объектах ConfigMap в namespace `kube-system`, что полностью совместимо с конфигурацией [Helm 2](https://helm.sh) по умолчанию. Место хранения информации о релизах может быть указано при деплое с помощью параметров Werf: `--helm-release-storage-namespace=NS` и `--helm-release-storage-type=configmap|secret`.
 
-Для получения информации обо всех созданных релизах, нужно использовать команду: `kubectl -n kube-system get cm`. Имена объектов ConfigMap, содержащих информацию о релизах, имеют следующих шаблон имени — `RELEASE_NAME.RELEASE_VERSION`. Наибольший номер `RELEASE_VERSION` соответствует последней развернутой версии. В ConfigMap, содержащих информацию о релизах, также есть метки (labels) по которым можно получить информацию о статусе релиза:
+Для получения информации обо всех созданных релизах, нужно использовать команду: `kubectl -n kube-system get cm`. Имена объектов ConfigMap, содержащих информацию о релизах, имеют следующий шаблон имени — `RELEASE_NAME.RELEASE_VERSION`. Наибольший номер `RELEASE_VERSION` соответствует последней развернутой версии. В ConfigMap, содержащих информацию о релизах, также есть метки (labels) по которым можно получить информацию о статусе релиза:
 
 ```yaml
 kind: ConfigMap
@@ -369,13 +369,13 @@ metadata:
     VERSION: "165"
 ```
 
-ЗАМЕЧАНИЕ: Изменение статуса релиза в метках ConfigMap не повлияет на реальный статус релиза, так как метки содержат информацию только для справочных целей и поиска/фильтрации объектов. Реальное состояние релиза хранится в ключ `data` ConfigMap.
+**ЗАМЕЧАНИЕ:** Изменение статуса релиза в метках ConfigMap не повлияет на реальный статус релиза, так как метки содержат информацию только для справочных целей и поиска/фильтрации объектов. Реальное состояние релиза хранится в ключе `data` ConfigMap.
 
 #### Замечание о совместимости с Helm
 
-Werf полностью совместим с уже установленным Helm 2, т.к. хранение информации о релизах осуществляется одинаковым образом как и в Helm, и в одном и том-же месте. Если вы используете в Helm специфичное место хранения информации о релизах а не значение по умолчанию, то вам нужно указывать место хранения с помощью опций Werf `--helm-release-storage-namespace` и `--helm-release-storage-type`.
+Werf полностью совместим с уже установленным Helm 2, т.к. хранение информации о релизах осуществляется одинаковым образом как и в Helm, и в одном и том-же месте. Если вы используете в Helm специфичное место хранения информации о релизах, а не значение по умолчанию, то вам нужно указывать место хранения с помощью опций Werf `--helm-release-storage-namespace` и `--helm-release-storage-type`.
 
-Информация о релизах, созданных с помощью Werf, может быть получена с помощью helm, например командами `helm list` и `helm get`. С помощью Werf также можно обновлять релизы, развернутые ранее с помощью Helm.
+Информация о релизах, созданных с помощью Werf, может быть получена с помощью Helm, например командами `helm list` и `helm get`. С помощью Werf также можно обновлять релизы, развернутые ранее с помощью Helm.
 
 Более того, вы можете работать в одном кластере Kubernetes одновременно и с Werf и с Helm 2.
 
@@ -392,7 +392,7 @@ Werf полностью совместим с уже установленным 
 
 ### Имя релиза
 
-По умолчанию название релиза формируется по шаблону `[[project]]-[[env]]`. Где `[[ project ]]` — имя [проекта]({{ site.baseurl }}/ru/documentation/configuration/introduction.html#имя-проекта), а `[[ env ]]` имя [окружения](#окружения).
+По умолчанию название релиза формируется по шаблону `[[project]]-[[env]]`. Где `[[ project ]]` — имя [проекта]({{ site.baseurl }}/ru/documentation/configuration/introduction.html#имя-проекта), а `[[ env ]]` — имя [окружения](#окружение).
 
 Например, для проекта с именем `symfony-demo` будет сформировано следующее имя релиза в зависимости от имени окружения:
 * `symfony-demo-stage` для окружения `stage`;
@@ -405,7 +405,7 @@ Werf полностью совместим с уже установленным 
 
 #### Слагификация имени релиза
 
-Сформированное по шаблону имя Helm-релиза [слагифицируется]({{ site.baseurl }}/documentation/reference/toolbox/slug.html#базовый-алгоритм), в результате чего получается уникальное имя Helm-релиза.
+Сформированное по шаблону имя Helm-релиза [слагифицируется]({{ site.baseurl }}/ru/documentation/reference/toolbox/slug.html#базовый-алгоритм), в результате чего получается уникальное имя Helm-релиза.
 
 Слагификация имени Helm-релиза включена по умолчанию, но может быть отключена указанием параметра [`deploy.helmReleaseSlug=false`]({{ site.baseurl }}/ru/documentation/configuration/deploy_into_kubernetes.html#имя-релиза) в файле конфигурации `werf.yaml`.
 
@@ -422,9 +422,9 @@ Werf полностью совместим с уже установленным 
 
 Имя namespace также можно явно определить в файле конфигурации `werf.yaml`, установив параметр [`deploy.namespace`]({{ site.baseurl }}/ru/documentation/configuration/deploy_into_kubernetes.html#kubernetes-namespace).
 
-#### Слагификация Kubernetes namespace slug
+#### Слагификация namespace Kubernetes
 
-Сформированное по шаблону имя namespace [слагифицируется]({{ site.baseurl }}/documentation/reference/toolbox/slug.html#базовый-алгоритм) чтобы удовлетворять требованиям к [DNS именам](https://www.ietf.org/rfc/rfc1035.txt), результате чего получается уникальное имя namespace в Kubernetes.
+Сформированное по шаблону имя namespace [слагифицируется]({{ site.baseurl }}/ru/documentation/reference/toolbox/slug.html#базовый-алгоритм) чтобы удовлетворять требованиям к [DNS именам](https://www.ietf.org/rfc/rfc1035.txt), в результате чего получается уникальное имя namespace в Kubernetes.
 
 Слагификация имени namespace включена по умолчанию, но может быть отключена указанием параметра [`deploy.namespaceSlug=false`]({{ site.baseurl }}/ru/documentation/configuration/deploy_into_kubernetes.html#kubernetes-namespace) в файле конфигурации `werf.yaml`.
 
@@ -439,31 +439,33 @@ Werf полностью совместим с уже установленным 
  5. Отслеживание всех ресурсов релиза (для тех, у кого есть пробы, — до готовности readiness-проб), вывод их логов и другой информации.
  6. Запуск [хуков](#helm-hooks) `post-install` или `post-upgrade`, отслеживание их работы вплоть до успешного или неуспешного завершения, вывод логов и другой информации.
 
-ЗАМЕЧАНИЕ: Werf удалит все созданные им при деплое ресурсы сразу же, во время процесса деплоя если он завершится неудачей на любом указанном выше этапе!
+**ЗАМЕЧАНИЕ:** Werf удалит все созданные им при деплое ресурсы сразу же во время процесса деплоя, если он завершится неудачей на любом из указанных выше этапе!
 
-Во время выполнения Helm-хуков на шагах 2 и 6 Werf будет отслеживать ресурсы хуков до их успешного завершения. Отслеживание может быть [настроено](#настройка-отслеживания-ресурсов) для каждого хука ресурса.
+Во время выполнения Helm-хуков на шагах 2 и 6 Werf будет отслеживать ресурсы хуков до их успешного завершения. Отслеживание может быть [настроено](#настройка-отслеживания-ресурсов) для каждого из хуков ресурсов.
 
-On the step 5 werf tracks all release resources until each resource reaches "ready" state. All resources are tracked at the same time. During tracking werf unifies info from all release resources in realtime into single text output and periodically prints so called status progress table. Tracking [can be configured](#resource-tracking-configuration) for each resource.
+На шаге 5, Werf будет отслеживать ресурсы релиза то их перехода в статус Ready. Все ресурсы отслеживаются одновременно, результат отслеживания всех ресурсов релиза выводится комбинированно с периодическим выводом т.н. таблицы прогресса. Отслеживание может быть [настроено](#настройка-отслеживания-ресурсов) для каждого ресурса.
 
-Werf shows logs of resources Pods only until pod reaches "ready" state, except for Jobs. For Pods of a Job logs will be shown till Pods are terminated.
+Werf отслеживает и выводит логи подов Kubernetes только до перехода их в статус "Ready", но не включая задания (ресурсы с `Kind: Job`). Для подов заданий, логи выводятся до момента завершения работы соответствущих подов.
 
-Internally [kubedog library](https://github.com/flant/kubedog) is used to track resources. Deployments, StatefulSets, DaemonSets and Jobs are supported for tracking now. Service, Ingress, PVC and other are [soon to come](https://github.com/flant/werf/issues/1637).
+С точки зрения реализации, для отслеживания ресурсов используется библиотека [kubedog](https://github.com/flant/kubedog). В настоящий момент поддерживается отслеживание ресурсов с типом — Deployment, StatefulSet, DaemonSet и Job. В [ближайшее время](https://github.com/flant/werf/issues/1637) планируется реализация поддержки отслеживания ресурсов с типом Service, Ingress, PVC и других.
 
-### Method of applying changes
+### Методы применения изменений
 
-Currently changes to manifest are applied only based on the previous state of manifests. The real state of resources is not taken into account. Resource state stored in the release and real resource state can get out of sync (for example by manual editing of resource manifest using `kubectl edit` command). This will lead to errors in subsequent werf deploy invocations. So it is up to user now to remember, that resources should be changed only by editing chart templates and running `werf deploy`. The new 3-way-merge method of applying changes to the resources which solves this problem is coming soon, subscribe to the issue: https://github.com/flant/werf/issues/1616.
+В Werf реализовано два метода принятия изменений — двухэтапный и трехэтапный методы слияния, подробнее о которых можно прочитать в [соответствующем разделе](https://{{site.baseurl}}/ru/documentation/reference/deploy_process/resources_update_methods_and_adoption.html) документации, а также в [статье](https://habr.com/ru/company/flant/blog/476646/).
 
-### If deploy failed
+В случае применения двухэтапного метода слияния, изменения манифеста ресурса применяются только исходя из предыдущего состояния манифеста ресурса. Реальное состояние ресурса не учитывается. Возможны ситуации, когда состояние ресурса описанное в данных релиза и реальное состояние ресурса в кластере будут различными (например в случае редактирования манифеста ресурса вручную с помощью команды `kubectl edit`). Такая ситуация приведет к ошибкам при последующих вызовах `werf deploy`. Т.о. необходимо помнить, что ресурсы желательно менять только путем редактирования шаблонов чартов и их последующим деплоем с помощью `werf deploy`. Для решения описанной проблемы разности состояний между фактическим состоянием ресурса и описанным в релизе, в Werf реализован специальный механизм 3-х этапного слияния, подробней о котором можно прочитать в соответствующей [статье](https://{{site.baseurl}}/ru/documentation/reference/deploy_process/resources_update_methods_and_adoption.html).
 
-In the case of failure during release process werf will create a new release in the FAILED state. This state can then be inspected by the user to find the problem and solve it in the next deploy invocation.
+### Если деплой завершился неудачно
 
-Then on the next deploy invocation werf will rollback release to the last successful version. During rollback all release resources will be restored to the last successful version state before applying any new changes to the resources manifests.
+В режиме 2-х этапного слияния (2-way-merge), в случае ошибки во время деплоя, Werf создает новый релиз со статусом `FAILED`. Далее, этот релиз может быть проанализирован пользователем для поиска и устранения проблем при следующем деплое.
 
-This rollback step is needed now and will be passed away when [3-way-merge method of applying changes](#method-of-applying-changes) will be implemented.
+При следующем деплое, Werf выполнит откат релиза до последней успешной версии. Во время отката все ресурсы релиза будут восстановлены до состояния последней успешной версии, которое было до применением новых изменений в манифестах ресурсов.
 
-### Helm hooks
+В режиме 3-х этапного слияния (3-way-merge) откат релиза не требуется, т.к. работает другой механизм, читай про него подробнее в соответствующей [статье](https://{{site.baseurl}}/ru/documentation/reference/deploy_process/resources_update_methods_and_adoption.html).
 
-The helm hook is arbitrary kubernetes resource marked with special annotation `helm.sh/hook`. For example:
+### Helm-хуки
+
+Helm-хуки — произвольный ресурс Kubernetes, помеченный специальной аннотацией `helm.sh/hook`. Например:
 
 ```yaml
 kind: Job
@@ -474,13 +476,13 @@ metadata:
     "helm.sh/hook-weight": "1"
 ```
 
-There are a lot of different helm hooks which come into play during deploy process. We have already seen `pre|post-install|upgade` hooks in the [deploy process](#deploy-process), which are the most usually needed hooks to run such tasks as migrations (in `pre-uprade` hooks) or some post deploy actions. The full list of available hooks can be found in the [helm docs](https://github.com/helm/helm/blob/master/docs/charts_hooks.md#the-available-hooks).
+Существует много разных helm-хуков, влияющих на процесс деплоя. Вы уже читали [выше](#процесс-деплоя) про `pre|post-install|upgade` хуки, используемые в процессе деплоя. Эти хуки наиболее часто используются для выполнения таких задач, как миграция (в хуках `pre-upgrade`) или выполнении некоторых действий после деплоя. Полный список доступных хуков можно найти в соответствующей документации [Helm](https://github.com/helm/helm/blob/master/docs/charts_hooks.md#the-available-hooks).
 
-Hooks are sorted in the ascending order specified by `helm.sh/hook-weight` annotation (hooks with the same weight are sorted by the names), then created and executed sequentially. Werf recreates kuberntes resource for each of the hook in the case when resource already exists in the cluster. Hooks kubernetes resources are not deleted after execution.
+Хуки сортируются в порядке возрастания согласно значению аннотации `helm.sh/hook-weight` (хуки с одинаковым весом сортируются по имени в алфавитном порядке), после чего хуки последовательно создаются и выполняются. Werf пересоздает ресурс Kubernetes для каждого хука, в случае когда ресурс уже существует в кластере. Созданные хуки ресурсов не удаляются после выполнения.
 
-### Resource tracking configuration
+### Настройка отслеживания ресурсов
 
-Tracking can be configured for each resource using resource annotations:
+Отслеживание ресурсов может быть настроено для каждого ресурса с помощью его аннотаций:
 
  * [`werf.io/track-termination-mode`](#track-termination-mode);
  * [`werf.io/fail-mode`](#fail-mode);
@@ -492,21 +494,21 @@ Tracking can be configured for each resource using resource annotations:
  * [`werf.io/show-logs-only-for-containers`](#show-logs-only-for-containers);
  * [`werf.io/show-service-messages`](#show-service-messages).
 
-All of these annotations can be combined and used together for resource.
+Все приведенные аннотации могут использоваться совместно в одном ресурсе.
 
-**TIP** Use `"werf.io/track-termination-mode": NonBlocking` and `"werf.io/fail-mode": IgnoreAndContinueDeployProcess` when you need to define a Job in the release, that runs in background and does not affect deploy process.
+**СОВЕТ** Используйте аннотации — `"werf.io/track-termination-mode": NonBlocking` и `"werf.io/fail-mode": IgnoreAndContinueDeployProcess`, когда описываете в релизе объект Job, который должен быть запущен в фоне и который не влияет на процесс деплоя.
 
-**TIP** Use `"werf.io/track-termination-mode": NonBlocking` when you need a StatefulSet with `OnDelete` manual update strategy, but you don't need to block deploy process till StatefulSet is updated immediately.
+**СОВЕТ** Используйте аннотацию `"werf.io/track-termination-mode": NonBlocking`, когда описываете в релизе объект StatefulSet с ручной стратегией выката (параметр `OnDelete`), и не хотите блокировать весь процесс деплоя из-за этого объекта, дожидаясь его обновления.
 
-**TIP** Show service messages example:
+**СОВЕТ** Пример использования аннотации `werf.io/show-service-messages`:
 
 ![Demo](https://raw.githubusercontent.com/flant/werf-demos/master/deploy/werf-new-track-modes-1.gif)
 
-**TIP** Skip logs example:
+**СОВЕТ** Пример использования аннотации `werf.io/skip-logs`:
 
 ![Demo](https://raw.githubusercontent.com/flant/werf-demos/master/deploy/werf-new-track-modes-2.gif)
 
-**TIP** NonBlocking track termination mode example:
+**СОВЕТ** Пример использования аннотации `werf.io/track-termination-mode` с указанным значеним `NonBlocking`:
 
 ![Demo](https://raw.githubusercontent.com/flant/werf-demos/master/deploy/werf-new-track-modes-3.gif)
 
@@ -514,81 +516,81 @@ All of these annotations can be combined and used together for resource.
 
 `"werf.io/track-termination-mode": WaitUntilResourceReady|NonBlocking`
 
- * `WaitUntilResourceReady` (default) — specifies to block whole deploy process till each resource with this track termination mode is ready.
- * `NonBlocking` — specifies to track this resource only until there are other resources not ready yet.
+ * `WaitUntilResourceReady` (по умолчанию) — весь процесс деплоя будет отслеживать и ожидать готовности ресурса с данной аннотацией. Т.к. данный режим включен по умолчанию, то, по умолчанию, процесс деплоя ждет готовности всех ресурсов.
+ * `NonBlocking` — ресурс с данной аннотацией отслеживается только пока есть другие ресурсы, готовности которых ожидает процесс деплоя.
 
 #### Fail mode
 
 `"werf.io/fail-mode": FailWholeDeployProcessImmediately|HopeUntilEndOfDeployProcess|IgnoreAndContinueDeployProcess`
 
- * `FailWholeDeployProcessImmediately` (default) — fail whole deploy process when error occurred for resource.
- * `HopeUntilEndOfDeployProcess` — when error occurred for resource set this resource into "hope" mode and continue tracking other resources. When all of remained resources has become ready or all of remained resources are in the "hope" mode, transit resource back to "normal" mode and fail whole deploy process when error occurred for this resource once again.
- * `IgnoreAndContinueDeployProcess` — resource errors does not affect deploy process.
+ * `FailWholeDeployProcessImmediately` (по умолчанию) — в случае ошибки при деплое ресурса с данной аннотацией, весь процесс деплоя будет завершен с ошибкой.
+ * `HopeUntilEndOfDeployProcess` — в случае ошибки при деплое ресурса с данной аннотацией его отслеживание будет продолжаться, пока есть другие ресурсы, готовности которых ожидает процесс деплоя, либо все оставшиеся ресурсы имеют такую-же аннотацию. Если с ошибкой остался только этот ресурс или несколько ресурсов с такой-же аннотацией, то в случае сохранения ошибки весь процесс деплоя завершается с ошибкой.
+ * `IgnoreAndContinueDeployProcess` — ошибка при деплое ресурса с данной аннотацией не влияет на весь процесс деплоя.
 
 #### Failures allowed per replica
 
 `"werf.io/failures-allowed-per-replica": DIGIT`
 
-By default 1 failure per replica is allowed before considering whole deploy process as failed. This setting is related to [fail mode](#fail-mode): it defines a threshold before fail mode comes into play.
+По умолчанию, при отслеживании статуса ресурса допускается срабатывание ошибки 1 раз, прежде чем весь процесс деплоя считается ошибочным. Этот параметр влияет на поведение настройки [Fail mode](#fail-mode): определяет порог срабатывания, после которого начинает работать режим реакции на ошибки.
 
 #### Log regex
 
 `"werf.io/log-regex": RE2_REGEX`
 
-Defines a [Re2 regex](https://github.com/google/re2/wiki/Syntax) that applies to all logs of all containers of all Pods owned by resource with this annotation. Werf will show only those log lines that fit specified regex. By default werf will show all log lines.
+Определяет [Re2 regex](https://github.com/google/re2/wiki/Syntax) шаблон, применяемый ко всем логам всех контейнеров всех подов ресурса с этой аннотацией. Werf будет выводить только те строки лога, которые удовлетворяют regex-шаблону. По умолчанию Werf выводит все строки лога.
 
 #### Log regex for container
 
 `"werf.io/log-regex-for-CONTAINER_NAME": RE2_REGEX`
 
-Defines a [Re2 regex](https://github.com/google/re2/wiki/Syntax) that applies to logs of specified container by name `CONTAINER_NAME` of all Pods owned by resource with this annotation. Werf will show only those log lines that fit specified regex. By default werf will show all log lines.
+Определяет [Re2 regex](https://github.com/google/re2/wiki/Syntax) шаблон, применяемый к логам контейнера с именем `CONTAINER_NAME` всех подов с данной аннотацией. Werf будет выводить только те строки лога, которые удовлетворяют regex-шаблону. По умолчанию Werf выводит все строки лога.
 
 #### Skip logs
 
 `"werf.io/skip-logs": true|false`
 
-Set to `true` to suppress all logs of all containers of all Pods owned by resource with this annotation. Annotation is disabled by default.
+Если установлена в `true`, то логи всех контейнеров пода с данной аннотацией не выводятся при отслеживании. Отключено по умолчанию.
 
 #### Skip logs for containers
 
 `"werf.io/skip-logs-for-containers": CONTAINER_NAME1,CONTAINER_NAME2,CONTAINER_NAME3...`
 
-Comma-separated list of containers names of all Pods owned by resource with this annotation for which werf should fully suppress log output.
+Список (через запятую) контейнеров пода с данной аннотацией, для которых логи не выводятся при отслеживании.
 
 #### Show logs only for containers
 
 `"werf.io/show-logs-only-for-containers": CONTAINER_NAME1,CONTAINER_NAME2,CONTAINER_NAME3...`
 
-Comman-separated list on containers names of all Pods owned by resource with this annotation for which werf should show logs. Logs of containers not specified in this list will be suppressed. By default werf shows logs of all containers of all Pods of resource.
+Список (через запятую) контейнеров пода с данной аннотацией, для которых выводятся логи при отслеживании. Для контейнеров, чьи имена отсутствуют в списке, — логи не выводятся. По умолчанию выводятся логи для всех контейнеров всех подов ресурса.
 
 #### Show service messages
 
 `"werf.io/show-service-messages": true|false`
 
-Set to `true` to enable additional debug info for resource including kubernetes events in realtime text stream during tracking. By default werf will show these service messages only when this resource has failed whole deploy process.
+Если установлена в `true`, то при отслеживании для ресурсов будет выводиться дополнительная отладочная информация, такая как — события Kubernetes. По умолчанию, Werf выводит такую отладочную информацию только в случае если ошибка ресурса приводит к ошибке всего процесса деплоя.
 
-### Annotate and label chart resources
+### Аннотации и метки ресурсов чарта
 
-#### Auto annotations
+#### Автоматические аннотации
 
-Werf automatically sets following builtin annotations to all chart resources deployed:
+Werf автоматически устанавливает следующие встроенные аннотации всем ресурсам чарта в процессе деплоя:
 
- * `"werf.io/version": FULL_WERF_VERSION` — werf version that being used when running `werf deploy` command;
- * `"project.werf.io/name": PROJECT_NAME` — project name specified in the `werf.yaml`;
- * `"project.werf.io/env": ENV` — environment name specified with `--env` param or `WERF_ENV` variable; optional, will not be set if env is not used.
+ * `"werf.io/version": FULL_WERF_VERSION` — версия Werf, использованная в процессе запуска команды `werf deploy`;
+ * `"project.werf.io/name": PROJECT_NAME` — имя проекта, указанное в файле конфигурации `werf.yaml`;
+ * `"project.werf.io/env": ENV` — имя окружения, указанное с помощью параметра `--env` или переменной окружения `WERF_ENV` (не обязательно, аннотация не устанавливается если окружение не было указано при запуске).
 
-Werf also sets auto annotations with info from the used CI/CD system (Gitlab CI for example)  when using `werf ci-env` command prior to run `werf deploy` command. For example [`project.werf.io/git`]({{ site.baseurl }}/documentation/reference/plugging_into_cicd/gitlab_ci.html#werf_add_annotation_project_git), [`ci.werf.io/commit`]({{ site.baseurl }}/documentation/reference/plugging_into_cicd/gitlab_ci.html#werf_add_annotation_ci_commit), [`gitlab.ci.werf.io/pipeline-url`]({{ site.baseurl }}/documentation/reference/plugging_into_cicd/gitlab_ci.html#werf_add_annotation_gitlab_ci_pipeline_url) and [`gitlab.ci.werf.io/job-url`]({{ site.baseurl }}/documentation/reference/plugging_into_cicd/gitlab_ci.html#werf_add_annotation_gitlab_ci_job_url).
+При использовании команды `werf ci-env` перед выполнением команды `werf deploy`, Werf также автоматически устанавливает аннотации содержащие информацию из используемой системы CI/CD (например, GitLab CI). Например — [`project.werf.io/git`]({{ site.baseurl }}/ru/documentation/reference/plugging_into_cicd/gitlab_ci.html#werf_add_annotation_project_git), [`ci.werf.io/commit`]({{ site.baseurl }}/ru/documentation/reference/plugging_into_cicd/gitlab_ci.html#werf_add_annotation_ci_commit), [`gitlab.ci.werf.io/pipeline-url`]({{ site.baseurl }}/ru/documentation/reference/plugging_into_cicd/gitlab_ci.html#werf_add_annotation_gitlab_ci_pipeline_url) и [`gitlab.ci.werf.io/job-url`]({{ site.baseurl }}/ru/documentation/reference/plugging_into_cicd/gitlab_ci.html#werf_add_annotation_gitlab_ci_job_url).
 
-For more info about CI/CD integration check out following pages:
+Для более подробной информации об интеграции Werf с системами CI/CD читайте статьи по темам:
 
- * [plugging into CI/CD overview]({{ site.baseurl }}/documentation/reference/plugging_into_cicd/overview.html);
- * [plugging into Gitlab CI]({{ site.baseurl }}/documentation/reference/plugging_into_cicd/gitlab_ci.html).
+ * [Общие сведения по работе с CI/CD системами]({{ site.baseurl }}/ru/documentation/reference/plugging_into_cicd/overview.html);
+ * [Работа Gitlab CI]({{ site.baseurl }}/ru/documentation/reference/plugging_into_cicd/gitlab_ci.html).
 
-#### Custom annotations and labels
+#### Пользовательские аннотации и метки
 
-User can pass arbitrary additional annotations and labels using cli options `--add-annotation annoName=annoValue` (can be specified multiple times) and `--add-label labelName=labelValue` (can be specified multiple times) for werf deploy invocation.
+Пользователь может устанавливать произвольные аннотации и метки используя CLI-параметры при деплое `--add-annotation annoName=annoValue` (может быть указан несколько раз) и `--add-label labelName=labelValue` (может быть указан несколько раз).
 
-For example, to set annotations and labels `commit-sha=9aeee03d607c1eed133166159fbea3bad5365c57`, `gitlab-user-email=vasya@myproject.com` to all kubernetes resources from chart use following werf deploy invocation:
+Например, для установки аннотаций и меток `commit-sha=9aeee03d607c1eed133166159fbea3bad5365c57`, `gitlab-user-email=vasya@myproject.com` всем ресурсам Kubernetes в чарте, можно использовать  следующий вызов команды деплоя:
 
 ```bash
 werf deploy \
@@ -601,28 +603,28 @@ werf deploy \
   --stages-storage :local
 ```
 
-### Resources manifests validation
+### Проверка манифестов ресурсов
 
-If resource manifest in the chart contains logical or syntax errors then werf will write validation warning to the output during deploy process. Also all validation errors will be written to the `debug.werf.io/validation-messages`. These errors typically does not affect deploy process exit status, because kubernetes apiserver can accept wrong manifests with certain typos or errors without reporting errors.
+Если манифест ресурса в чарте содержит логические или синтаксические ошибки, то Werf выведет соответствующее предупреждение во время процесса деплоя. Также, все ошибки проверки манифеста заносятся в аннотацию `debug.werf.io/validation-messages`. Такие ошибки обычно не влияют прямо на процесс деплоя и его статус выполнения, т.к. apiserver Kubernetes может принимать манифесты содержащие опечатки или ошибки, не выдавая какого-либо предупреждения.
 
-For example, having following typos in the chart templates (`envs` instead of `env` and `redinessProbe` instead of `readinessProbe`):
+Например, допустим имеем следующую опечатку в шаблоне чарта (`envs` вместо `env`, и `redinessProbe` вместо `readinessProbe`):
 
 ```
-      containers:
-      - name: main
-        command: [ "/bin/bash", "-c", "while true; do date ; sleep 1 ; done" ]
-        image: ubuntu:18.04
-        redinessProbe:
-          tcpSocket:
-            port: 8080
-          initialDelaySeconds: 5
-          periodSeconds: 10
-      envs:
-      - name: MYVAR
-        value: myvalue
+containers:
+- name: main
+  command: [ "/bin/bash", "-c", "while true; do date ; sleep 1 ; done" ]
+  image: ubuntu:18.04
+  redinessProbe:
+    tcpSocket:
+      port: 8080
+    initialDelaySeconds: 5
+    periodSeconds: 10
+envs:
+- name: MYVAR
+  value: myvalue
 ```
 
-Validation output will be like:
+Результат проверки манифеста будет примерно следующим:
 
 ```
 │   WARNING ### Following problems detected during deploy process ###
@@ -630,7 +632,7 @@ Validation output will be like:
 │ "redinessProbe" in io.k8s.api.core.v1.Container, ValidationError(Deployment.spec.template.spec): unknown field "envs" in io.k8s.api.core.v1.PodSpec]
 ```
 
-And resource will contain `debug.werf.io/validation-messages` annotation:
+В результате ресурс будет иметь аннотацию `debug.werf.io/validation-messages` следующего содержания:
 
 ```
 apiVersion: apps/v1
@@ -644,8 +646,6 @@ metadata:
 ...
 ```
 
-## Multiple Kubernetes clusters
+## Работа с несколькими кластерами Kubernetes
 
-There are cases when separate Kubernetes clusters are needed for a different environments. You can [configure access to multiple clusters](https://kubernetes.io/docs/tasks/access-application-cluster/configure-access-multiple-clusters) using kube contexts in a single kube config.
-
-In that case deploy option `--kube-context=CONTEXT` should be specified manually along with the environment.
+В некоторых случаях, необходима работа с несколькими кластерами Kubernetes для разных окружений. Все что вам нужно, это настроить необходимые [контексты](https://kubernetes.io/docs/tasks/access-application-cluster/configure-access-multiple-clusters) kubectl для доступа к необходимым кластерам, и использовать для Werf при деплое параметр `--kube-context=CONTEXT`, совместно с указанием окружения.
