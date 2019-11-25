@@ -1,11 +1,15 @@
 ---
-title: Resources update methods and adoption
+title: Методы обновления ресурсов и применения изменений
 sidebar: documentation
 permalink: ru/documentation/reference/deploy_process/resources_update_methods_and_adoption.html
 ref: documentation_reference_deploy_process_resources_update_methods_and_adoption
 lang: ru
 author: Timofey Kirillov <timofey.kirillov@flant.com>
 ---
+
+<div id="outdatedWarning" class="docs__outdated active">
+    Статья в процессе перевода.
+</div>
 
 > Three way merge is under development now. This page contains implementation notes and other debug and development info about resources update method which Werf currently uses.
 

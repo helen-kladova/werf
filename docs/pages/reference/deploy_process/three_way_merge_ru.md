@@ -1,7 +1,7 @@
 ---
-title: "Experimental: 3-х этапное слияние"
+title: 3-х этапное слияние
 sidebar: documentation
-permalink: documentation/reference/deploy_process/experimental_three_way_merge.html
+permalink: ru/documentation/reference/deploy_process/experimental_three_way_merge.html
 ref: documentation_reference_deploy_process_experimental_three_way_merge
 lang: ru
 author: Timofey Kirillov <timofey.kirillov@flant.com>

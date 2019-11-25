@@ -7,8 +7,8 @@ ref: documentation_guides_installation
 lang: ru
 ---
 
-{% include /readme/installation_ru.md %}
+{% include /readme_ru/installation.md %}
 
 # Обещание обратной совместимости
 
-{% include /readme/backward_compatibility_promise_ru.md %}
+{% include /readme_ru/backward_compatibility_promise.md %}
