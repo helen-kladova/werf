@@ -10,7 +10,7 @@ lang: ru
 
 Мы рекомендуем начинать знакомство с раздела "Руководства":
 
-- [Installation]({{ site.baseurl }}/documentation/guides/installation.html) describes Werf dependencies and different installation methods.
+- [Установка]({{ site.baseurl }}/ru/documentation/guides/installation.html) describes Werf dependencies and different installation methods.
 - [Getting started]({{ site.baseurl }}/documentation/guides/getting_started.html) helps to start using Werf with regular Dockerfile. Take your project and put into Werf easily just now.
 - [Deploying into Kubernetes]({{ site.baseurl }}/documentation/guides/deploy_into_kubernetes.html) is a short example of application deployment.
 - [Gitlab CI/CD integration]({{ site.baseurl }}/documentation/guides/gitlab_ci_cd_integration.html) is all about integration with GitLab: build, publish, deployment and scheduled registry cleanup.
