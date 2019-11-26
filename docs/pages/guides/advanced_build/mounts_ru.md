@@ -302,7 +302,7 @@ image-stage-hotel-booking    306aa6e8...f71dbe53      0a9943b0da6a     3 minutes
 ### Анализ
 
 Папки, смонтированные с помощью инструкций `from: build_dir` в `werf.yaml`, находятся по пути `~/.werf/shared_context/mounts/projects/hotel-booking/`.
-Для анализа содержимого смонтированнх папок выполните следующую команду:
+Для анализа содержимого смонтированных папок выполните следующую команду:
 
 ```bash
 tree -L 3 ~/.werf/shared_context/mounts/projects/hotel-booking

@@ -218,7 +218,7 @@ layout: default
                         <li class="roadmap__steps-list-item" data-roadmap-step="1184">
                             <a href="https://github.com/flant/werf/issues/1184" class="roadmap__steps-list-item-issue" target="_blank">#1184</a>
                             <span class="roadmap__steps-list-item-text">
-                                Тэгирование на основе содержимого.
+                                Контентно-адресуемое тэгирование.
                             </span>
                         </li>
                         <li class="roadmap__steps-list-item" data-roadmap-step="1617">
@@ -260,21 +260,21 @@ layout: default
         </div>
         <div class="documentation__info">
             <div class="documentation__info-title">
-                Complete documentation
+                Исчерпывающая документация
             </div>
             <div class="documentation__info-text">
-                Documentation of werf comprises ~100 articles which include common use cases (getting started, deploy to Kubernetes, CI/CD integration and more), comprehensive description of its functions & architecture, as well as CLI, commands.
+                Документация содержит более 100 статей, включающих описание частых случаев (первые шаги, деплой в Kubernetes, интеграция с CI/CD системами и другое), полное описание функций, архитектуры и CLI-команд.
             </div>
         </div>
         <div class="documentation__btns">
             <a href="https://github.com/flant/werf" target="_blank" class="page__btn page__btn_b documentation__btn">
-                Get Werf
+                Начать использовать
             </a>
-            <a href="{{ site.baseurl }}/documentation/guides/getting_started.html" class="page__btn page__btn_o documentation__btn">
-                Starters guide
+            <a href="{{ site.baseurl }}/ru/documentation/guides/getting_started.html" class="page__btn page__btn_o documentation__btn">
+                Руководства для старта
             </a>
-            <a href="{{ site.baseurl }}/documentation/cli/main/build.html" class="page__btn page__btn_o documentation__btn">
-                Explore CLI
+            <a href="{{ site.baseurl }}/ru/documentation/cli/main/build.html" class="page__btn page__btn_o documentation__btn">
+                CLI команды
             </a>
         </div>
     </div>

@@ -10,10 +10,10 @@
 ## Скоро
 
 - 3-х этапное слияние (3-way-merge) [#1616](https://github.com/flant/werf/issues/1616).
-- Тэгирование по содержимому [#1184](https://github.com/flant/werf/issues/1184).
+- Контентно-адресуемое тэгирование [#1184](https://github.com/flant/werf/issues/1184).
 - Распределенная сборка с общим Docker-registry [#1614](https://github.com/flant/werf/issues/1614).
 
-## Полный списко возможностей
+## Полный список возможностей
 
 ### Сборка
 

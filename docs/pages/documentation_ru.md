@@ -49,7 +49,7 @@ lang: ru
 * [Разработка и отладка]({{ site.baseurl }}/ru/documentation/reference/development_and_debug/setup_minikube.html)
 * [Toolbox]({{ site.baseurl }}/ru/documentation/reference/toolbox/slug.html)
 
-Werf — это CLI-утилита, поэтому, если вы хотите найти описание как базовых команд, необходимых для управления процессом CI/CD, так и служебных команд, обеспечивающих расширенные функциональные возможности — используйте раздел **CLI Commands**.
+Werf — это CLI-утилита, поэтому, если вы хотите найти описание как базовых команд, необходимых для управления процессом CI/CD, так и служебных команд, обеспечивающих расширенные функциональные возможности — используйте раздел [**CLI Commands**]({{ site.baseurl }}/documentation/cli/main/build.html).
 
 Раздел [**Разработка**]({{ site.baseurl }}/ru/documentation/development/stapel.html)
 содержит информацию, предназначенную для более глубокого понимания работы компонентов Werf, участии в развитии Werf со стороны разработчика и т.д.
