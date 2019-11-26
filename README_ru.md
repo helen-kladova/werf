@@ -48,7 +48,7 @@ Werf — Open Source CLI утилита написанная на Golang, пре
 - Тэгирование по содержимому [#1184](https://github.com/flant/werf/issues/1184).
 - Распределенная сборка с общим Docker-registry [#1614](https://github.com/flant/werf/issues/1614).
 
-## Полный списко возможностей
+## Полный список возможностей
 
 ### Сборка
 
