@@ -10,46 +10,46 @@ lang: ru
 
 Мы рекомендуем начинать знакомство с раздела "Руководства":
 
-- [Установка]({{ site.baseurl }}/ru/documentation/guides/installation.html) describes Werf dependencies and different installation methods.
-- [Getting started]({{ site.baseurl }}/documentation/guides/getting_started.html) helps to start using Werf with regular Dockerfile. Take your project and put into Werf easily just now.
-- [Deploying into Kubernetes]({{ site.baseurl }}/documentation/guides/deploy_into_kubernetes.html) is a short example of application deployment.
-- [Gitlab CI/CD integration]({{ site.baseurl }}/documentation/guides/gitlab_ci_cd_integration.html) is all about integration with GitLab: build, publish, deployment and scheduled registry cleanup.
-- [Unsupported CI/CD integration]({{ site.baseurl }}/documentation/guides/unsupported_ci_cd_integration.html) is about plugging werf into CI/CD system that is not [officially supported]({{ site.baseurl }}/documentation/reference/plugging_into_cicd/overview.html).
-- Advanced build section is about our image description syntax to take advantage of incremental rebuilds based on git history and other carefully crafted tools. Recommend to start reading from [First application guide]({{ site.baseurl }}/documentation/guides/advanced_build/first_application.html).
+- [Установка]({{ site.baseurl }}/ru/documentation/guides/installation.html) описывает зависимости Werf и возможные варианты установки.
+- [Первые шаги]({{ site.baseurl }}/ru/documentation/guides/getting_started.html) помогают начать использовать Werf с обычным Dockerfile. Вы можете легко запустить Werf в вашем проекте прямо сейчас.
+- [Деплой в Kubernetes]({{ site.baseurl }}/ru/documentation/guides/deploy_into_kubernetes.html) — краткий пример развертывания приложения в кластере Kubernetes.
+- [Интеграция с GitLab CI/CD]({{ site.baseurl }}/ru/documentation/guides/gitlab_ci_cd_integration.html) расскажет всё об интеграции с GitLab: про сборку, про публикацию, про деплой и очистку Docker-регистри.
+- [Интеграция с неподдерживаемыми системами CI/CD]({{ site.baseurl }}/ru/documentation/guides/unsupported_ci_cd_integration.html) расскажет о том, как интегрировать Werf в любую CI/CD-систему, которая пока еще [официально не поддерживается]({{ site.baseurl }}/ru/documentation/reference/plugging_into_cicd/overview.html).
+- В разделе расширенной сборки рассказывается о нашем синтаксисе описания сборки образов, которая дает преимущества инкрементальной сборки с учетом истории в git и других интересных инструментах. Рекомендуем начать знакомство с создания [первого приложения]({{ site.baseurl }}/ru/documentation/guides/advanced_build/first_application.html).
 
-The next step is **Configuration** section.
+Следующий раздел — **Конфигурация**.
 
-To use Werf an application should be configured in `werf.yaml` file.
-This configuration includes:
+Для использования Werf в вашем проекте, необходимо создать файл конфигурации `werf.yaml`, что включает в себя:
 
-1. Definition of project meta information such as project name, which will affect build, deploy and other commands.
-2. Definition of the images to be built.
+1. Описание метаинформации проекта, которая впоследствии будет использоваться в командах сборки, деплоя  и других. Пример такой метаинформации — имя проекта.
+2. Описание образов для сборки.
 
-In the [Overview]({{ site.baseurl }}/documentation/configuration/introduction.html) article you can find information about:
+В статье ["Общие сведения"]({{ site.baseurl }}/ru/documentation/configuration/introduction.html) вы найдете информацию о:
 
-* Structure and config sections.
-* Organization approaches.
-* Config processing steps.
-* Supported Go templates functions.
+* Структуре секций и их конфигурации
+* Подходах к описанию конфигурации
+* Процессах обработки конфигурации
+* Поддерживаемых функциях Go-шаблонов
 
-Other section articles give detailed information about [Dockerfile Image]({{ site.baseurl }}/documentation/configuration/dockerfile_image.html), [Stapel Image]({{ site.baseurl }}/documentation/configuration/stapel_image/naming.html) and [Stapel Artifact]({{ site.baseurl }}/documentation/configuration/stapel_artifact.html) directives and their features of usage.
+В других статьях раздела "Конфигурация" дается детальная информация о директивах описания [Dockerfile-образа]({{ site.baseurl }}/ru/documentation/configuration/dockerfile_image.html), [Stapel-образа]({{ site.baseurl }}/ru/documentation/configuration/stapel_image/naming.html), [Stapel-артефакта]({{ site.baseurl }}/ru/documentation/configuration/stapel_artifact.html) и особенностях их использования.
 
-**Reference** section is dedicated to Werf main processes:
+Раздел **Справочника** посвящен описанию основных процессов Werf:
 
-* [Build process]({{ site.baseurl }}/documentation/reference/build_process.html).
-* [Publish process]({{ site.baseurl }}/documentation/reference/publish_process.html).
-* [Deploy process]({{ site.baseurl }}/documentation/reference/deploy_process/deploy_into_kubernetes.html).
-* [Cleaning process]({{ site.baseurl }}/documentation/reference/cleaning_process.html).
+* [Сборка]({{ site.baseurl }}/ru/documentation/reference/build_process.html)
+* [Публикация]({{ site.baseurl }}/ru/documentation/reference/publish_process.html)
+* [Деплой]({{ site.baseurl }}/ru/documentation/reference/deploy_process/deploy_into_kubernetes.html)
+* [Очистка]({{ site.baseurl }}/ru/documentation/reference/cleaning_process.html)
 
-Each article describes a certain process: process composition, available options and features.
+Каждая статья описывает определенный процесс: его состав, доступные опции и особенности.
 
-Also, this section includes articles with base primitives and general tools:
+Также в этот раздел включены статьи с описанием базовых примитивов и общих инструментов:
 
-* [Stages and images]({{ site.baseurl }}/documentation/reference/stages_and_images.html).
-* [Registry authorization]({{ site.baseurl }}/documentation/reference/registry_authorization.html).
-* [Development and debug]({{ site.baseurl }}/documentation/reference/development_and_debug/setup_minikube.html).
-* [Toolbox]({{ site.baseurl }}/documentation/reference/toolbox/slug.html).
+* [Стадии и образы]({{ site.baseurl }}/ru/documentation/reference/stages_and_images.html)
+* [Авторизация в Docker-регистри]({{ site.baseurl }}/ru/documentation/reference/registry_authorization.html)
+* [Разработка и отладка]({{ site.baseurl }}/ru/documentation/reference/development_and_debug/setup_minikube.html)
+* [Toolbox]({{ site.baseurl }}/ru/documentation/reference/toolbox/slug.html)
 
-Werf is a CLI utility, so if you want to find a description of both basic commands needed to provide the CI/CD process and service commands that provide advanced functionality — use **CLI Commands** section.
+Werf — это CLI-утилита, поэтому, если вы хотите найти описание как базовых команд, необходимых для управления процессом CI/CD, так и служебных команд, обеспечивающих расширенные функциональные возможности — используйте раздел **CLI Commands**.
 
-[**Development** section]({{ site.baseurl }}/documentation/development/stapel.html) contains service and maintenance manuals and other docs which help developers to understand how some werf subsystem works, how to maintain some subsystem in the actual state, how to write and build new code for the werf, etc.
+Раздел [**Разработка**]({{ site.baseurl }}/ru/documentation/development/stapel.html)
+содержит информацию, предназначенную для более глубокого понимания работы компонентов Werf, участии в развитии Werf со стороны разработчика и т.д.

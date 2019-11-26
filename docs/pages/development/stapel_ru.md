@@ -7,6 +7,10 @@ lang: ru
 author: Timofey Kirillov <timofey.kirillo@flant.com>
 ---
 
+<div id="outdatedWarning" class="docs__outdated active">
+    Статья в процессе перевода.
+</div>
+
 ## Overview
 
 Stapel is an [LFS](http://www.linuxfromscratch.org/lfs/view/stable) based linux distribution, which contains:

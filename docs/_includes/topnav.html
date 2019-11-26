@@ -1,7 +1,7 @@
 <div class="header">
     <div class="page__container">
         <div class="header__content">
-            <a href="/">
+            <a href="{% if page.lang == 'ru' %}/ru{% else %}/{% endif %}">
                 <img src="{{ site.baseurl }}/images/werf-logo.svg" alt="werf"/>
             </a>
 

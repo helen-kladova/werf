@@ -368,7 +368,7 @@ entries:
         - title: Стадии и образы
           url: /ru/documentation/reference/stages_and_images.html
 
-        - title: Авторизация в registry
+        - title: Авторизация в Docker-регистри
           url: /ru/documentation/reference/registry_authorization.html
 
         - title: Сборка

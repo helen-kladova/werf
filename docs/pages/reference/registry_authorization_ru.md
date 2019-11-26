@@ -1,5 +1,5 @@
 ---
-title: Авторизация в registry
+title: Авторизация в Docker-регистри
 sidebar: documentation
 permalink: ru/documentation/reference/registry_authorization.html
 ref: documentation_reference_registry_authorization
