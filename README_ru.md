@@ -44,9 +44,13 @@ Werf — Open Source CLI утилита написанная на Golang, пре
 
 ## Скоро
 
-- 3-х этапное слияние (3-way-merge) [#1616](https://github.com/flant/werf/issues/1616).
-- Тэгирование по содержимому [#1184](https://github.com/flant/werf/issues/1184).
+- ~3-х этапное слияние (3-way-merge) [#1616](https://github.com/flant/werf/issues/1616).~
+- Легкая локальная разработка приложений с Werf [#1940](https://github.com/flant/werf/issues/1940).
+- Контентно-адресуемое тэгирование [#1184](https://github.com/flant/werf/issues/1184).
+- Проверенные подходы и рецепты работы с наиболее популярными CI-системами. [#1617](https://github.com/flant/werf/issues/1617).
 - Распределенная сборка с общим Docker-registry [#1614](https://github.com/flant/werf/issues/1614).
+- Поддержка Helm 3 [#1606](https://github.com/flant/werf/issues/1606).
+- Сборка в userspace без Docker-демона (как в kaniko)[#1618](https://github.com/flant/werf/issues/1618).
 
 ## Полный список возможностей
 
@@ -72,7 +76,7 @@ Werf — Open Source CLI утилита написанная на Golang, пре
   - `IMAGES_REPO[/IMAGE_NAME]:TAG` в режиме `multirepo`.
 - Различные стратегии тэгирования образов:
   - Тжгирование образов по тэгу, ветке или коммиту в Git.
-  - Тэгирование по содержимому (скоро) [#1184](https://github.com/flant/werf/issues/1184).
+  - Контентно-адресуемое тэгирование (скоро) [#1184](https://github.com/flant/werf/issues/1184).
 
 ### Деплой
 
@@ -220,6 +224,9 @@ go get github.com/flant/werf/cmd/werf
 - Русскоязычное сообщество — чат в Telegram [#werf_ru](https://t.me/werf_ru)
 
 Мы внимательно рассматриваем ваши [issues](https://github.com/flant/werf/issues) на GitHub.
+
+Также мы есть Twitter: [https://twitter.com/werf_io](https://twitter.com/werf_io).
+
 
 <!-- WERF DOCS PARTIAL END -->
 

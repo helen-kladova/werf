@@ -196,7 +196,7 @@ layout: default
                         </li>
                         <li class="roadmap__goals-list-item">
                             Проверенные подходы и рецепты работы<br/>
-                            с большинством CI-систем.
+                            с наиболее популярными CI-системами.
                         </li>
                         <li class="roadmap__goals-list-item">
                             Building images completely in userspace, <br/>
@@ -212,7 +212,13 @@ layout: default
                         <li class="roadmap__steps-list-item" data-roadmap-step="1616">
                             <a href="https://github.com/flant/werf/issues/1616" class="roadmap__steps-list-item-issue" target="_blank">#1616</a>
                             <span class="roadmap__steps-list-item-text">
-                                Использование <a href="https://kubernetes.io/docs/tasks/manage-kubernetes-objects/declarative-config/#merge-patch-calculation" target="_blank">3-х этапного слияния</a> при обновлении helm-релизов.
+                                <strike>Использование <a href="https://kubernetes.io/docs/tasks/manage-kubernetes-objects/declarative-config/#merge-patch-calculation" target="_blank">3-х этапного слияния</a> при обновлении helm-релизов.</strike>
+                            </span>
+                        </li>
+                        <li class="roadmap__steps-list-item" data-roadmap-step="1940">
+                            <a href="https://github.com/flant/werf/issues/1940" class="roadmap__steps-list-item-issue" target="_blank">#1940</a>
+                            <span class="roadmap__steps-list-item-text">
+                                Легкая локальная разработка приложений с Werf.
                             </span>
                         </li>
                         <li class="roadmap__steps-list-item" data-roadmap-step="1184">
@@ -225,13 +231,13 @@ layout: default
                             <a href="https://github.com/flant/werf/issues/1617" class="roadmap__steps-list-item-issue" target="_blank">#1617</a>
                             <span class="roadmap__steps-list-item-text">
                             Проверенные подходы и рецепты работы<br/>
-                            с большинством CI-систем.
+                            с наиболее популярными CI-системами.
                             </span>
                         </li>
                         <li class="roadmap__steps-list-item" data-roadmap-step="1614">
                             <a href="https://github.com/flant/werf/issues/1614" class="roadmap__steps-list-item-issue" target="_blank">#1614</a>
                             <span class="roadmap__steps-list-item-text">
-                                Распределенная сборка.
+                                Распределенная сборка с общим Docker-registry.
                             </span>
                         </li>
                         <li class="roadmap__steps-list-item" data-roadmap-step="1606">

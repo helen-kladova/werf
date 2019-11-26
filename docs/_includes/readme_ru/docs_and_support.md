@@ -8,3 +8,5 @@
 - Русскоязычное сообщество — чат в Telegram [#werf_ru](https://t.me/werf_ru)
 
 Мы внимательно рассматриваем ваши [issues](https://github.com/flant/werf/issues) на GitHub.
+
+Также мы есть Twitter: [https://twitter.com/werf_io](https://twitter.com/werf_io).

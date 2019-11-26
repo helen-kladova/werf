@@ -9,9 +9,13 @@
 
 ## Скоро
 
-- 3-х этапное слияние (3-way-merge) [#1616](https://github.com/flant/werf/issues/1616).
+- ~3-х этапное слияние (3-way-merge) [#1616](https://github.com/flant/werf/issues/1616).~
+- Легкая локальная разработка приложений с Werf [#1940](https://github.com/flant/werf/issues/1940).
 - Контентно-адресуемое тэгирование [#1184](https://github.com/flant/werf/issues/1184).
+- Проверенные подходы и рецепты работы с наиболее популярными CI-системами. [#1617](https://github.com/flant/werf/issues/1617).
 - Распределенная сборка с общим Docker-registry [#1614](https://github.com/flant/werf/issues/1614).
+- Поддержка Helm 3 [#1606](https://github.com/flant/werf/issues/1606).
+- Сборка в userspace без Docker-демона (как в kaniko)[#1618](https://github.com/flant/werf/issues/1618).
 
 ## Полный список возможностей
 
@@ -37,7 +41,7 @@
   - `IMAGES_REPO[/IMAGE_NAME]:TAG` в режиме `multirepo`.
 - Различные стратегии тэгирования образов:
   - Тжгирование образов по тэгу, ветке или коммиту в Git.
-  - Тэгирование по содержимому (скоро) [#1184](https://github.com/flant/werf/issues/1184).
+  - Контентно-адресуемое тэгирование (скоро) [#1184](https://github.com/flant/werf/issues/1184).
 
 ### Деплой
 
