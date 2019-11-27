@@ -50,7 +50,7 @@ Werf — Open Source CLI утилита написанная на Golang, пре
 - Проверенные подходы и рецепты работы с наиболее популярными CI-системами. [#1617](https://github.com/flant/werf/issues/1617).
 - Распределенная сборка с общим Docker-registry [#1614](https://github.com/flant/werf/issues/1614).
 - Поддержка Helm 3 [#1606](https://github.com/flant/werf/issues/1606).
-- Сборка в userspace без Docker-демона (как в kaniko)[#1618](https://github.com/flant/werf/issues/1618).
+- Сборка в userspace без Docker-демона (как в kaniko) [#1618](https://github.com/flant/werf/issues/1618).
 
 ## Полный список возможностей
 
