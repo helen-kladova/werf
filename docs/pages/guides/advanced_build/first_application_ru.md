@@ -39,7 +39,7 @@ source <(multiwerf use 1.0 beta)
 
 Чтобы выполнить все необходимые шаги по сборке с помощью Werf, добавим специальный файл `werf.yaml` к исходному коду приложения.
 
-1. Клонироуйте git-репозиторий [Symfony Demo Application](https://github.com/symfony/demo):
+1. Клонируйте git-репозиторий [Symfony Demo Application](https://github.com/symfony/demo):
 
     ```shell
     git clone https://github.com/symfony/symfony-demo.git
@@ -246,6 +246,6 @@ source <(multiwerf use 1.0 beta)
 В приведенном примере есть что улучшить:
 * Набор команд создания скрипта `start.sh` можно легко заменить на одну команду — git, а сам файл `start.sh` хранить в git-репозитории.
 * Если хранить файл в git-репозитории, то при его копировании можно сразу же (в той-же команде) указывать необходимые права.
-* Лучше использовать `composer install` вместо `composer update` чобы устанавливать зависимости согласно версий, закрепленных в файлах `composer.lock`, `package.json` и `yarn.lock`. Также, при сборке необходима проверка этих файлов и запуск `composer install` при их изменении. Чтобы добиться этого, в Werf есть директива `stageDependencies`.
+* Лучше использовать `composer install` вместо `composer update` чтобы устанавливать зависимости согласно версий, закрепленных в файлах `composer.lock`, `package.json` и `yarn.lock`. Также, при сборке необходима проверка этих файлов и запуск `composer install` при их изменении. Чтобы добиться этого, в Werf есть директива `stageDependencies`.
 
 Решение этих задач рассматривается в [соответствующем разделе]({{ site.baseurl }}/ru/documentation/configuration/stapel_image/git_directive.html) документации.

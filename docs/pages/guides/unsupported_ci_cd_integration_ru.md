@@ -11,13 +11,13 @@ lang: ru
 
 Чтобы использовать Werf с любой CI/CD системой которая пока не поддерживается, необходимо выполнить шаги описанные [здесь]({{ site.baseurl }}/ru/documentation/reference/plugging_into_cicd/overview.html#what-is-ci-env), с помощью собственного скрипта. Запуск такого скрипта нужно производить вместо вызова команды `werf ci-env`, но поведение скрипта должно быть похожим на результат выполнения команды `werf ci-env`. Запуск скрипта также должен осуществляться перед выполнением любых других команд werf, вначале задания CI/CD.
 
-Необходимого результата можно добиться выполнив в скрипте некоторые действия и определив ряд переменных окружения из [списка]({{ site.baseurl }}/ru/documentation/reference/plugging_into_cicd/overview.html#complete-list-of-ci-env-params-and-customizing) (далее рассмотрим эти шаги подрбнее).
+Необходимого результата можно добиться выполнив в скрипте некоторые действия и определив ряд переменных окружения из [списка]({{ site.baseurl }}/ru/documentation/reference/plugging_into_cicd/overview.html#complete-list-of-ci-env-params-and-customizing) (далее рассмотрим эти шаги подробнее).
 
 ## Настройка CI-окружения
 
-### Интеграция с Docker registry
+### Интеграция с Docker-регистри
 
-Согласно процедуре [интеграции с Docker registry]({{ site.baseurl }}/ru/documentation/reference/plugging_into_cicd/overview.html#docker-registry-integration), необходимо определить следующие переменные:
+Согласно процедуре [интеграции с Docker-регистри]({{ site.baseurl }}/ru/documentation/reference/plugging_into_cicd/overview.html#интеграция-с-docker-регистри), необходимо определить следующие переменные:
  * [`DOCKER_CONFIG`]({{ site.baseurl }}/ru/documentation/reference/plugging_into_cicd/overview.html#docker_config);
  * [`WERF_IMAGES_REPO`]({{ site.baseurl }}/ru/documentation/reference/plugging_into_cicd/overview.html#werf_images_repo).
 
@@ -80,7 +80,7 @@ export WERF_ENABLE_PROCESS_EXTERMINATOR=1
 export WERF_LOG_TERMINAL_WIDTH=95
 ```
 
-Исправьте скрипт для работы с вашей CI/CD системой: измените присваиваемые значения переменных `WERF_*` согласно вашему случаю. Будет полезно ознакомиться и ориентироваться на статью по [интеграции с GitLab CI]({{ site.baseurl }}/ru/documentation/reference/plugging_into_cicd/gitlab_ci.html), чтобы понимать какие значения для переменных вам стоит брать.
+Исправьте скрипт для работы с вашей CI/CD системой: измените присваиваемые значения переменных `WERF_*` согласно вашему случаю. Будет полезно ознакомиться и ориентироваться на статью по [интеграции с GitLab CI]({{ site.baseurl }}/ru/documentation/reference/plugging_into_cicd/gitlab_ci.html), чтобы понимать, какие значения для переменных вам стоит брать.
 
 Создайте также скрипт `werf-ci-env-cleanup.sh`, следующего содержания:
 

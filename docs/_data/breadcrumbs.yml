@@ -14,7 +14,7 @@
   title: Stapel Image
   url: /documentation/configuration/stapel_image/naming.html
 /ru/documentation/configuration/stapel_image:
-  title: Сборка со Stapel
+  title: Stapel-образ
   url: /ru/documentation/configuration/stapel_image/naming.html
 /documentation/reference:
   title: Reference
@@ -78,4 +78,4 @@
   url: /documentation/development/stapel.html
 /ru/documentation/development:
   title: Разработка
-  url: /documentation/development/stapel.html
+  url: /ru/documentation/development/stapel.html

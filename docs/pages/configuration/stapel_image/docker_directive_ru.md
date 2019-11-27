@@ -28,17 +28,17 @@ summary: |
 
 Инструкции в [Dockerfile](https://docs.docker.com/engine/reference/builder/) можно условно разделить на две группы: инструкции сборки и другие инструкции, которые влияют на manifest Docker-образа.
 
-Werf поддерживает некоторые инструкции Dockerfile, кроме инструкций сборки, а именно:
+Кроме инструкций сборки, Werf поддерживает и некоторые другие инструкции Dockerfile, а именно:
 
-* `USER` пользователь и группа, которые необходимо использовать при запуске контейнера ([подробнее](https://docs.docker.com/engine/reference/builder/#user))
-* `WORKDIR` рабочая директория при запуске контейнера ([подробнее](https://docs.docker.com/engine/reference/builder/#workdir))
-* `VOLUME` определяет точку монтирования ([подробнее](https://docs.docker.com/engine/reference/builder/#volume))
-* `ENV` устанавливает переменные окружения ([подробнее](https://docs.docker.com/engine/reference/builder/#env))
-* `LABEL` добавляет метаданные к образу ([подробнее](https://docs.docker.com/engine/reference/builder/#label))
-* `EXPOSE` указывает, какие сетевые порты будут прослушиваться в запущенном контейнере ([подробнее](https://docs.docker.com/engine/reference/builder/#expose))
-* `ENTRYPOINT` задает команду по умолчанию, которая будет выполнена при запуске контейнера ([подробнее](https://docs.docker.com/engine/reference/builder/#entrypoint))
-* `CMD` задает аргументы по умолчанию для `ENTRYPOINT` ([подробнее](https://docs.docker.com/engine/reference/builder/#cmd))
-* `HEALTHCHECK` определяет инструкции, которые Docker может использовать для проверки работоспособности запущенного контейнера ([подробнее](https://docs.docker.com/engine/reference/builder/#healthcheck))
+* `USER` — пользователь и группа, которые необходимо использовать при запуске контейнера ([подробнее](https://docs.docker.com/engine/reference/builder/#user))
+* `WORKDIR` — рабочая директория при запуске контейнера ([подробнее](https://docs.docker.com/engine/reference/builder/#workdir))
+* `VOLUME` — определяет точку монтирования ([подробнее](https://docs.docker.com/engine/reference/builder/#volume))
+* `ENV` — устанавливает переменные окружения ([подробнее](https://docs.docker.com/engine/reference/builder/#env))
+* `LABEL` — добавляет метаданные к образу ([подробнее](https://docs.docker.com/engine/reference/builder/#label))
+* `EXPOSE` — указывает, какие сетевые порты будут прослушиваться в запущенном контейнере ([подробнее](https://docs.docker.com/engine/reference/builder/#expose))
+* `ENTRYPOINT` — задает команду по умолчанию, которая будет выполнена при запуске контейнера ([подробнее](https://docs.docker.com/engine/reference/builder/#entrypoint))
+* `CMD` — задает аргументы по умолчанию для `ENTRYPOINT` ([подробнее](https://docs.docker.com/engine/reference/builder/#cmd))
+* `HEALTHCHECK` — определяет инструкции, которые Docker может использовать для проверки работоспособности запущенного контейнера ([подробнее](https://docs.docker.com/engine/reference/builder/#healthcheck))
 
 Эти инструкции могут быть указаны с помощью директивы `docker` в конфигурации.
 
