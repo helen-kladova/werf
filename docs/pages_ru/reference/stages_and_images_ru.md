@@ -3,7 +3,6 @@ title: Стадии и образы
 sidebar: documentation
 permalink: ru/documentation/reference/stages_and_images.html
 ref: documentation_reference_stages_and_images
-lang: ru
 author: Alexey Igrychev <alexey.igrychev@flant.com>
 ---
 

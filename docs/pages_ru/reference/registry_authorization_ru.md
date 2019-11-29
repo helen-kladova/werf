@@ -3,7 +3,6 @@ title: Авторизация в Docker-регистри
 sidebar: documentation
 permalink: ru/documentation/reference/registry_authorization.html
 ref: documentation_reference_registry_authorization
-lang: ru
 author: Timofey Kirillov <timofey.kirillov@flant.com>
 ---
 

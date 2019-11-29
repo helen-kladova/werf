@@ -3,7 +3,6 @@ title: Сборка
 sidebar: documentation
 permalink: ru/documentation/reference/build_process.html
 ref: documentation_reference_build_process
-lang: ru
 author: Alexey Igrychev <alexey.igrychev@flant.com>
 ---
 

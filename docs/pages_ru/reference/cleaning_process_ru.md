@@ -3,7 +3,6 @@ title: Очистка
 sidebar: documentation
 permalink: ru/documentation/reference/cleaning_process.html
 ref: documentation_reference_cleaning_process
-lang: ru
 author: Artem Kladov <artem.kladov@flant.com>, Timofey Kirillov <timofey.kirillov@flant.com>
 ref: reference_cleaning_process
 ---

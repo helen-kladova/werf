@@ -3,7 +3,6 @@ title: Обзор
 permalink: ru/documentation/index.html
 sidebar: documentation
 ref: documentation
-lang: ru
 ---
 
 Документация содержит более 100 различных статей, включая наиболее типичные примеры использования Werf, подробное описание функций, архитектуры и параметров вызова.

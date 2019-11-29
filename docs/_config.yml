@@ -23,30 +23,30 @@ breadcrumbs:
   root:
     hide: false  # show breadcrumbs on root/home page
     image: false # Show image or title text
+  hometext: "Home"
 
 collections:
   tooltips:
     output: false
 
 defaults:
-- scope:
-    path: ""
-    type: "pages"
-  values:
-    layout: "page"
-    lang: en
-    comments: true
-    search: true
-    sidebar: sidebar
-    topnav: topnav
+  - scope:
+      path: ""
+      type: "pages"
+    values:
+      layout: "page"
+      lang: en
+      comments: true
+      search: true
+      sidebar: sidebar
+      topnav: topnav
+  - scope:
+      path: "pages_ru"
+      type: "pages"
+    values:
+      lang: ru
+ 
 
 sidebars:
 - documentation
 
-t:
-  en:
-    breadcrumbs:
-      home: "Home"
-  ru:
-    breadcrumbs:
-      home: "Начало"

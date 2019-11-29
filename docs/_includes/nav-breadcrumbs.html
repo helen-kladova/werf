@@ -1,5 +1,5 @@
 <ol class="breadcrumbs">
-   <li><a href="{{ site.baseurl }}/">{{ site.t[page.lang].breadcrumbs.home }}</a></li>
+   <li><a href="{{ site.baseurl }}/">{{ site.breadcrumbs.hometext | default: "Home" }}</a></li>
 
    {% capture page_url_without_index_html %}{{ page.url | remove: "/index.html" }}{% endcapture %}
    {% assign splitted_url_parts = page_url_without_index_html | split: '/' %}
