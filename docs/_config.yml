@@ -4,11 +4,12 @@ topnav_title: Werf Documentation
 site_title: Werf Documentation
 company_name: Flant
 url: https://werf.io
+site_lang: en
 sitemap_urls:
   ru:
-    url: ru.werf.io
+    url: https://ru.werf.io
   en:
-    url: werf.io
+    url: https://werf.io
 
 exclude:
 - .idea/

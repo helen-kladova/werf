@@ -2,6 +2,7 @@ topnav_title: Документация Werf
 site_title: Документация Werf
 company_name: Флант
 url: https://ru.werf.io
+site_lang: ru
 
 breadcrumbs:
   hometext: "Начало"
