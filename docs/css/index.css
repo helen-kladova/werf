@@ -99,6 +99,10 @@ html, body, .page {
     background-image: url('../images/icons/telegram.svg');
 }
 
+.page__icon_twitter {
+    background-image: url('../images/icons/twitter.svg');
+}
+
 .page__icon_github {
     background-image: url('../images/icons/github.svg');
 }
