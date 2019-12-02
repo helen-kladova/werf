@@ -3,7 +3,6 @@ title: Интроспекция стадий
 sidebar: documentation
 permalink: ru/documentation/reference/development_and_debug/stage_introspection.html
 ref: documentation_reference_development_and_debug_stage_introspection
-lang: ru
 author: Alexey Igrychev <alexey.igrychev@flant.com>
 summary: |
   <div class="language-bash highlighter-rouge">

@@ -1,7 +1,6 @@
 ---
 title: Главная
 permalink: /ru/
-lang: ru
 ref: main
 layout: default
 ---

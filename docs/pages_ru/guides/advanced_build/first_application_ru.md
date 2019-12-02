@@ -4,7 +4,6 @@ sidebar: documentation
 permalink: ru/documentation/guides/advanced_build/first_application.html
 author: Ivan Mikheykin <ivan.mikheykin@flant.com>
 ref: documentation_guides_advanced_build_first_application
-lang: ru
 ---
 
 ## Обзор задачи

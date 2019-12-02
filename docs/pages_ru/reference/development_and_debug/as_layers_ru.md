@@ -3,7 +3,6 @@ title: Директива asLayers и раздельное кэшировани�
 sidebar: documentation
 permalink: ru/documentation/reference/development_and_debug/as_layers.html
 ref: documentation_reference_development_and_debug_as_layers
-lang: ru
 author: Alexey Igrychev <alexey.igrychev@flant.com>
 summary: |
   <div class="language-yaml highlighter-rouge"><pre class="highlight"><code><span class="s">asLayers</span><span class="pi">:</span> <span class="s">true</span>

@@ -7,7 +7,7 @@
 {%- assign versions=site.pages | where:"ref", page.ref %}
 {%- if versions.size > 1 %}
 {%- for version in versions %}
-<link rel="alternate" hreflang="{{ version.lang }}" href="{{ site.url }}{{ site.baseurl}}{{ version.url }}" />
+<link rel="alternate" hreflang="{{ version.lang }}" href="{{ site.sitemap_urls[version.lang].url }}{{ site.baseurl}}{{ version.url }}" />
 {%- endfor %}
 {%- endif %}
 {%- endif %}

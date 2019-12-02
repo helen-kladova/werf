@@ -4,7 +4,6 @@ sidebar: documentation
 permalink: ru/documentation/guides/advanced_build/multi_images.html
 author: Artem Kladov <artem.kladov@flant.com>
 ref: documentation_guides_advanced_build_multi_images
-lang: ru
 ---
 
 ## Обзор задачи

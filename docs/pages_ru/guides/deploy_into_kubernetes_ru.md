@@ -4,7 +4,6 @@ sidebar: documentation
 permalink: ru/documentation/guides/deploy_into_kubernetes.html
 author: Timofey Kirillov <timofey.kirillov@flant.com>
 ref: documentation_guides_deploy_into_kubernetes
-lang: ru
 ---
 
 ## Обзор задачи

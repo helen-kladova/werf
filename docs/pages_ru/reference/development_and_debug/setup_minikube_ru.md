@@ -3,7 +3,6 @@ title: Настройка Minikube
 sidebar: documentation
 permalink: ru/documentation/reference/development_and_debug/setup_minikube.html
 ref: documentation_reference_development_and_debug_setup_minikube
-lang: ru
 author: Timofey Kirillov <timofey.kirillov@flant.com>
 ---
 

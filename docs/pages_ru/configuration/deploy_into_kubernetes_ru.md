@@ -4,7 +4,6 @@ sidebar: documentation
 permalink: ru/documentation/configuration/deploy_into_kubernetes.html
 author: Timofey Kirillov <timofey.kirillov@flant.com>
 ref: documentation_configuration_deploy_into_kubernetes
-lang: ru
 ---
 
 ## Имя релиза

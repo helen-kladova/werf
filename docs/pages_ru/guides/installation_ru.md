@@ -4,7 +4,6 @@ sidebar: documentation
 permalink: ru/documentation/guides/installation.html
 author: Alexey Igrychev <alexey.igrychev@flant.com>
 ref: documentation_guides_installation
-lang: ru
 ---
 
 {% include /readme_ru/installation.md %}

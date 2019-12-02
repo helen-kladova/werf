@@ -3,7 +3,6 @@ title: Деплой в Kubernetes
 sidebar: documentation
 permalink: ru/documentation/reference/deploy_process/deploy_into_kubernetes.html
 ref: documentation_reference_deploy_process_deploy_into_kubernetes
-lang: ru
 author: Timofey Kirillov <timofey.kirillov@flant.com>
 ---
 

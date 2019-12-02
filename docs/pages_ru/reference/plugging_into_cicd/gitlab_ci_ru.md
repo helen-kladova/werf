@@ -3,7 +3,6 @@ title: GitLab CI
 sidebar: documentation
 permalink: ru/documentation/reference/plugging_into_cicd/gitlab_ci.html
 ref: documentation_reference_plugging_into_cicd_gitlab_ci
-lang: ru
 author: Timofey Kirillov <timofey.kirillov@flant.com>
 ---
 

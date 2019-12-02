@@ -4,7 +4,6 @@ sidebar: documentation
 permalink: ru/documentation/guides/unsupported_ci_cd_integration.html
 author: Timofey Kirillov <timofey.kirillov@flant.com>
 ref: documentation_guides_unsupported_ci_cd_integration
-lang: ru
 ---
 
 В настоящий момент Werf поддерживает только работу с [Gitlab CI]({{ site.baseurl }}/ru/documentation/reference/plugging_into_cicd/gitlab_ci.html), но мы планируем в [скором будущем](https://github.com/flant/werf/issues/1682) обеспечить поддержку top-10 популярных CI систем.
