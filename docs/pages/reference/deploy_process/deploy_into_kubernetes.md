@@ -581,7 +581,7 @@ Werf also sets auto annotations with info from the used CI/CD system (Gitlab CI 
 For more info about CI/CD integration check out following pages:
 
  * [plugging into CI/CD overview]({{ site.baseurl }}/documentation/reference/plugging_into_cicd/overview.html);
- * [plugging into Gitlab CI]({{ site.baseurl }}/documentation/reference/plugging_into_cicd/gitlab_ci.html).
+ * [plugging into GitLab CI]({{ site.baseurl }}/documentation/reference/plugging_into_cicd/gitlab_ci.html).
 
 #### Custom annotations and labels
 

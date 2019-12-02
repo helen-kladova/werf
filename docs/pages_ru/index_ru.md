@@ -16,7 +16,7 @@ layout: default
             </div>
             <form action="https://www.google.com/search" class="welcome__search" method="get" name="searchform" target="_blank">
                 <input name="sitesearch" type="hidden" value="werf.io">
-                <input autocomplete="on" class="page__input welcome__search-input" name="q" placeholder="Search the documentation" required="required"  type="text">
+                <input autocomplete="on" class="page__input welcome__search-input" name="q" placeholder="Поиск по документации" required="required"  type="text">
                 <button type="submit" class="page__icon page__icon_search welcome__search-btn"></button>
             </form>
         </div>
@@ -28,15 +28,15 @@ layout: default
         <div class="intro__image"></div>
         <div class="intro__content">
             <div class="intro__title">
-                CLI утилита построения пайплайнов CI/CD
+                CLI утилита для построения пайплайнов CI/CD
             </div>
             <div class="intro__text">
                 <ul class="intro__list">
                     <li>
-                        Werf — единственный инструмент, интегрирующий в себе такие известные инструменты как:<br/> <code>git</code>, <code>helm</code> и <code>Docker</code>.
+                        Werf интегрирует <code>git</code>, <code>helm</code> и <code>Docker</code>.
                     </li>
                     <li>
-                        Может быть встроен в любую существующую CI/CD-систему (наример Gitlab CI) <br>для построения пайплайнов CI/CD используя набор готовых инструментов:
+                        Может быть встроена в любую CI/CD-систему (например, GitLab CI) для построения пайплайнов, используя предложенный набор команд:
                         <ul class="intro__list_c2">
                             <li><code>werf build-and-publish</code>;</li>
                             <li><code>werf deploy</code>;</li>
@@ -48,7 +48,7 @@ layout: default
                         Open Source, написана на Golang.
                     </li>
                     <li>
-                        Werf — это не SAAS, а (по нашему мнению) представитель высокоуровневых CI/CD инструментов нового поколения.
+                        Werf — это не SAAS, а, по нашему мнению, представитель высокоуровневых CI/CD инструментов нового поколения.
                     </li>
                 </ul>
             </div>
@@ -79,10 +79,10 @@ layout: default
             </div>
             <div class="intro-extra__item-text">
                 <ul class="intro__list">
-                    <li>Собирайте образы из Dockerfile'ов либо используйте наш расширенный сборщик с Ansible и инкрементальной сборкой, учитывающей историю в git.</li>
-                    <li>Пуликуйте образы в Docker-registry с использованием расширенной схемы именования образов.</li>
-                    <li>Развертывайте образы приложения в кластере Kubernetes.</li>
-                    <li>Очищайте Docker-registry от мусора используя политики очистки.</li>
+                    <li>Собирайте образы c Dockerfile либо используйте наш расширенный сборщик с Ansible и инкрементальной сборкой, учитывающей историю в git.</li>
+                    <li>Публикуйте образы в Docker Registry, используя существующие схемы тегирования.</li>
+                    <li>Выкатывайте приложение в Kubernetes.</li>
+                    <li>Очищайте Docker Registry от неиспользуемых образов, используя политики очистки.</li>
                 </ul>
             </div>
         </li>
@@ -120,17 +120,17 @@ layout: default
             <li class="features__list-item">
                 <div class="features__list-item-icon features__list-item-icon_easy"></div>
                 <div class="features__list-item-title">Легко начать</div>
-                <div class="features__list-item-text">Можно использвать текущий процесс сборки с Dockerfile. Легко добавить Werf в ваш проект прямо сейчас.</div>
+                <div class="features__list-item-text">Начните использовать Werf с существующим Dockerfile.</div>
             </li>
             <li class="features__list-item">
                 <div class="features__list-item-icon features__list-item-icon_config"></div>
                 <div class="features__list-item-title">Компактный файл конфигурации</div>
-                <div class="features__list-item-text">Собирайте несколько образов используя один файл конфигурации, переиспользуйте общие части с помощью Go-шаблонов.</div>
+                <div class="features__list-item-text">Собирайте несколько образов, используя один файл конфигурации, переиспользуйте общие части с помощью Go-шаблонов.</div>
             </li>
             <li class="features__list-item">
                 <div class="features__list-item-icon features__list-item-icon_lifecycle"></div>
                 <div class="features__list-item-title">Полный цикл управления жизненным циклом приложения</div>
-                <div class="features__list-item-text">Легко управляйте процессом сборки и удаления образов, деплоем приложений в Kubernetes.</div>
+                <div class="features__list-item-text">Управляйте процессом сборки, выкатом приложения в Kubernetes и очисткой неиспользуемых образов.</div>
             </li>
             <li class="features__list-item">
                 <div class="features__list-item-icon features__list-item-icon_size"></div>
@@ -145,13 +145,13 @@ layout: default
             <li class="features__list-item">
                 <div class="features__list-item-icon features__list-item-icon_debug"></div>
                 <div class="features__list-item-title">Продвинутые инструменты отладки сборочного процесса</div>
-                <div class="features__list-item-text">Получайте доступ к любой стадии во время сборки, с помощью опций интроспекции.</div>
+                <div class="features__list-item-text">Получайте доступ к любой стадии во время сборки с помощью опций интроспекции.</div>
             </li>
             <li class="features__list-item"></li>
             <li class="features__list-item">
                 <div class="features__list-item-icon features__list-item-icon_kubernetes"></div>
                 <div class="features__list-item-title">Удобный деплой в <span>Kubernetes</span></div>
-                <div class="features__list-item-text">Деплойте в Kubernetes используя стандартный менеджер пакетов с интерактивным отслеживанием процесса и получением журналов в режиме реального времени, прямо в CI-задании.</div>
+                <div class="features__list-item-text">Выкатывайте приложения в Kubernetes, используя стандартный менеджер пакетов с интерактивным отслеживанием процесса и получением событий и логов в режиме реального времени.</div>
             </li>
             <li class="features__list-item"></li>
         </ul>
@@ -169,11 +169,11 @@ layout: default
             <div class="community__btns">
                 <a href="https://t.me/werf_ru" target="_blank" class="page__btn page__btn_w community__btn">
                     <span class="page__icon page__icon_telegram"></span>
-                    Подключайся в Telegram
+                    Мы в Telegram
                 </a>
                 <a href="https://cloud-native.slack.com/messages/CHY2THYUU" target="_blank" class="page__btn page__btn_w community__btn">
                     <span class="page__icon page__icon_slack"></span>
-                    Join via Slack
+                    Мы в Slack
                 </a>
             </div>
         </div>
@@ -191,15 +191,14 @@ layout: default
                     <div class="roadmap__goals-title">Цели</div>
                     <ul class="roadmap__goals-list">
                         <li class="roadmap__goals-list-item">
-                            Полнофункциональная версия Werf, которая хорошо работает на одном выделенным постоянно хосте для выполнения всех операций Werf (сборка, деплой и очистка).
+                            Полнофункциональная версия Werf, хорошо работающая на единственном хосте при выполнении всех операций Werf (сборка, деплой и очистка).
                         </li>
                         <li class="roadmap__goals-list-item">
-                            Проверенные подходы и рецепты работы<br/>
-                            с наиболее популярными CI-системами.
+                            Проверенные подходы и готовые решения<br/>
+                            для работы с популярными CI-системами.
                         </li>
                         <li class="roadmap__goals-list-item">
-                            Building images completely in userspace, <br/>
-                            a container or Kubernetes cluster.
+                            Развитие сборщика. Сборка образов без привязки к локальному Docker-демону и сборка в кластере Kubernetes.
                         </li>
                     </ul>
                 </div>
@@ -217,26 +216,26 @@ layout: default
                         <li class="roadmap__steps-list-item" data-roadmap-step="1940">
                             <a href="https://github.com/flant/werf/issues/1940" class="roadmap__steps-list-item-issue" target="_blank">#1940</a>
                             <span class="roadmap__steps-list-item-text">
-                                Легкая локальная разработка приложений с Werf.
+                                Локальная разработка приложений с Werf.
                             </span>
                         </li>
                         <li class="roadmap__steps-list-item" data-roadmap-step="1184">
                             <a href="https://github.com/flant/werf/issues/1184" class="roadmap__steps-list-item-issue" target="_blank">#1184</a>
                             <span class="roadmap__steps-list-item-text">
-                                Контентно-адресуемое тэгирование.
+                                Тэгирование, основанное на контенте.
                             </span>
                         </li>
                         <li class="roadmap__steps-list-item" data-roadmap-step="1617">
                             <a href="https://github.com/flant/werf/issues/1617" class="roadmap__steps-list-item-issue" target="_blank">#1617</a>
                             <span class="roadmap__steps-list-item-text">
-                            Проверенные подходы и рецепты работы<br/>
+                            Готовые рецепты для интеграции<br/>
                             с наиболее популярными CI-системами.
                             </span>
                         </li>
                         <li class="roadmap__steps-list-item" data-roadmap-step="1614">
                             <a href="https://github.com/flant/werf/issues/1614" class="roadmap__steps-list-item-issue" target="_blank">#1614</a>
                             <span class="roadmap__steps-list-item-text">
-                                Распределенная сборка с общим Docker-registry.
+                                Распределенная сборка с общим Docker Registry.
                             </span>
                         </li>
                         <li class="roadmap__steps-list-item" data-roadmap-step="1606">
@@ -248,8 +247,7 @@ layout: default
                         <li class="roadmap__steps-list-item" data-roadmap-step="1618">
                             <a href="https://github.com/flant/werf/issues/1618" class="roadmap__steps-list-item-issue" target="_blank">#1618</a>
                             <span class="roadmap__steps-list-item-text">
-                                Сборка в userspace без Docker-демона<br/>
-                                (как в <a href="https://github.com/GoogleContainerTools/kaniko" target="_blank">kaniko</a>).
+                                <a href="https://github.com/GoogleContainerTools/kaniko" target="_blank">Kaniko</a>-подобная сборка без привязки к локальному Docker-демону.
                             </span>
                         </li>
                     </ul>

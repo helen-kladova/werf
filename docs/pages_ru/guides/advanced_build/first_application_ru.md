@@ -224,17 +224,17 @@ source <(multiwerf use 1.0 beta)
     curl localhost:8000
     ```
 
-## Шаг 3: Загрузите образ в Docker-registry
+## Шаг 3: Загрузите образ в Docker Registry
 
-С помощью Werf можно пушить собранные образы в Docker-registry.
+С помощью Werf можно пушить собранные образы в Docker Registry.
 
-1. Запустите локальный Docker-registry:
+1. Запустите локальный Docker Registry:
 
     ```shell
     docker run -d -p 5000:5000 --restart=always --name registry registry:2
     ```
 
-2. Загрузите образ в Docker-registry используя Werf с пользовательской моделью тэгирования, используя тэг `v0.1.0`:
+2. Загрузите образ в Docker Registry используя Werf с пользовательской моделью тэгирования, используя тэг `v0.1.0`:
 
     ```shell
     werf publish --stages-storage :local --images-repo localhost:5000/symfony-demo --tag-custom v0.1.0

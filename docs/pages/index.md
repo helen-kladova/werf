@@ -36,7 +36,7 @@ layout: default
                         Werf is a single CLI tool that integrates well known tools:<br/> <code>git</code>, <code>helm</code> and <code>docker</code>.
                     </li>
                     <li>
-                        Werf can be embedded into any existing CI/CD system (like Gitlab CI) <br>to implement CI/CD pipelines using provided building blocks:
+                        Werf can be embedded into any existing CI/CD system (like GitLab CI) <br>to implement CI/CD pipelines using provided building blocks:
                         <ul class="intro__list_c2">
                             <li><code>werf build-and-publish</code>;</li>
                             <li><code>werf deploy</code>;</li>

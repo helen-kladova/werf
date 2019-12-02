@@ -99,7 +99,7 @@ ansible:
 werf build-and-publish --stages-storage :local --tag-custom myapp --images-repo :minikube
 ```
 
-Название собранного образа приложения состоит из адреса Docker-регистри (`REPO`) и тега (`TAG`). При указании `:minikube` в качестве адреса Docker-регистри, Werf использует в качестве адреса Docker-регистри адрес `werf-registry.kube-system.svc.cluster.local:5000/myapp`. Так как мы указали в качестве тега образа тег `myapp`, Werf загрузит в Docker-регистри образ `werf-registry.kube-system.svc.cluster.local:5000/myapp:myapp`.
+Название собранного образа приложения состоит из адреса Docker-регистри (`REPO`) и тэга (`TAG`). При указании `:minikube` в качестве адреса Docker-регистри, Werf использует в качестве адреса Docker-регистри адрес `werf-registry.kube-system.svc.cluster.local:5000/myapp`. Так как мы указали в качестве тега образа тег `myapp`, Werf загрузит в Docker-регистри образ `werf-registry.kube-system.svc.cluster.local:5000/myapp:myapp`.
 
 ## Подготовка конфигурации деплоя
 
@@ -167,7 +167,7 @@ spec:
 В конфигурации описывается создание Deployment'а `myapp-backend` (конструкция {% raw %}`{{ .Chart.Name }}-backend`{% endraw %} будет преобразована в `myapp-backend`) с четырьмя репликами.
 
 Конструкция {% raw %}`{{ werf_container_image . | indent 8 }}`{% endraw %} — это использование функции Go-шаблонов, добавляемой Werf, которая:
-* всегда возвращает поле `image:` объекта Kubernetes с корректным именем образа, учитывая используемую схему тегирования (в примере это — `werf-registry.kube-system.svc.cluster.local:5000/myapp:latest`)
+* всегда возвращает поле `image:` объекта Kubernetes с корректным именем образа, учитывая используемую схему тэгирования (в примере это — `werf-registry.kube-system.svc.cluster.local:5000/myapp:latest`)
 * дополнительно может возвращать другие поля объекта Kubernetes, такие как `imagePullPolicy`, на основании заложенной логики и некоторых внешних условий.
 
 Функция `werf_container_image` позволяет удобно указывать имя образа в объекте Kubernetes исходя из **описанной** (в `werf.yaml`) конфигурации. Как использовать эту функцию в случае если в конфигурации описано несколько образов, читай подробнее [в соответствующей статье]({{ site.baseurl }}/ru/documentation/reference/deploy_process/deploy_into_kubernetes.html#werf_container_image).
