@@ -10,17 +10,17 @@ author: Alexey Igrychev <alexey.igrychev@flant.com>
     Статья в процессе перевода.
 </div>
 
-Helm-чарт может содержатьпроизвольное число зависимостей — **сабчартов**.
+Helm-чарт может содержать произвольное число зависимостей — **сабчартов**.
 
-Сабчарты размещаются в папке `.helm/charts/SUBCHART_DIR`. Каждый сабчарт в папке `SUBCHART_DIR` представляет собой отдельный чарт с похожей структурой файлов (каждый сабчарт может также содержать сабчарт).
+Сабчарты размещаются в папке `.helm/charts/SUBCHART_DIR`. Каждый сабчарт в папке `SUBCHART_DIR` представляет собой отдельный чарт с похожей структурой файлов (каждый сабчарт может в свою очередь также содержать сабчарт).
 
-During deploy process werf will render, create and track all resources of all subcharts.
+Во время процесса деплоя Werf рендерит, создает и отслеживает все ресурсы всех сабчартов.
 
-## Managing subcharts with requirements.yaml
+## Управление сабчартами через файл requirements.yaml
 
-For chart developers, it is often easier to manage a single dependency file which declares all dependencies.
+Зачастую, в разработке применяется подход хранения зависимостей в одном файле, что позволяет проще управлять зависимостями из одной точки. Этот же подход справедлив и для управления зависимостями сабчартов.
 
-A `requirements.yaml` file is a YAML file in which developers can declare chart dependencies, along with the location of the chart and the desired version. For example, this requirements file declares two dependencies:
+YAML-файл `requirements.yaml` — это файл описания зависимостей, в котором разработчики могут указывать как зависимости чарта, так и его версию, а также путь размещения. Например, следующий файл описания зависимостей определяет две зависимости:
 
 ```yaml
 # requirements.yaml
@@ -33,30 +33,30 @@ dependencies:
   repository: "@stable"
 ```
 
-* The `name` should be the name of a chart, where that name must match the name in that chart's 'Chart.yaml' file.
-* The `version` field should contain a semantic version or version range.
-* The `repository` URL should point to a **Chart Repository**. Helm expects that by appending `/index.yaml` to the URL, it should be able to retrieve the chart repository's index. The `repository` can be an alias. The alias must start with `alias:` or `@`.
+* `name` — имя чарта, которое должно совпадать с именем (параметр `name`) в файле Chart.yaml соответствующего чарта — зависимости.
+* `version` — версия чарта согласно схеме семантического версионирования, либо диапазон версий.
+* `repository` — URL **репозитория чартов**. Helm ожидает, что добавив `/index.yaml` к URL, он получит список чартов репозитория. Значение `repository` может быть псевдонимом, который в этом случае должен начинаться с префикса `alias:` или `@`.
 
-The `requirements.lock` file lists the exact versions of immediate dependencies and their dependencies and so forth.
+Файл `requirements.lock` содержит точные версии прямых зависимостей, версии зависимостей прямых зависимостей и т.д.
 
-The `werf helm dependency` commands operate on that file, making it easy to synchronize between the desired dependencies and the actual dependencies stored in the `charts` directory:
-* Use [werf helm dependency list]({{ site.baseurl }}/documentation/cli/management/helm/dependency_list.html) to check dependencies and their statuses.  
-* Use [werf helm dependency update]({{ site.baseurl }}/documentation/cli/management/helm/dependency_update.html) to update `/charts` based on the contents of `requirements.yaml`.
-* Use [werf helm dependency build]({{ site.baseurl }}/documentation/cli/management/helm/dependency_build.html) to update `/charts` based on the `requirements.lock` file.
+Для работы с файлом зависимостей существуют команды `werf helm dependency`, которые упрощают синхронизацию между желаемыми зависимостями и фактическими зависимостями, указанными в папке чарта:
+* [werf helm dependency list]({{ site.baseurl }}/documentation/cli/management/helm/dependency_list.html) — проверка зависимостей и их статуса.  
+* [werf helm dependency update]({{ site.baseurl }}/documentation/cli/management/helm/dependency_update.html) — обновление папки `/charts` согласно содержимому файла `requirements.yaml`.
+* [werf helm dependency build]({{ site.baseurl }}/documentation/cli/management/helm/dependency_build.html) — обновление `/charts` согласно содержимому файла `requirements.lock`.
 
-All Chart Repositories that are used in `requirements.yaml` should be configured on the system. The `werf helm repo` commands can be used to interact with Chart Repositories:
-* Use [werf helm repo add]({{ site.baseurl }}/documentation/cli/management/helm/repo_add.html) to add Chart Repository.
-* Use [werf helm repo update]({{ site.baseurl }}/documentation/cli/management/helm/repo_update.html) to update local Chart Repositories indexes.
-* Use [werf helm repo remove]({{ site.baseurl }}/documentation/cli/management/helm/repo_remove.html) to remove Chart Repository.
-* Use [werf helm repo list]({{ site.baseurl }}/documentation/cli/management/helm/repo_list.html) to list existing Chart Repositories.
-* Use [werf helm repo search]({{ site.baseurl }}/documentation/cli/management/helm/repo_search.html) to search for a keyword in charts of configured Chart Repositories.
-* Use [werf helm repo fetch]({{ site.baseurl }}/documentation/cli/management/helm/repo_fetch.html) to download chart by chart reference.
+Все репозитории чартов, используемые в `requirements.yaml`, должны быть настроены в системе. Для работы с репозиториями чартов можно использовать команды `werf helm repo`:
+* [werf helm repo add]({{ site.baseurl }}/documentation/cli/management/helm/repo_add.html) — добавление репозитория чартов.
+* [werf helm repo update]({{ site.baseurl }}/documentation/cli/management/helm/repo_update.html) — обновление локального индекса репозиториев чартов.
+* [werf helm repo remove]({{ site.baseurl }}/documentation/cli/management/helm/repo_remove.html) — удаление репозитория чартов.
+* [werf helm repo list]({{ site.baseurl }}/documentation/cli/management/helm/repo_list.html) — вывод списка существующих репозиториев чартов.
+* [werf helm repo search]({{ site.baseurl }}/documentation/cli/management/helm/repo_search.html) — поиск по ключевому слову чарта в настроенных репозиториях чартов.
+* [werf helm repo fetch]({{ site.baseurl }}/documentation/cli/management/helm/repo_fetch.html) — скачивание чарта по ссылке.
 
-Werf is compatible with Helm settings, so by default `werf helm dependency` and `werf helm repo` commands use settings from **helm home folder**, `~/.helm`. But you can change it with `--helm-home` option. If you do not have **helm home folder** or want to create another one use [werf helm repo init]({{ site.baseurl }}/documentation/cli/management/helm/repo_init.html) command to initialize necessary settings and configure default Chart Repositories.
+Werf совместим с настройками Helm, поэтому по умолчанию команды `werf helm dependency` и `werf helm repo` используют настройки из папки конфигурации Helm в домашней папке пользователя, — `~/.helm`. Вы можете указать другую папку с помощью параметра `--helm-home`. Если у вас нет папки `~/.helm` в домашней папке, либо вы хотите создать другую, то вы можете использовать команду [werf helm repo init]({{ site.baseurl }}/documentation/cli/management/helm/repo_init.html) для инициализации необходимых настроек и конфигурации репозитория чартов по умолчанию.
 
-## Subchart and values
+## Сабчарты и данные
 
-To pass values from parent chart to subchart called `mysubchart` user must define following values in the parent chart:
+Чтобы передать данные из родительского чарта в сабчарт `mysubchart` необходимо определить следующие данные в в родительском чарте:
 
 ```yaml
 mysubchart:
@@ -65,7 +65,7 @@ mysubchart:
     - key3: value
 ```
 
-In the `mysubchart` these values should be specified without `mysubchart` key:
+В сабчарте `mysubchart` эти данные можно использовать с помощью обращения к соответствующим параметрам без указания ключа `mysubchart`:
 
 {% raw %}
 ```yaml
@@ -73,7 +73,7 @@ In the `mysubchart` these values should be specified without `mysubchart` key:
 ```
 {% endraw %}
 
-Global values defined by the special toplevel values key `global` will also be available in the subcharts:
+Данные, определенные глобально в ключе верхнего уровня `global`, также доступны в сабчартах:
 
 ```yaml
 global:
@@ -83,7 +83,7 @@ global:
       password: password
 ```
 
-In the subcharts these values should be specified as always:
+Обращаться к ним необходимо как обычно:
 
 {% raw %}
 ```yaml
@@ -91,6 +91,6 @@ In the subcharts these values should be specified as always:
 ```
 {% endraw %}
 
-Only values by keys `mysubchart` and `global` will be available in the subchart `mysubchart`.
+В сабчарте `mysubchart` будут доступны только данные ключей `mysubchart` и `global`.
 
-**NOTE** `secret-values.yaml` files from subcharts will not be used during deploy process. Although secret values from main chart and additional secret values from cli params `--secret-values` will be available in the `.Values` as usually.
+**ЗАМЕЧАНИЕ** Файлы `secret-values.yaml` сабчартов не будут использоваться во время процесса деплоя, несмотря на то, что данные секретов из главного чарта и данные переданные через параметр `--secret-values` будут доступны через массив `.Values` как обычно.
