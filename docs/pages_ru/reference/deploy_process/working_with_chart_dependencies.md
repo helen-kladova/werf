@@ -10,9 +10,9 @@ author: Alexey Igrychev <alexey.igrychev@flant.com>
     Статья в процессе перевода.
 </div>
 
-The chart can include arbitrary number of dependencies called **subcharts**.
+Helm-чарт может содержатьпроизвольное число зависимостей — **сабчартов**.
 
-Subcharts are placed in the directory `.helm/charts/SUBCHART_DIR`. Each subchart in the `SUBCHART_DIR` is a chart by itself with the similar files structure (which can also have own recursive subcharts).
+Сабчарты размещаются в папке `.helm/charts/SUBCHART_DIR`. Каждый сабчарт в папке `SUBCHART_DIR` представляет собой отдельный чарт с похожей структурой файлов (каждый сабчарт может также содержать сабчарт).
 
 During deploy process werf will render, create and track all resources of all subcharts.
 

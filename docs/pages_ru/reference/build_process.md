@@ -54,11 +54,11 @@ Werf использует специальный сервисный образ `
 
 ### Как сборщик Stapel работает с CMD и ENTRYPOINT
 
-Для сборки стадии Werf запускает контейнер со служебными значениями `CMD` и `ENTRYPOINT` а затем, заменяет их значениями [базового образа]({{ site.baseurl }}/ru/documentation/configuration/stapel_image/base_image.html). Если в базовом образе эти значения не установлены, Werf сбрасывает следующим образом:
+Для сборки стадии Werf запускает контейнер со служебными значениями `CMD` и `ENTRYPOINT` а затем, заменяет их значениями [базового образа]({{ site.baseurl }}/ru/documentation/configuration/stapel_image/base_image.html). Если в базовом образе эти значения не установлены, Werf сбрасывает их следующим образом:
 * `[]` для `CMD`;  
 * `[""]` для `ENTRYPOINT`.
 
-Также, Werf сбрасывает (использует специальные пустые значение) значение `ENTRYPOINT` базового образа, если указано значение `CMD` в конфигурации (`docker.CMD`).
+Также, Werf сбрасывает (использует специальные пустые значения) значение `ENTRYPOINT` базового образа, если указано значение `CMD` в конфигурации (`docker.CMD`).
 
 В противном случае, поведение Werf аналогично [поведению Docker](https://docs.docker.com/engine/reference/builder/#understand-how-cmd-and-entrypoint-interact).
 

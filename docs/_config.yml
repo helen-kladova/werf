@@ -11,6 +11,17 @@ sitemap_urls:
   en:
     url: https://werf.io
 
+social_links:
+  ru:
+    twitter: https://twitter.com/werf_io
+    telegram: https://t.me/werf_ru
+    slack: https://cloud-native.slack.com/messages/CHY2THYUU
+  en:
+    twitter: https://twitter.com/werf_io
+    telegram: https://t.me/werf_io
+    slack: https://cloud-native.slack.com/messages/CHY2THYUU
+  
+
 exclude:
 - .idea/
 - .gitignore

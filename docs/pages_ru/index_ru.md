@@ -9,7 +9,7 @@ layout: default
     <div class="page__container">
         <div class="welcome__content">
             <h1 class="welcome__title">
-                GitOps утилита
+                GitOps-утилита
             </h1>
             <div class="welcome__subtitle">
                  Быстро и легко обеспечивает доставку приложения.<br/>Open Source. Написана на Golang.
