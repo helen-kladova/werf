@@ -79,10 +79,10 @@ layout: default
             </div>
             <div class="intro-extra__item-text">
                 <ul class="intro__list">
-                    <li>Собирайте образы c Dockerfile либо используйте наш расширенный сборщик с Ansible и инкрементальной сборкой, учитывающей историю в git.</li>
-                    <li>Публикуйте образы в Docker Registry, используя существующие схемы тегирования.</li>
-                    <li>Выкатывайте приложение в Kubernetes.</li>
-                    <li>Очищайте Docker Registry от неиспользуемых образов, используя политики очистки.</li>
+                    <li>Сборка образов с Dockerfile либо с нашим синтаксисом, учитывая особенности инкрементальной сборкой (основанной на истории git), используя Ansible и многие дригие особенности Werf сборщика.</li>
+                    <li>Публикация образов в Docker Registry, используя множество различных схем тегирования.</li>
+                    <li>Выкат приложения в Kubernetes.</li>
+                    <li>Очистка Docker Registry, основанная на встроенных политиках и используемых в Kubernetes кластерах образах приложения.</li>
                 </ul>
             </div>
         </li>
@@ -134,24 +134,24 @@ layout: default
             </li>
             <li class="features__list-item">
                 <div class="features__list-item-icon features__list-item-icon_size"></div>
-                <div class="features__list-item-title">Уменьшение размеров образа</div>
-                <div class="features__list-item-text">Исключите исходный код и инструменты сборки с помощью артефактов, монтирования и возможностей Stapel.</div>
+                <div class="features__list-item-title">Уменьшение размера образа</div>
+                <div class="features__list-item-text">Сократите размер, исключив исходный код и инструменты сборки с помощью артефактов и монтирования.</div>
             </li>
             <li class="features__list-item">
                 <div class="features__list-item-icon features__list-item-icon_ansible"></div>
-                <div class="features__list-item-title">Собирайте образы с <span>Ansible</span></div>
+                <div class="features__list-item-title">Сборка образов с <span>Ansible</span></div>
                 <div class="features__list-item-text">Используйте популярный и мощный IaaS-инструмент.</div>
             </li>
             <li class="features__list-item">
                 <div class="features__list-item-icon features__list-item-icon_debug"></div>
-                <div class="features__list-item-title">Продвинутые инструменты отладки сборочного процесса</div>
+                <div class="features__list-item-title">Инструменты отладки сборочного процесса</div>
                 <div class="features__list-item-text">Получайте доступ к любой стадии во время сборки с помощью опций интроспекции.</div>
             </li>
             <li class="features__list-item"></li>
             <li class="features__list-item">
                 <div class="features__list-item-icon features__list-item-icon_kubernetes"></div>
                 <div class="features__list-item-title">Удобный деплой в <span>Kubernetes</span></div>
-                <div class="features__list-item-text">Выкатывайте приложения в Kubernetes, используя стандартный менеджер пакетов с интерактивным отслеживанием процесса и получением событий и логов в режиме реального времени.</div>
+                <div class="features__list-item-text">Выкатывайте приложение в Kubernetes, используя стандартный менеджер пакетов с интерактивным отслеживанием процесса и получением событий и логов в режиме реального времени.</div>
             </li>
             <li class="features__list-item"></li>
         </ul>
