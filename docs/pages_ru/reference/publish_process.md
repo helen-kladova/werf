@@ -51,20 +51,20 @@ docker rmi REPO:TAG
 
  1. Получение имени или id собранного локального образа.
  2. Создание временного образа-псевдонима, состоящего из следующих частей:
-     - [имя Docker-репозитория](https://docs.docker.com/glossary/?term=repository) содержащего в том числе и адрес Docker-регистри;
+     - [имя Docker-репозитория](https://docs.docker.com/glossary/?term=repository) содержащего в том числе и адрес Docker Registry;
      - [имя Docker-тэга](https://docs.docker.com/glossary/?term=tag).
- 3. Публикация образа-псевдонима в Docker-регистри.
+ 3. Публикация образа-псевдонима в Docker Registry.
  4. Удаление временного образа-псевдонима.
 
 В Werf реализована иная логика публикации [образа]({{ site.baseurl }}/ru/documentation/reference/stages_and_images.html#образы), описанного в конфигурации:
 
  1. Создание **нового образа** с определенным именем на основе соответствующего собранного образа. В созданном образе хранится информация о применяемой схеме тэгирования, необходимая для внутреннего использования Werf (эта информация сохраняется с использованием docker labels). Далее, такая информация будет упоминаться как **мета-информация** образа. Werf использует мета-информацию образа в [процессе деплоя]({{ site.baseurl }}/ru/documentation/reference/deploy_process/deploy_into_kubernetes.html#integration-with-built-images) и [процессе очистки]({{ site.baseurl }}/ru/documentation/reference/cleaning_process.html).
- 2. Публикация созданного образа в Docker-регистри.
+ 2. Публикация созданного образа в Docker Registry.
  3. Удаление образа, созданного на этапе 1.
 
 Далее, такой процесс будет называться **процессом публикации образа**.
 
-Результатом процесса публикации образа является образ, именованный согласно [*правил именования образов*](#именование-образов) и загруженный в Docker-регистри. Все эти шаги выполняются с помощью команды [werf publish]({{ site.baseurl }}/documentation/cli/main/publish.html) или [werf build-and-publish]({{ site.baseurl }}/documentation/cli/main/build_and_publish.html).
+Результатом процесса публикации образа является образ, именованный согласно [*правил именования образов*](#именование-образов) и загруженный в Docker Registry. Все эти шаги выполняются с помощью команды [werf publish]({{ site.baseurl }}/documentation/cli/main/publish.html) или [werf build-and-publish]({{ site.baseurl }}/documentation/cli/main/build_and_publish.html).
 
 ## Именование образов
 
@@ -83,7 +83,7 @@ docker rmi REPO:TAG
 - `IMAGES_REPO:IMAGE_NAME-TAG` в случае значения `monorepo` для параметра `--images-repo-mode`;
 - `IMAGES_REPO/IMAGE_NAME:TAG` в случае значения `multirepo` для параметра `--images-repo-mode` (используется по умолчанию).
 
-Большинство реализаций Docker-регистри позволяют создавать иерархию репозиториев, например `COMPANY/PROJECT/IMAGE`. В этом случае вам нет необходимости менять значение парамера `--images-repo-mode` со значения по умолчанию — `multirepo`. Но, если у вас в проекте описано несколько образов, и вы работаете с Docker-регистри неподдерживающим иерархию репозиториев (самый яркий пример, это — [Docker Hub](https://hub.docker.com/)), то вам потребуется указать значение `monorepo` в параметре `--images-repo-mode`. Подробнее о работе режима _monorepo/multirepo_ можно прочитать в нашей [статье](https://habr.com/ru/company/flant/blog/465131/).
+Большинство реализаций Docker Registry позволяют создавать иерархию репозиториев, например `COMPANY/PROJECT/IMAGE`. В этом случае вам нет необходимости менять значение парамера `--images-repo-mode` со значения по умолчанию — `multirepo`. Но, если у вас в проекте описано несколько образов, и вы работаете с Docker Registry неподдерживающим иерархию репозиториев (самый яркий пример, это — [Docker Hub](https://hub.docker.com/)), то вам потребуется указать значение `monorepo` в параметре `--images-repo-mode`. Подробнее о работе режима _monorepo/multirepo_ можно прочитать в нашей [статье](https://habr.com/ru/company/flant/blog/465131/).
 
 Значение, указываемое для параметра `--images-repo` может быть также передано через переменную окружения `$WERF_IMAGES_REPO`.
 
@@ -158,7 +158,7 @@ werf publish --stages-storage :local --images-repo registry.hello.com/web/core/s
 
 ### Два образа в задании GitLab CI
 
-Имеем файл конфигурации `werf.yaml` с описанными двумя образами  — `backend` и `frontend`. Имеем проект `web/core/system` в GitLab, и сконфигурированный Docker-регистри для проекта — `registry.hello.com/web/core/system`.
+Имеем файл конфигурации `werf.yaml` с описанными двумя образами  — `backend` и `frontend`. Имеем проект `web/core/system` в GitLab, и сконфигурированный Docker Registry для проекта — `registry.hello.com/web/core/system`.
 
 Запуск следующей команды в задании pipeline GitLab CI для ветки `core/feature/ADD_SETTINGS`:
 
@@ -175,7 +175,7 @@ werf publish --stages-storage :local
 
 ### Безымянный образ в задании GitLab CI
 
-Имеем файл конфигурации `werf.yaml` с описанным безымянным образом. Имеем проект `web/core/queue` в GitLab, и сконфигурированный Docker-регистри для проекта — `registry.hello.com/web/core/queue`.
+Имеем файл конфигурации `werf.yaml` с описанным безымянным образом. Имеем проект `web/core/queue` в GitLab, и сконфигурированный Docker Registry для проекта — `registry.hello.com/web/core/queue`.
 
 Запуск следующей команды в задании pipeline GitLab CI для тэга `v2.3.`:
 

@@ -14,9 +14,9 @@ ref: documentation_guides_unsupported_ci_cd_integration
 
 ## Настройка CI-окружения
 
-### Интеграция с Docker-регистри
+### Интеграция с Docker Registry
 
-Согласно процедуре [интеграции с Docker-регистри]({{ site.baseurl }}/ru/documentation/reference/plugging_into_cicd/overview.html#интеграция-с-docker-регистри), необходимо определить следующие переменные:
+Согласно процедуре [интеграции с Docker Registry]({{ site.baseurl }}/ru/documentation/reference/plugging_into_cicd/overview.html#интеграция-с-docker-registry), необходимо определить следующие переменные:
  * [`DOCKER_CONFIG`]({{ site.baseurl }}/ru/documentation/reference/plugging_into_cicd/overview.html#docker_config);
  * [`WERF_IMAGES_REPO`]({{ site.baseurl }}/ru/documentation/reference/plugging_into_cicd/overview.html#werf_images_repo).
 
