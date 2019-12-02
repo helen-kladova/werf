@@ -98,7 +98,7 @@ configVersion: 1
 
 Part of the configuration can be moved in ***separate template files*** and then included into __werf.yaml__. _Template files_ should live in the ***.werf*** directory with **.tmpl** extension (any nesting is supported).
 
-> **Tip:** templates can be generated or downloaded before running werf. For example, for sharing common logic between projects.
+> **Tip:** templates can be generated or downloaded before running werf. For example, for sharing common logic between projects
 
 Werf parses all files in one environment, thus described [define](#include) of one _template file_ becomes available in other files, including _werf.yaml_.
 
@@ -191,7 +191,7 @@ ansible:
 </div>
 </div>
 
-> If there are templates with the same name werf will use template defined in _werf.yaml_ or the latest described in _templates files_.
+> If there are templates with the same name werf will use template defined in _werf.yaml_ or the latest described in _templates files_
 
 If need to use the whole _template file_, use template file path relative to _.werf_ directory as a template name in [include](#include) function.
 
@@ -254,7 +254,7 @@ shell:
 </div>
 </div>
 
-<div class="details active">
+<div class="details">
 <a href="javascript:void(0)" class="details__summary">.werf/artifact/storefront.tmpl</a>
 <div class="details__content" markdown="1">
 
@@ -281,7 +281,7 @@ shell:
 The following steps could describe the processing of a YAML configuration file:
 1. Reading `werf.yaml` and extra templates from `.werf` directory;
 2. Executing Go templates;
-3. Saving dump into `.werf.render.yaml` (that file will remain after build and will be available until next render);
+3. Saving dump into `.werf.render.yaml` (this file remains after the command execution and will be removed automatically with GC procedure);
 4. Splitting rendered YAML file into separate config sections (part of YAML stream separated by three hyphens, https://yaml.org/spec/1.2/spec.html#id2800132);
 5. Validating each config section:
   * Validating YAML syntax (you could read YAML reference [here](http://yaml.org/refcard.html)).

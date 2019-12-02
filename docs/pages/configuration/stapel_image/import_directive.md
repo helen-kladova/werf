@@ -100,6 +100,6 @@ As in the case of adding _git mappings_, masks are supported for including, `inc
 You can also define the rights for the imported resources, `owner: <owner>` and `group: <group>`.
 Read more about these in the [git directive article]({{ site.baseurl }}/documentation/configuration/stapel_image/git_directive.html).
 
-> Import paths and _git mappings_ must not overlap with each other.
+> Import paths and _git mappings_ must not overlap with each other
 
 Information about _using artifacts_ available in [separate article]({{ site.baseurl }}/documentation/configuration/stapel_artifact.html).

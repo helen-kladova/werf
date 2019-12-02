@@ -8,7 +8,7 @@ ref: documentation_configuration_deploy_into_kubernetes
 
 ## Имя релиза
 
-Werf позволяет определять пользовательский шаблон имени helm-релиза, который используется во время [процесса деплоя]({{ site.baseurl }}/ru/documentation/reference/deploy_process/deploy_into_kubernetes.html#release-name) для генерации имени релиза.
+Werf позволяет определять пользовательский шаблон имени Helm-релиза, который используется во время [процесса деплоя]({{ site.baseurl }}/ru/documentation/reference/deploy_process/deploy_into_kubernetes.html#release-name) для генерации имени релиза.
 
 Пользовательский шаблон имени релиза определяется в [секции мета-информации]({{ site.baseurl }}/ru/documentation/configuration/introduction.html#meta-config-section) в файле `werf.yaml`:
 
@@ -20,7 +20,7 @@ deploy:
   helmReleaseSlug: false
 ```
 
-`deploy.helmReleaseSlug` включает или отключает [slug'ификацию]({{ site.baseurl }}/documentation/reference/deploy_process/deploy_into_kubernetes.html#release-name-slug) имени helm-релиза. Включен по умолчанию.
+`deploy.helmReleaseSlug` включает или отключает [slug'ификацию]({{ site.baseurl }}/documentation/reference/deploy_process/deploy_into_kubernetes.html#release-name-slug) имени Helm-релиза. Включен по умолчанию.
 
 В качестве значения для `deploy.helmRelease` указывается Go-шаблон с разделителями `[[` и `]]`. Поддерживаются функции `project` и `env`. Значение шаблона имени релиза по умолчанию: `[[ project ]]-[[ env ]]`.
 

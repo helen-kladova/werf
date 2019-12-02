@@ -30,7 +30,7 @@ image: example
 dockerfile: Dockerfile
 ```
 
-Вы можете также описывать несколько образов на основе одного и того-же Dockerfile:
+Вы можете также описывать несколько образов на основе одного и того же Dockerfile:
 
 ```yaml
 image: backend

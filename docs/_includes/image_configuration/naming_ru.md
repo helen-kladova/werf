@@ -1,5 +1,5 @@
 Образы описываются с помощью директивы _image_: `image: <image name>`, с которой начинается описание образа в конфигурации.
-Параметр _image name_ — строка с именем образа, аналогичная соответствующей в Docker:
+Параметр _image name_ — строка с именем, по аналогии с именем образа в Docker:
 
 ```yaml
 image: frontend
@@ -33,4 +33,4 @@ image: [main-front,main-back]
 * [werf build-and-publish \[IMAGE_NAME...\] \[options\]]({{ site.baseurl }}/documentation/cli/main/build_and_publish.html)
 * [werf run \[options\] \[IMAGE_NAME\] \[-- COMMAND ARG...\]]({{ site.baseurl }}/documentation/cli/main/run.html)
 
-Также, имя образа используется при загрузке собранного образа в registry (читайте подробнее в соответствующей [статье]({{ site.baseurl }}/ru/documentation/reference/publish_process.html)).
+Также, имя образа используется при загрузке собранного образа в Docker Registry (читайте подробнее в соответствующей [статье]({{ site.baseurl }}/ru/documentation/reference/publish_process.html)).

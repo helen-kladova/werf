@@ -26,7 +26,7 @@ sudo usermod -aG docker $USER
 
 [Multiwerf](https://github.com/flant/multiwerf) — это менеджер версий для Werf, который:
 * скачивает исполняемый файл Werf;
-* управляет версиями Werf, установленными на одном и том-же хосте;
+* управляет версиями Werf, установленными на одном и том же хосте;
 * автоматически обновляет исполняемый файл Werf (можно отключить).
 
 ```bash
@@ -41,7 +41,7 @@ curl -L https://raw.githubusercontent.com/flant/multiwerf/master/get.sh | bash
 source <(multiwerf use 1.0 beta)
 ```
 
-> _Замечание:_ Если вы используете bash версии < 4.0 (например для MacOS версия bash по умолчанию — 3.2), вы должны использовать команду `source /dev/stdin <<<"$(multiwerf use 1.0 beta)"` вместо `source <(multiwerf use 1.0 beta)`.
+> _Примечание:_ Если вы используете bash версии < 4.0 (например, для MacOS версия bash по умолчанию — 3.2), вы должны использовать команду `source /dev/stdin <<<"$(multiwerf use 1.0 beta)"` вместо `source <(multiwerf use 1.0 beta)`.
 
 ### Метод 2: скачать исполняемый файл
 

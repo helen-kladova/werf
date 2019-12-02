@@ -97,7 +97,7 @@ Werf получает информацию о кластерах Kubernetes и �
 
 Выполняя эту операцию, Werf удаляет _стадии_, которые не относятся ни к каким образам в Docker Registry.
 
-> Если первый этап очистки по политикам — выполнение команды [werf images cleanup]({{ site.baseurl }}/documentation/cli/management/images/cleanup.html) — был пропущен, , то выполнение команды [werf stages cleanup]({{ site.baseurl }}/documentation/cli/management/stages/cleanup.html) не даст никакого эффекта.
+> Если первый этап очистки по политикам — выполнение команды [werf images cleanup]({{ site.baseurl }}/documentation/cli/management/images/cleanup.html) — был пропущен, , то выполнение команды [werf stages cleanup]({{ site.baseurl }}/documentation/cli/management/stages/cleanup.html) не даст никакого эффекта
 
 ## Ручная очистка
 

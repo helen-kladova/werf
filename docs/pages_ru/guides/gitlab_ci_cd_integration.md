@@ -118,7 +118,7 @@ Build:
 
 Для авторизации в registy (при выполнении push/pull образов) werf использует переменную окружения GitLab `CI_JOB_TOKEN` (читай подробнее про модель разграничения доступа при выполнении заданий в GitLab [здесь](https://docs.gitlab.com/ee/user/project/new_ci_build_permissions_model.html)). Это не единственный, но самый рекомендуемый вариант в случае работы с GitLab (читай более подробно про авторизацию Werf в Docker Registry [здесь]({{ site.baseurl }}/ru/documentation/reference/registry_authorization.html)). В простейшем случае, если вы используете встроенный в GitLab registry, вам не нужно делать никаких дополнительных действий для авторизации.
 
-Если вам нужно чтобы Werf не использовал переменную `CI_JOB_TOKEN`, либо вы используете не встроенный в GitLab Docker Registry (например `Google Container Registry`), читайте подробнее о вариантах авторизации в Docker Registry [здесь]({{ site.baseurl }}/ru/documentation/reference/registry_authorization.html).
+Если вам нужно чтобы Werf не использовал переменную `CI_JOB_TOKEN`, либо вы используете не встроенный в GitLab Docker Registry (например, `Google Container Registry`), читайте подробнее о вариантах авторизации в Docker Registry [здесь]({{ site.baseurl }}/ru/documentation/reference/registry_authorization.html).
 
 ### Стадии деплоя
 

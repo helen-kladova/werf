@@ -93,7 +93,7 @@ Werf gets information about kubernetes clusters and how to connect to them from 
 Executing a [stages storage cleanup command]({{ site.baseurl }}/documentation/cli/management/stages/cleanup.html) is necessary to update it according to a _images repo_.
 On this step, werf deletes _stages_ which do not relate to _images_ currently existing in the _images repo_.
 
-> If the [images cleanup command]({{ site.baseurl }}/documentation/cli/management/images/cleanup.html), — the first step of cleaning by policies, — was skipped, then [stages storage cleanup]({{ site.baseurl }}/documentation/cli/management/stages/cleanup.html) makes no sense.
+> If the [images cleanup command]({{ site.baseurl }}/documentation/cli/management/images/cleanup.html), — the first step of cleaning by policies, — was skipped, then [stages storage cleanup]({{ site.baseurl }}/documentation/cli/management/stages/cleanup.html) makes no sense
 
 ## Manual cleaning
 

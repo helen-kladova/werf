@@ -232,7 +232,6 @@ Werf performs _user stage_ commands as follows:
 
 > `bash` binary is stored in a _stapel volume_. Details about the concept can be found in this [blog post [RU]](https://habr.com/company/flant/blog/352432/) (referred `dappdeps` has been renamed to `stapel` but the principle is the same)
 
-
 ## Ansible
 
 Syntax for _user stages_ with _ansible assembly instructions_:
@@ -557,7 +556,7 @@ For each _user stage_ werf creates a list of matched files and calculates a chec
 
 Mask that starts with `*` is treated as anchor name by yaml parser. So mask with `*` or `**` patterns at the beginning should be quoted:
 
-```
+```yaml
 # * at the beginning of mask, so use double quotes
 - "*.rb"
 # single quotes also work
@@ -578,7 +577,6 @@ These checksums are calculated in the beginning of the build process before any 
 Example:
 
 ```yaml
----
 image: app
 git:
 - add: /src
@@ -595,7 +593,7 @@ shell:
   - echo "setup stage"
 ```
 
-This `werf.yaml` has a git mapping configuration to transfer `/src` content from local git repository into `/app` directory in the image. During the first build, files are cached in _gitArchive_ stage and assembly instructions for _install_ and _beforeSetup_ are executed. The next builds of commits that have only changes outside of the `/src` do not execute assembly instructions. If a commit has changes inside `/src` directory, then checksums of matched files are changed, werf will apply git patch, rebuild all existing stages since _beforeSetup_: _beforeSetup_ and _setup_. Werf will apply patch on the _beforeSetup_ stage itself.
+This `werf.yaml` has a _git mapping_ configuration to transfer `/src` content from local git repository into `/app` directory in the image. During the first build, files are cached in _gitArchive_ stage and assembly instructions for _install_ and _beforeSetup_ are executed. The next builds of commits that have only changes outside of the `/src` do not execute assembly instructions. If a commit has changes inside `/src` directory, then checksums of matched files are changed, werf will apply git patch, rebuild all existing stages since _beforeSetup_: _beforeSetup_ and _setup_. Werf will apply patch on the _beforeSetup_ stage itself.
 
 ## Dependency on CacheVersion values
 

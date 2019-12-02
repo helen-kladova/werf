@@ -85,7 +85,7 @@ werf run --stages-storage :local --docker-options="-d -p 9000:9000 --name go-boo
 docker ps -f "name=go-booking"
 ```
 
-Вы должны увидеть запущенный контейнер `go-booking`, например вывод может быть подобен следующему:
+Вы должны увидеть запущенный контейнер `go-booking`, например, вывод может быть подобен следующему:
 ```bash
 CONTAINER ID  IMAGE                                          COMMAND        CREATED        STATUS        PORTS                   NAMES
 41d6f49798a8  image-stage-hotel-booking:f27efaf9...1456b0b4  "/app/run.sh"  3 minutes ago  Up 3 minutes  0.0.0.0:9000->9000/tcp  go-booking
@@ -186,7 +186,7 @@ werf run --stages-storage :local --docker-options="-d -p 9000:9000 --name go-boo
 docker ps -f "name=go-booking"
 ```
 
-Вы должны увидеть запущенный контейнер `go-booking`, например вывод может быть следующим:
+Вы должны увидеть запущенный контейнер `go-booking`, например, вывод может быть следующим:
 ```bash
 CONTAINER ID  IMAGE                                          COMMAND        CREATED        STATUS        PORTS                   NAMES
 41d6f49798a8  image-stage-hotel-booking:306aa6e8...f71dbe53  "/app/run.sh"  3 minutes ago  Up 3 minutes  0.0.0.0:9000->9000/tcp  go-booking
