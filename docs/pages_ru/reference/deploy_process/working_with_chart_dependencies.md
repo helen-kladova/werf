@@ -6,10 +6,6 @@ ref: documentation_reference_deploy_process_working_with_chart_dependencies
 author: Alexey Igrychev <alexey.igrychev@flant.com>
 ---
 
-<div id="outdatedWarning" class="docs__outdated active">
-    Статья в процессе перевода.
-</div>
-
 Helm-чарт может содержать произвольное число зависимостей — **сабчартов**.
 
 Сабчарты размещаются в папке `.helm/charts/SUBCHART_DIR`. Каждый сабчарт в папке `SUBCHART_DIR` представляет собой отдельный чарт с похожей структурой файлов (каждый сабчарт может в свою очередь также содержать сабчарт).
