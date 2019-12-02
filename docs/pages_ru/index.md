@@ -12,7 +12,7 @@ layout: default
                 GitOps-утилита
             </h1>
             <div class="welcome__subtitle">
-                 Быстро и легко обеспечивает доставку приложения.<br/>Open Source. Написана на Golang.
+                 Выкатывайте приложения быстро и просто.<br/>Open Source. Написана на Golang.
             </div>
             <form action="https://www.google.com/search" class="welcome__search" method="get" name="searchform" target="_blank">
                 <input name="sitesearch" type="hidden" value="werf.io">
@@ -66,10 +66,10 @@ layout: default
                 <ul class="intro__list">
                     <li>Полная совместимость с Helm.</li>
                     <li>Простое использование RBAC.</li>
-                    <li>Обычный подход к развертыванию приложений в Kubernetes не гарантирует развертывания функционирующего приложения. Werf дает вам эту гарантию.</li>
-                    <li>Werf может остановить весь процесс развертывания задания CI-системы в случае найденной проблемы, не дожидаясь таймаутов и не заставляя вас запускать kubectl. Вы быстрее отладите ваше приложение.</li>
+                    <li>Выкаченное приложение в Kubernetes == готовое к использованию.</li>
+                    <li>Обнаружение проблем и быстрое завершение проблемного выката.</li>
+                    <li>Получение в режиме реального времени информации о процессе деплоя.</li>
                     <li>Настраиваемый детектор ошибок и готовности ресурсов Kubernetes с использованием их аннотаций.</li>
-                    <li>Богатое журналирование и информативный отчет об ошибках.</li>
                 </ul>
             </div>
         </li>
@@ -107,7 +107,7 @@ layout: default
                 <li class="stats__list-item">
                     <div class="stats__list-item-num gh_counter">1010</div>
                     <div class="stats__list-item-title">звезд на GitHub</div>
-                    <div class="stats__list-item-subtitle">подкиньте еще ;)</div>
+                    <div class="stats__list-item-subtitle">поддержите проект ;)</div>
                 </li>
             </ul>
         </div>
@@ -135,7 +135,7 @@ layout: default
             <li class="features__list-item">
                 <div class="features__list-item-icon features__list-item-icon_size"></div>
                 <div class="features__list-item-title">Уменьшение размера образа</div>
-                <div class="features__list-item-text">Сократите размер, исключив исходный код и инструменты сборки с помощью артефактов и монтирования.</div>
+                <div class="features__list-item-text">Сократите размер, исключив исходный код, инструменты сборки и кэши с помощью артефактов и монтирования.</div>
             </li>
             <li class="features__list-item">
                 <div class="features__list-item-icon features__list-item-icon_ansible"></div>

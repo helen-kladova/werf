@@ -9,4 +9,4 @@
 
 Мы внимательно рассматриваем ваши [issues](https://github.com/flant/werf/issues) на GitHub.
 
-Также мы есть Twitter: [https://twitter.com/werf_io](https://twitter.com/werf_io).
+Также мы есть в Twitter: [https://twitter.com/werf_io](https://twitter.com/werf_io).
