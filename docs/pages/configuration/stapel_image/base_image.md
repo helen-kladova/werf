@@ -9,11 +9,12 @@ summary: |
       <img src="https://docs.google.com/drawings/d/e/2PACX-1vReDSY8s7mMtxuxwDTwtPLFYjEXePaoIB-XbEZcunJGNEHrLbrb9aFxyOoj_WeQe0XKQVhq7RWnG3Eq/pub?w=1016&amp;h=72">
   </a>
 
-  <div class="language-yaml highlighter-rouge"><pre class="highlight"><code><span class="s">from</span><span class="pi">:</span> <span class="s">&lt;image[:&lt;tag&gt;]&gt;</span>
-  <span class="s">fromLatest</span><span class="pi">:</span> <span class="s">&lt;bool&gt;</span>
-  <span class="s">fromCacheVersion</span><span class="pi">:</span> <span class="s">&lt;arbitrary string&gt;</span>
-  <span class="s">fromImage</span><span class="pi">:</span> <span class="s">&lt;image name&gt;</span>
-  <span class="s">fromImageArtifact</span><span class="pi">:</span> <span class="s">&lt;artifact name&gt;</span></code></pre>
+  <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">from</span><span class="pi">:</span> <span class="s">&lt;image[:&lt;tag&gt;]&gt;</span>
+  <span class="na">fromLatest</span><span class="pi">:</span> <span class="s">&lt;bool&gt;</span>
+  <span class="na">fromCacheVersion</span><span class="pi">:</span> <span class="s">&lt;arbitrary string&gt;</span>
+  <span class="na">fromImage</span><span class="pi">:</span> <span class="s">&lt;image name&gt;</span>
+  <span class="na">fromImageArtifact</span><span class="pi">:</span> <span class="s">&lt;artifact name&gt;</span>
+  </code></pre></div>
   </div>
 ---
 

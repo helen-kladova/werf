@@ -27,7 +27,7 @@ image: backend
 image: [main-front,main-back]
 ```
 
-Указав имя образа вы можете использовать его впоследствии в большинстве команд, например:
+Имя образа может быть использовано в большинстве команд:
 * [werf build \[IMAGE_NAME...\] \[options\]]({{ site.baseurl }}/documentation/cli/main/build.html)
 * [werf publish \[IMAGE_NAME...\] \[options\]]({{ site.baseurl }}/documentation/cli/main/publish.html)
 * [werf build-and-publish \[IMAGE_NAME...\] \[options\]]({{ site.baseurl }}/documentation/cli/main/build_and_publish.html)

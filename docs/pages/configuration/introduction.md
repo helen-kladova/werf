@@ -33,7 +33,7 @@ More types can be added in the future.
 
 ### Meta config section
 
-```
+```yaml
 project: PROJECT_NAME
 configVersion: CONFIG_VERSION
 OTHER_FIELDS
@@ -68,7 +68,7 @@ Each image config section defines instructions to build one independent docker i
 
 Config section with the key `image: IMAGE_NAME` is the image config section. `image` defines short name of the docker image to be built. This name must be unique in a single `werf.yaml` config.
 
-```
+```yaml
 image: IMAGE_NAME_1
 OTHER_FIELDS
 ---
@@ -279,10 +279,10 @@ shell:
 ## Processing of config
 
 The following steps could describe the processing of a YAML configuration file:
-1. Reading `werf.yaml` and extra templates from `.werf` directory;
-2. Executing Go templates;
-3. Saving dump into `.werf.render.yaml` (this file remains after the command execution and will be removed automatically with GC procedure);
-4. Splitting rendered YAML file into separate config sections (part of YAML stream separated by three hyphens, https://yaml.org/spec/1.2/spec.html#id2800132);
+1. Reading `werf.yaml` and extra templates from `.werf` directory.
+2. Executing Go templates.
+3. Saving dump into `.werf.render.yaml` (this file remains after the command execution and will be removed automatically with GC procedure).
+4. Splitting rendered YAML file into separate config sections (part of YAML stream separated by three hyphens, https://yaml.org/spec/1.2/spec.html#id2800132).
 5. Validating each config section:
   * Validating YAML syntax (you could read YAML reference [here](http://yaml.org/refcard.html)).
   * Validating werf syntax.
