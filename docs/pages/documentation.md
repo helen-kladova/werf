@@ -2,8 +2,6 @@
 title: Overview
 permalink: documentation/index.html
 sidebar: documentation
-ref: documentation
-lang: en
 ---
 
 Documentation of Werf comprises ~100 articles which include common use cases (getting started, deploy to Kubernetes, CI/CD integration and more), comprehensive description of its functions & architecture, as well as CLI, commands.

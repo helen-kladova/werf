@@ -3,7 +3,6 @@ title: Использование монтирования
 sidebar: documentation
 permalink: ru/documentation/guides/advanced_build/mounts.html
 author: Artem Kladov <artem.kladov@flant.com>
-ref: documentation_guides_advanced_build_mounts
 ---
 
 ## Обзор задачи

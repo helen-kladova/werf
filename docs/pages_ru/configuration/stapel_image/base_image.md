@@ -2,7 +2,6 @@
 title: Базовый образ
 sidebar: documentation
 permalink: ru/documentation/configuration/stapel_image/base_image.html
-ref: documentation_configuration_stapel_image_base_image
 author: Alexey Igrychev <alexey.igrychev@flant.com>
 summary: |
   <a class="google-drawings" href="https://docs.google.com/drawings/d/e/2PACX-1vReDSY8s7mMtxuxwDTwtPLFYjEXePaoIB-XbEZcunJGNEHrLbrb9aFxyOoj_WeQe0XKQVhq7RWnG3Eq/pub?w=2031&amp;h=144" data-featherlight="image">

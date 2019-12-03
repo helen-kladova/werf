@@ -2,7 +2,6 @@
 title: Именование
 sidebar: documentation
 permalink: ru/documentation/configuration/stapel_image/naming.html
-ref: documentation_configuration_stapel_image_naming
 author: Alexey Igrychev <alexey.igrychev@flant.com>
 ---
 

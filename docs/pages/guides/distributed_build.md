@@ -3,7 +3,6 @@ title: Distributed build with GitLab
 sidebar: documentation
 permalink: documentation/guides/distributed_build.html
 author: Artem Kladov <artem.kladov@flant.com>
-ref: documentation_guides_distributed_build
 ---
 
 ## Task Overview

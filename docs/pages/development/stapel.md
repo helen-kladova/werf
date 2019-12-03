@@ -2,7 +2,6 @@
 title: Stapel
 sidebar: documentation
 permalink: documentation/development/stapel.html
-ref: documentation_development_stapel
 author: Timofey Kirillov <timofey.kirillo@flant.com>
 ---
 

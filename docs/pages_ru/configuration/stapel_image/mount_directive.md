@@ -2,7 +2,6 @@
 title: Монтирование, для уменьшения размера и ускорения сборки
 sidebar: documentation
 permalink: ru/documentation/configuration/stapel_image/mount_directive.html
-ref: documentation_configuration_stapel_image_mount_directive
 author: Artem Kladov <artem.kladov@flant.com>, Alexey Igrychev <alexey.igrychev@flant.com>
 summary: |
   <a class="google-drawings" href="https://docs.google.com/drawings/d/e/2PACX-1vReDSY8s7mMtxuxwDTwtPLFYjEXePaoIB-XbEZcunJGNEHrLbrb9aFxyOoj_WeQe0XKQVhq7RWnG3Eq/pub?w=2031&amp;h=144" data-featherlight="image">

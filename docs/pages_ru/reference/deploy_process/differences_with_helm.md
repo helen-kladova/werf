@@ -2,7 +2,6 @@
 title: Отличия от Helm
 sidebar: documentation
 permalink: ru/documentation/reference/deploy_process/differences_with_helm.html
-ref: documentation_reference_deploy_process_differences_with_helm
 author: Timofey Kirillov <timofey.kirillov@flant.com>
 ---
 

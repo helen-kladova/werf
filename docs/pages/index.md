@@ -1,7 +1,6 @@
 ---
 title: Main page
 permalink: /
-ref: main
 layout: default
 ---
 

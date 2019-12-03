@@ -2,7 +2,6 @@
 title: Stapel-артефакт
 sidebar: documentation
 permalink: ru/documentation/configuration/stapel_artifact.html
-ref: documentation_configuration_stapel_artifact
 author: Alexey Igrychev <alexey.igrychev@flant.com>
 summary: |
   <a class="google-drawings" href="https://docs.google.com/drawings/d/e/2PACX-1vRD-K_z7KEoliEVT4GpTekCkeaFMbSPWZpZkyTDms4XLeJAWEnnj4EeAxsdwnU3OtSW_vuKxDaaFLgD/pub?w=1800&amp;h=850" data-featherlight="image">

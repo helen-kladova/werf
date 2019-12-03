@@ -3,7 +3,6 @@ title: Mounts
 sidebar: documentation
 permalink: documentation/guides/advanced_build/mounts.html
 author: Artem Kladov <artem.kladov@flant.com>
-ref: documentation_guides_advanced_build_mounts
 ---
 
 ## Task Overview

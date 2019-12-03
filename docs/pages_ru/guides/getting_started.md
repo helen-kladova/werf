@@ -3,7 +3,6 @@ title: Первые шаги
 sidebar: documentation
 permalink: ru/documentation/guides/getting_started.html
 author: Artem Kladov <artem.kladov@flant.com>
-ref: guides_getting_started
 ---
 
 ## Обзор задачи

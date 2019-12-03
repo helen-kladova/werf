@@ -2,7 +2,6 @@
 title: Методы обновления ресурсов и применения изменений
 sidebar: documentation
 permalink: ru/documentation/reference/deploy_process/resources_update_methods_and_adoption.html
-ref: documentation_reference_deploy_process_resources_update_methods_and_adoption
 author: Timofey Kirillov <timofey.kirillov@flant.com>
 ---
 

@@ -2,7 +2,6 @@
 title: Publish process
 sidebar: documentation
 permalink: documentation/reference/publish_process.html
-ref: documentation_reference_publish_process
 author: Timofey Kirillov <timofey.kirillov@flant.com>
 ---
 

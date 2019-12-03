@@ -2,9 +2,7 @@
 title: Очистка
 sidebar: documentation
 permalink: ru/documentation/reference/cleaning_process.html
-ref: documentation_reference_cleaning_process
 author: Artem Kladov <artem.kladov@flant.com>, Timofey Kirillov <timofey.kirillov@flant.com>
-ref: reference_cleaning_process
 ---
 
 В процессе сборки образов приложений и их публикации, Docker-слои создаются но никогда не удаляются. Как следствие, _хранилище стадий_ и репозиторий образов в Docker Registry постоянно увеличивается в размерах, требуя все больше и больше ресурсов. Прерванная сборка образа также оставляет после себя образы, которые уже никогда не будут использоваться. В случае удаления ветки или тэга в git, соответствующие стадии, использованные для сборки образа, также остаются в _хранилище стадий_ и Docker Registry.

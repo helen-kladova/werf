@@ -3,7 +3,6 @@ title: Использование артефактов
 sidebar: documentation
 permalink: ru/documentation/guides/advanced_build/artifacts.html
 author: Artem Kladov <artem.kladov@flant.com>
-ref: documentation_guides_advanced_build_artifacts
 ---
 
 ## Обзор задачи

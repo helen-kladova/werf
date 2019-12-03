@@ -3,7 +3,6 @@ title: First application
 sidebar: documentation
 permalink: documentation/guides/advanced_build/first_application.html
 author: Ivan Mikheykin <ivan.mikheykin@flant.com>
-ref: documentation_guides_advanced_build_first_application
 ---
 
 ## Task Overview
