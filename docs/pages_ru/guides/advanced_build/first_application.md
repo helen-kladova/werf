@@ -22,7 +22,7 @@ author: Ivan Mikheykin <ivan.mikheykin@flant.com>
 ## Требования
 
 * Минимальные знания [Docker](https://www.docker.com/) и [инструкций Dockerfile'а](https://docs.docker.com/engine/reference/builder/).
-* Установленные [зависимости Werf]({{ site.baseurl }}/ru/documentation/guides/installation.html#install-dependencies).
+* Установленные [зависимости Werf]({{ site.baseurl }}/documentation/guides/installation.html#install-dependencies).
 * Установленный [Multiwerf](https://github.com/flant/multiwerf).
 
 ### Выбор версии Werf
@@ -246,4 +246,4 @@ source <(multiwerf use 1.0 beta)
 * Если хранить файл в git-репозитории, то при его копировании можно сразу же (в той-же команде) указывать необходимые права.
 * Лучше использовать `composer install` вместо `composer update` чтобы устанавливать зависимости согласно версий, закрепленных в файлах `composer.lock`, `package.json` и `yarn.lock`. Также, при сборке необходима проверка этих файлов и запуск `composer install` при их изменении. Чтобы добиться этого, в Werf есть директива `stageDependencies`.
 
-Решение этих задач рассматривается в [соответствующем разделе]({{ site.baseurl }}/ru/documentation/configuration/stapel_image/git_directive.html) документации.
+Решение этих задач рассматривается в [соответствующем разделе]({{ site.baseurl }}/documentation/configuration/stapel_image/git_directive.html) документации.

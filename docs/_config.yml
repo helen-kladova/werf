@@ -23,7 +23,7 @@ exclude:
 - .idea/
 - .gitignore
 - vendor
-- pages_ru
+- pages_ru/
 
 highlighter: rouge
 

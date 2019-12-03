@@ -17,7 +17,7 @@ Werf же, позволяет описать все образы проекта 
 
 ## Требования
 
-* Установленные [зависимости Werf]({{ site.baseurl }}/ru/documentation/guides/installation.html#install-dependencies).
+* Установленные [зависимости Werf]({{ site.baseurl }}/documentation/guides/installation.html#install-dependencies).
 * Установленный [Multiwerf](https://github.com/flant/multiwerf).
 
 ### Выбор версии Werf
@@ -36,7 +36,7 @@ source <(multiwerf use 1.0 beta)
 
 ### Backend
 
-Образ с именем `app`. Контейнер с backend принимает HTTP-запросы от контейнера frontend. Исходный код приложения находится в папке `/app`, и состоит из приложения на Java и приложения на ReactJS. Для сборки образа backend, будем использовать два артефакта (читай подробней об артефактах [здесь]({{ site.baseurl }}/ru/documentation/configuration/stapel_artifact.html)) — `storefront` и `appserver`.
+Образ с именем `app`. Контейнер с backend принимает HTTP-запросы от контейнера frontend. Исходный код приложения находится в папке `/app`, и состоит из приложения на Java и приложения на ReactJS. Для сборки образа backend, будем использовать два артефакта (читай подробней об артефактах [здесь]({{ site.baseurl }}/documentation/configuration/stapel_artifact.html)) — `storefront` и `appserver`.
 
 Образ самого backend основан на официальном образе Java. Он использует файлы из артефактов и не требует дополнительных шагов по скачиванию и сборке чего-либо.
 
@@ -88,7 +88,7 @@ shell:
 
 #### Артефакт Appserver
 
-В артефакте выполняется сборка Java-кода, после чего результат — jar-файл `AtSea-0.0.1-SNAPSHOT.jar` импортируется в папку `/app` в backend-образ `app`. Для эффективности, сборка образа `appserver` разделена на две стадии — _install_ и _setup_. А также, папка `/usr/share/maven/ref/repository` монтируется с помощью инструкции `build_dir`, чтобы заработало кэширование (читай подробнее об инструкциях монтирования [здесь]({{ site.baseurl }}/ru/documentation/configuration/stapel_image/mount_directive.html)).
+В артефакте выполняется сборка Java-кода, после чего результат — jar-файл `AtSea-0.0.1-SNAPSHOT.jar` импортируется в папку `/app` в backend-образ `app`. Для эффективности, сборка образа `appserver` разделена на две стадии — _install_ и _setup_. А также, папка `/usr/share/maven/ref/repository` монтируется с помощью инструкции `build_dir`, чтобы заработало кэширование (читай подробнее об инструкциях монтирования [здесь]({{ site.baseurl }}/documentation/configuration/stapel_image/mount_directive.html)).
 
 ```yaml
 artifact: appserver
@@ -423,6 +423,6 @@ docker stop reverse_proxy app database payment_gw
 ## Выводы
 
 Мы описали инструкции по сборке всех образов приложения в одном файле. Приведенный пример иллюстрирует следующие возможности:
-* Если в вашем проекте есть схожие образы, вы можете обеспечить совместное использование каких либо частей в образах с помощью монтирования папок директивой  `build_dir` (читайте подробнее об этом [здесь]({{ site.baseurl }}/ru/documentation/configuration/stapel_image/mount_directive.html)).
+* Если в вашем проекте есть схожие образы, вы можете обеспечить совместное использование каких либо частей в образах с помощью монтирования папок директивой  `build_dir` (читайте подробнее об этом [здесь]({{ site.baseurl }}/documentation/configuration/stapel_image/mount_directive.html)).
 * Вы можете использовать общие артефакты в разных образах, описав все это в одном файле конфигураций.
 * Вы можете использовать шаблоны в файле конфигураций, для описания образов со схожими инструкциями.

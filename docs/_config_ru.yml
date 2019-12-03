@@ -6,8 +6,7 @@ exclude:
 - pages/
 
 include:
-- pages_ru
-- pages/cli
+- pages_ru/
 
 breadcrumbs:
   hometext: "Начало"

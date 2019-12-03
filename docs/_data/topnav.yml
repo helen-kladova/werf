@@ -12,10 +12,10 @@ topnav:
        url: /releases.html
   ru:
      - title: Установка
-       url: /ru/documentation/guides/installation.html
+       url: /documentation/guides/installation.html
      - title: Документация
-       url: /ru/documentation/
+       url: /documentation/
      - title: Публикации
-       url: /ru/publications.html
+       url: /publications.html
      - title: Релизы
        url: /releases.html

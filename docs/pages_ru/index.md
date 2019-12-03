@@ -276,10 +276,10 @@ layout: default
             <a href="https://github.com/flant/werf" target="_blank" class="page__btn page__btn_b documentation__btn">
                 Начать использовать
             </a>
-            <a href="{{ site.baseurl }}/ru/documentation/guides/getting_started.html" class="page__btn page__btn_o documentation__btn">
+            <a href="{{ site.baseurl }}/documentation/guides/getting_started.html" class="page__btn page__btn_o documentation__btn">
                 Руководства для старта
             </a>
-            <a href="{{ site.baseurl }}/ru/documentation/cli/main/build.html" class="page__btn page__btn_o documentation__btn">
+            <a href="{{ site.baseurl }}/documentation/cli/main/build.html" class="page__btn page__btn_o documentation__btn">
                 CLI команды
             </a>
         </div>

@@ -9,20 +9,20 @@ author: Alexey Igrychev <alexey.igrychev@flant.com>
 
 ## Dockerfile-образ
 
-Werf использует Dockerfile как главный способ описания того, как должен быть собран образ. Образ, собранный из Dockerfile далее будет упоминаться как **Dockerfile-образ** (более подробно об использовании Dockerfile-образа читай в [соответствующем разделе]]({{ site.baseurl }}/ru/documentation/configuration/dockerfile_image.html)).
+Werf использует Dockerfile как главный способ описания того, как должен быть собран образ. Образ, собранный из Dockerfile далее будет упоминаться как **Dockerfile-образ** (более подробно об использовании Dockerfile-образа читай в [соответствующем разделе]]({{ site.baseurl }}/documentation/configuration/dockerfile_image.html)).
 
 ### Как собирается Dockerfile-образ
 
-Для сборки Dockerfile-образа Werf создает единственную [стадию]({{ site.baseurl }}/ru/documentation/reference/stages_and_images.html#стадии) — `dockerfile`.
+Для сборки Dockerfile-образа Werf создает единственную [стадию]({{ site.baseurl }}/documentation/reference/stages_and_images.html#стадии) — `dockerfile`.
 
 Как собирается стадия `dockerfile`:
 
  1. Высчитывается сигнатура стадии, исходя из указанного `Dockerfile` и его содержимого. Эта сигнатура отражает состояние собранного образа.
- 2. Если образ с такой сигнатурой уже существует в [хранилище стадий]({{ site.baseurl }}/ru/documentation/reference/stages_and_images.html#хранилище-стадий), то Werf не выполняет новую сборку образа.
- 3. Если образ с такой сигнатурой отсутствует в [хранилище стадий]({{ site.baseurl }}/ru/documentation/reference/stages_and_images.html#хранилище-стадий), то Werf запускает обычную сборку образа с помощью Docker, используя стандартные команды встроенного в Docker клиента (это аналогично выполнению команды `docker build`). Кэш, создаваемый при сборке используется как и при обычной сборке без помощи Werf.
- 4. После сборки стадии, Werf помещает ее в [хранилище стадий]({{ site.baseurl }}/ru/documentation/reference/stages_and_images.html#хранилище-стадий) (при этом тэгируя соответствующий Docker-образ сигнатурой стадии), если используется параметр [`--stages-storage :local`]({{ site.baseurl }}/ru/documentation/reference/stages_and_images.html#хранилище-стадий).
+ 2. Если образ с такой сигнатурой уже существует в [хранилище стадий]({{ site.baseurl }}/documentation/reference/stages_and_images.html#хранилище-стадий), то Werf не выполняет новую сборку образа.
+ 3. Если образ с такой сигнатурой отсутствует в [хранилище стадий]({{ site.baseurl }}/documentation/reference/stages_and_images.html#хранилище-стадий), то Werf запускает обычную сборку образа с помощью Docker, используя стандартные команды встроенного в Docker клиента (это аналогично выполнению команды `docker build`). Кэш, создаваемый при сборке используется как и при обычной сборке без помощи Werf.
+ 4. После сборки стадии, Werf помещает ее в [хранилище стадий]({{ site.baseurl }}/documentation/reference/stages_and_images.html#хранилище-стадий) (при этом тэгируя соответствующий Docker-образ сигнатурой стадии), если используется параметр [`--stages-storage :local`]({{ site.baseurl }}/documentation/reference/stages_and_images.html#хранилище-стадий).
 
-Подробнее о файле конфигурации сборки `werf.yaml` смотри в [соответствующем разделе]({{ site.baseurl }}/ru/documentation/configuration/dockerfile_image.html).
+Подробнее о файле конфигурации сборки `werf.yaml` смотри в [соответствующем разделе]({{ site.baseurl }}/documentation/configuration/dockerfile_image.html).
 
 ## Stapel-образ и Stapel-артефакт
 
@@ -35,7 +35,7 @@ Werf использует Dockerfile как главный способ опис
 
 Образ, собранный с помощью сборщика Stapel далее будет упоминаться как **Stapel-образ** или **Stapel-артефакт** в зависимости от контекста.
 
-Читай более подробно про [Stapel-образ]({{ site.baseurl }}/ru/documentation/configuration/stapel_image/naming.html) и [Stapel-артефакт]({{ site.baseurl }}/ru/documentation/configuration/stapel_artifact.html) в соответствующих разделах.
+Читай более подробно про [Stapel-образ]({{ site.baseurl }}/documentation/configuration/stapel_image/naming.html) и [Stapel-артефакт]({{ site.baseurl }}/documentation/configuration/stapel_artifact.html) в соответствующих разделах.
 
 ### Как происходит сборка Stapel-образа и Stapel-артефакта
 
@@ -45,15 +45,15 @@ Werf использует Dockerfile как главный способ опис
 
 При сборке стадии предполагается что инструкции стадии будут запускаться в контейнере, основанном на предыдущей собранной стадии. Такой контейнер будет упоминаться далее как **сборочный контейнер**.
 
-Werf запускает в сборочном контейнере инструкции из подготовленного списка, и сохраняет результат в [хранилище стадий]({{ site.baseurl }}/ru/documentation/reference/stages_and_images.html#хранилище-стадий).
+Werf запускает в сборочном контейнере инструкции из подготовленного списка, и сохраняет результат в [хранилище стадий]({{ site.baseurl }}/documentation/reference/stages_and_images.html#хранилище-стадий).
 
-Werf использует специальный сервисный образ `flant/werf-stapel` содержащий инструменты и библиотеки, необходимые для сборки Stapel-образа или Stapel-артефакта. Подробнее о самом образе Stapel читай в [соответствующей статье]({{ site.baseurl }}/ru/documentation/development/stapel.html).
+Werf использует специальный сервисный образ `flant/werf-stapel` содержащий инструменты и библиотеки, необходимые для сборки Stapel-образа или Stapel-артефакта. Подробнее о самом образе Stapel читай в [соответствующей статье]({{ site.baseurl }}/documentation/development/stapel.html).
 
 Сервисный образ `flant/werf-stapel` монтируется в каждый сборочный контейнер, и все инструменты Stapel доступны при сборке на любой стадии.
 
 ### Как сборщик Stapel работает с CMD и ENTRYPOINT
 
-Для сборки стадии Werf запускает контейнер со служебными значениями `CMD` и `ENTRYPOINT` а затем, заменяет их значениями [базового образа]({{ site.baseurl }}/ru/documentation/configuration/stapel_image/base_image.html). Если в базовом образе эти значения не установлены, Werf сбрасывает их следующим образом:
+Для сборки стадии Werf запускает контейнер со служебными значениями `CMD` и `ENTRYPOINT` а затем, заменяет их значениями [базового образа]({{ site.baseurl }}/documentation/configuration/stapel_image/base_image.html). Если в базовом образе эти значения не установлены, Werf сбрасывает их следующим образом:
 * `[]` для `CMD`;  
 * `[""]` для `ENTRYPOINT`.
 

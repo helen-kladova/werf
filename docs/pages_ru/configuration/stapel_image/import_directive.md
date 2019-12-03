@@ -71,13 +71,13 @@ CMD ["--spring.profiles.active=postgres"]
 
 Смысл такого подхода в следующем — описать несколько вспомогательных образов и выборочно копировать артефакты из одного образа в другой, оставляя все то, что не нужно в конечном образе.
 
-Werf предлагает такой-же подход, но с использованием [_образов_]({{ site.baseurl }}/ru/documentation/configuration/introduction.html#image-config-section) и  [_артефактов_]({{ site.baseurl }}/documentation/configuration/introduction.html#artifact-config-section).
+Werf предлагает такой-же подход, но с использованием [_образов_]({{ site.baseurl }}/documentation/configuration/introduction.html#image-config-section) и  [_артефактов_]({{ site.baseurl }}/documentation/configuration/introduction.html#artifact-config-section).
 
 > Почему Werf не использует multi-stage сборку?
 * Исторически, возможность _импорта_ появилась значительно раньше чем в Docker появилась multi-stage сборка.
 * Werf дает больше гибкости при работе со вспомогательными образами
 
-Импорт _ресурсов_ из _образов_ и _артефактов_ должен быть описан в директиве `import` в конфигурации [_образа_]({{ site.baseurl }}/ru/documentation/configuration/introduction.html#image-config-section) или [_артефакта_]({{ site.baseurl }}/ru/documentation/configuration/introduction.html#artifact-config-section)) куда импортируются файлы. `import` — массив записей, каждая из которых должна содержать следующие параметры:
+Импорт _ресурсов_ из _образов_ и _артефактов_ должен быть описан в директиве `import` в конфигурации [_образа_]({{ site.baseurl }}/documentation/configuration/introduction.html#image-config-section) или [_артефакта_]({{ site.baseurl }}/documentation/configuration/introduction.html#artifact-config-section)) куда импортируются файлы. `import` — массив записей, каждая из которых должна содержать следующие параметры:
 
 - `image: <image name>` или `artifact: <artifact name>`: _исходный образ_, имя образа из которого вы хотите копировать файлы или папки.
 - `add: <absolute path>`: _исходный путь_, абсолютный путь к файлу или папке в _исходном образе_ для копирования.
@@ -99,8 +99,8 @@ import:
 Так же как и при конфигурации _git mappings_ поддерживаются маски включения и исключения файлов и папок. 
 Для указания маски включения файлов используется параметр `include_paths: []`, а для исключения `exclude_paths: []`. Маски указываются относительно пути источника (параметр `add`). 
 Вы также можете указывать владельца и группу для импортируемых ресурсов с помощью параметров `owner: <owner>` и `group: <group>` соответственно. 
-Это поведение аналогично используемому при добавлении кода из git-репозиториев, и вы можете подробнее почитать об этом в [соответствующем разделе]({{ site.baseurl }}/ru/documentation/configuration/stapel_image/git_directive.html).
+Это поведение аналогично используемому при добавлении кода из git-репозиториев, и вы можете подробнее почитать об этом в [соответствующем разделе]({{ site.baseurl }}/documentation/configuration/stapel_image/git_directive.html).
 
 > Обратите внимание, что путь импортируемых ресурсов и путь указанный в _git mappings_ не должны пересекаться
 
-Подробнее об использовании _артефактов_ можно узнать в [отдельной статье]({{ site.baseurl }}/ru/documentation/configuration/stapel_artifact.html).
+Подробнее об использовании _артефактов_ можно узнать в [отдельной статье]({{ site.baseurl }}/documentation/configuration/stapel_artifact.html).

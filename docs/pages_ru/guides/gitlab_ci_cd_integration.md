@@ -59,7 +59,7 @@ author: Artem Kladov <artem.kladov@flant.com>
    ```
 
 1. [Установите](https://kubernetes.io/docs/setup/independent/install-kubeadm/#installing-docker) Docker и настройте kubectl (конечно если они не были установлены ранее).
-1. Установите [зависимости Werf]({{ site.baseurl }}/ru/documentation/guides/getting_started.html#requirements).
+1. Установите [зависимости Werf]({{ site.baseurl }}/documentation/guides/getting_started.html#requirements).
 1. Установите [Multiwerf](https://github.com/flant/multiwerf) от пользователя `gitlab-runner`:
 
    ```bash
@@ -115,9 +115,9 @@ Build:
 
 Забегая вперед скажем, что очистка сборочного кэша и Docker Registry предполагает запуск соответствующей стадии по расписанию. И, так как на стадии очистки не нужно выполнять повторную сборку образов, то в стадии сборки нужно указать `except: schedules`, чтобы стадия сборки не запускалась в случае работы pipeline по расписанию.
 
-Для авторизации в registy (при выполнении push/pull образов) werf использует переменную окружения GitLab `CI_JOB_TOKEN` (читай подробнее про модель разграничения доступа при выполнении заданий в GitLab [здесь](https://docs.gitlab.com/ee/user/project/new_ci_build_permissions_model.html)). Это не единственный, но самый рекомендуемый вариант в случае работы с GitLab (читай более подробно про авторизацию Werf в Docker Registry [здесь]({{ site.baseurl }}/ru/documentation/reference/registry_authorization.html)). В простейшем случае, если вы используете встроенный в GitLab registry, вам не нужно делать никаких дополнительных действий для авторизации.
+Для авторизации в registy (при выполнении push/pull образов) werf использует переменную окружения GitLab `CI_JOB_TOKEN` (читай подробнее про модель разграничения доступа при выполнении заданий в GitLab [здесь](https://docs.gitlab.com/ee/user/project/new_ci_build_permissions_model.html)). Это не единственный, но самый рекомендуемый вариант в случае работы с GitLab (читай более подробно про авторизацию Werf в Docker Registry [здесь]({{ site.baseurl }}/documentation/reference/registry_authorization.html)). В простейшем случае, если вы используете встроенный в GitLab registry, вам не нужно делать никаких дополнительных действий для авторизации.
 
-Если вам нужно чтобы Werf не использовал переменную `CI_JOB_TOKEN`, либо вы используете не встроенный в GitLab Docker Registry (например, `Google Container Registry`), читайте подробнее о вариантах авторизации в Docker Registry [здесь]({{ site.baseurl }}/ru/documentation/reference/registry_authorization.html).
+Если вам нужно чтобы Werf не использовал переменную `CI_JOB_TOKEN`, либо вы используете не встроенный в GitLab Docker Registry (например, `Google Container Registry`), читайте подробнее о вариантах авторизации в Docker Registry [здесь]({{ site.baseurl }}/documentation/reference/registry_authorization.html).
 
 ### Стадии деплоя
 
