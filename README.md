@@ -1,3 +1,7 @@
+
+-------------------
+
+
 <p align="center">
   <img src="https://github.com/flant/werf/raw/master/docs/images/werf-logo.svg?sanitize=true" style="max-height:100%;" height="175">
 </p>
