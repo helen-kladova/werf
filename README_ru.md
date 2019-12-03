@@ -216,12 +216,9 @@ go get github.com/flant/werf/cmd/werf
 
 <!-- WERF DOCS PARTIAL BEGIN: Docs and support -->
 
-[Создайте ваше первое приложение с Werf](https://werf.io/documentation/guides/getting_started.html) или начните знакомство с чтения [документации](https://werf.io/).
+[Создайте ваше первое приложение с Werf](https://werf.io/documentation/guides/getting_started.html) или начните знакомство с чтения [документации](https://ru.werf.io/).
 
-Разработчики Werf всегда поддерживают связь с сообществом. Присоединяйтесь к нам в Slack или Telegram!
-
-- English-speaking community in [CNCF Slack channel #werf](https://cloud-native.slack.com/messages/CHY2THYUU)
-- Русскоязычное сообщество — чат в Telegram [#werf_ru](https://t.me/werf_ru)
+Мы всегда поддерживают связь с сообществом. Присоединяйтесь к нам в [Telegram](https://t.me/werf_ru), [Twitter](https://twitter.com/werf_io) или [Slack](https://cloud-native.slack.com/messages/CHY2THYUU)!
 
 Мы внимательно рассматриваем ваши [issues](https://github.com/flant/werf/issues) на GitHub.
 
