@@ -1,5 +1,5 @@
 ---
-title: Главная
+title: GitOps CLI утилита
 permalink: /
 layout: default
 ---

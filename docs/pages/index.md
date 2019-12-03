@@ -1,5 +1,5 @@
 ---
-title: Main page
+title: GitOps CLI tool
 permalink: /
 layout: default
 ---
