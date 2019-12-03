@@ -1,7 +1,7 @@
 ---
 title: Деплой в Kubernetes
 sidebar: documentation
-permalink: ru/documentation/reference/deploy_process/deploy_into_kubernetes.html
+permalink: documentation/reference/deploy_process/deploy_into_kubernetes.html
 author: Timofey Kirillov <timofey.kirillov@flant.com>
 ---
 

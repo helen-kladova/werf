@@ -1,7 +1,7 @@
 ---
 title: Первое приложение
 sidebar: documentation
-permalink: ru/documentation/guides/advanced_build/first_application.html
+permalink: documentation/guides/advanced_build/first_application.html
 author: Ivan Mikheykin <ivan.mikheykin@flant.com>
 ---
 

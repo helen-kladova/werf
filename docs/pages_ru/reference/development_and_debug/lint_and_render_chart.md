@@ -1,7 +1,7 @@
 ---
 title: Рендеринг и линтер конфигурации
 sidebar: documentation
-permalink: ru/documentation/reference/development_and_debug/lint_and_render_chart.html
+permalink: documentation/reference/development_and_debug/lint_and_render_chart.html
 author: Timofey Kirillov <timofey.kirillov@flant.com>
 ---
 

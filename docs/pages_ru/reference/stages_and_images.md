@@ -1,7 +1,7 @@
 ---
 title: Стадии и образы
 sidebar: documentation
-permalink: ru/documentation/reference/stages_and_images.html
+permalink: documentation/reference/stages_and_images.html
 author: Alexey Igrychev <alexey.igrychev@flant.com>
 ---
 

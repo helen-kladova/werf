@@ -1,7 +1,7 @@
 ---
 title: Импорт из артефактов и образов
 sidebar: documentation
-permalink: ru/documentation/configuration/stapel_image/import_directive.html
+permalink: documentation/configuration/stapel_image/import_directive.html
 author: Alexey Igrychev <alexey.igrychev@flant.com>
 summary: |
   <a class="google-drawings" href="https://docs.google.com/drawings/d/e/2PACX-1vSHlip8uqKZ7Wh00abw6kuh0_3raMr-g1LcLjgRDgztHVIHbY2V-_qp7zZ0GPeN46LKoqb-yMhfaG-l/pub?w=2031&amp;h=144" data-featherlight="image">

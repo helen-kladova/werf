@@ -1,7 +1,7 @@
 ---
 title: Stapel
 sidebar: documentation
-permalink: ru/documentation/development/stapel.html
+permalink: documentation/development/stapel.html
 author: Timofey Kirillov <timofey.kirillo@flant.com>
 ---
 

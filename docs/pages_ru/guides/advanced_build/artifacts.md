@@ -1,7 +1,7 @@
 ---
 title: Использование артефактов
 sidebar: documentation
-permalink: ru/documentation/guides/advanced_build/artifacts.html
+permalink: documentation/guides/advanced_build/artifacts.html
 author: Artem Kladov <artem.kladov@flant.com>
 ---
 

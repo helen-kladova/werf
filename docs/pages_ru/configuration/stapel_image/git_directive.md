@@ -1,7 +1,7 @@
 ---
 title: Добавление исходного кода из git-репозиториев
 sidebar: documentation
-permalink: ru/documentation/configuration/stapel_image/git_directive.html
+permalink: documentation/configuration/stapel_image/git_directive.html
 summary: |
   <a class="google-drawings" href="https://docs.google.com/drawings/d/e/2PACX-1vRUYmRNmeuP14OcChoeGzX_4soCdXx7ZPgNqm5ePcz9L_ItMUqyolRoJyPL7baMNoY7P6M0B08eMtsb/pub?w=2031&amp;h=144" data-featherlight="image">
       <img src="https://docs.google.com/drawings/d/e/2PACX-1vRUYmRNmeuP14OcChoeGzX_4soCdXx7ZPgNqm5ePcz9L_ItMUqyolRoJyPL7baMNoY7P6M0B08eMtsb/pub?w=1016&amp;h=72">

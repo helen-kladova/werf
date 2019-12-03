@@ -1,7 +1,7 @@
 ---
 title: Директива asLayers и раздельное кэширование инструкций
 sidebar: documentation
-permalink: ru/documentation/reference/development_and_debug/as_layers.html
+permalink: documentation/reference/development_and_debug/as_layers.html
 author: Alexey Igrychev <alexey.igrychev@flant.com>
 summary: |
   <div class="language-yaml highlighter-rouge"><pre class="highlight"><code><span class="s">asLayers</span><span class="pi">:</span> <span class="s">true</span>

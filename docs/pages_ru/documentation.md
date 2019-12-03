@@ -1,6 +1,6 @@
 ---
 title: Обзор
-permalink: ru/documentation/index.html
+permalink: documentation/index.html
 sidebar: documentation
 ---
 

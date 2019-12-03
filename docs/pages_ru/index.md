@@ -1,6 +1,6 @@
 ---
 title: Главная
-permalink: /ru/
+permalink: /
 layout: default
 ---
 

@@ -1,7 +1,7 @@
 ---
 title: Использование монтирования
 sidebar: documentation
-permalink: ru/documentation/guides/advanced_build/mounts.html
+permalink: documentation/guides/advanced_build/mounts.html
 author: Artem Kladov <artem.kladov@flant.com>
 ---
 

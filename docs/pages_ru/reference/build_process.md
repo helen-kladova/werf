@@ -1,7 +1,7 @@
 ---
 title: Сборка
 sidebar: documentation
-permalink: ru/documentation/reference/build_process.html
+permalink: documentation/reference/build_process.html
 author: Alexey Igrychev <alexey.igrychev@flant.com>
 ---
 

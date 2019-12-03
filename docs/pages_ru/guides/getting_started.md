@@ -1,7 +1,7 @@
 ---
 title: Первые шаги
 sidebar: documentation
-permalink: ru/documentation/guides/getting_started.html
+permalink: documentation/guides/getting_started.html
 author: Artem Kladov <artem.kladov@flant.com>
 ---
 

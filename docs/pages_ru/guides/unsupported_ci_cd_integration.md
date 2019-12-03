@@ -1,7 +1,7 @@
 ---
 title: Интеграция с неподдерживаемыми системами CI/CD
 sidebar: documentation
-permalink: ru/documentation/guides/unsupported_ci_cd_integration.html
+permalink: documentation/guides/unsupported_ci_cd_integration.html
 author: Timofey Kirillov <timofey.kirillov@flant.com>
 ---
 

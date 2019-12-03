@@ -1,7 +1,7 @@
 ---
 title: Распределенная сборка с GitLab
 sidebar: documentation
-permalink: ru/documentation/guides/distributed_build.html
+permalink: documentation/guides/distributed_build.html
 author: Artem Kladov <artem.kladov@flant.com>
 ---
 

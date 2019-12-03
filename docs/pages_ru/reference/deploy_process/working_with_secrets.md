@@ -1,7 +1,7 @@
 ---
 title: Работа с секретами
 sidebar: documentation
-permalink: ru/documentation/reference/deploy_process/working_with_secrets.html
+permalink: documentation/reference/deploy_process/working_with_secrets.html
 author: Alexey Igrychev <alexey.igrychev@flant.com>
 ---
 

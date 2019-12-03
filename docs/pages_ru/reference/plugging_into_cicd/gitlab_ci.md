@@ -1,7 +1,7 @@
 ---
 title: GitLab CI
 sidebar: documentation
-permalink: ru/documentation/reference/plugging_into_cicd/gitlab_ci.html
+permalink: documentation/reference/plugging_into_cicd/gitlab_ci.html
 author: Timofey Kirillov <timofey.kirillov@flant.com>
 ---
 
