@@ -1,8 +1,7 @@
 ---
 title: Работа с SSH
 sidebar: documentation
-permalink: ru/documentation/reference/toolbox/ssh.html
-ref: documentation_reference_toolbox_ssh
+permalink: documentation/reference/toolbox/ssh.html
 author: Timofey Kirillov <timofey.kirillov@flant.com>
 ---
 

@@ -3,7 +3,6 @@ title: Stages and Images
 sidebar: documentation
 permalink: documentation/reference/stages_and_images.html
 author: Alexey Igrychev <alexey.igrychev@flant.com>
-ref: documentation_reference_stages_and_images
 ---
 
 We propose to divide the assembly proccess into steps, intermediate images (like layers in Docker), with clear functions and assignments.

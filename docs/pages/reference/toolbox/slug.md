@@ -2,7 +2,6 @@
 title: Slug
 sidebar: documentation
 permalink: documentation/reference/toolbox/slug.html
-ref: documentation_reference_toolbox_slug
 author: Timofey Kirillov <timofey.kirillov@flant.com>
 ---
 

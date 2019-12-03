@@ -1,7 +1,6 @@
 ---
 title: Главная
-permalink: /ru/
-ref: main
+permalink: /
 layout: default
 ---
 
@@ -165,13 +164,17 @@ layout: default
     <div class="page__container">
         <div class="community__content">
             <div class="community__title">Растущее дружелюбное сообщество</div>
-            <div class="community__subtitle">Разработчики Werf всегда на связи с сообществом<br/> в Slack и Telegram.</div>
+            <div class="community__subtitle">Мы всегда на связи с сообществом<br/> в Telegram, Twitter и Slack.</div>
             <div class="community__btns">
-                <a href="https://t.me/werf_ru" target="_blank" class="page__btn page__btn_w community__btn">
+                <a href="{{ site.social_links[page.lang].telegram }}" target="_blank" class="page__btn page__btn_w community__btn">
                     <span class="page__icon page__icon_telegram"></span>
                     Мы в Telegram
                 </a>
-                <a href="https://cloud-native.slack.com/messages/CHY2THYUU" target="_blank" class="page__btn page__btn_w community__btn">
+                <a href="{{ site.social_links[page.lang].twitter }}" target="_blank" class="page__btn page__btn_w community__btn">
+                <span class="page__icon page__icon_twitter"></span>
+                Мы в Twitter
+                </a>
+                <a href="{{ site.social_links[page.lang].slack }}" target="_blank" class="page__btn page__btn_w community__btn">
                     <span class="page__icon page__icon_slack"></span>
                     Мы в Slack
                 </a>

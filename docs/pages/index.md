@@ -1,7 +1,6 @@
 ---
 title: Main page
 permalink: /
-ref: main
 layout: default
 ---
 
@@ -165,15 +164,19 @@ layout: default
     <div class="page__container">
         <div class="community__content">
             <div class="community__title">Friendly growing community</div>
-            <div class="community__subtitle">Werf’s developers are always in contact with community<br/> at Slack and Telegram.</div>
+            <div class="community__subtitle">We are always in contact with community through<br/> Twitter, Slack and Telegram.</div>
             <div class="community__btns">
-                <a href="https://t.me/werf_ru" target="_blank" class="page__btn page__btn_w community__btn">
-                    <span class="page__icon page__icon_telegram"></span>
-                    Join via Telegram
+                <a href="{{ site.social_links[page.lang].twitter }}" target="_blank" class="page__btn page__btn_w community__btn">
+                    <span class="page__icon page__icon_twitter"></span>
+                    Join via Twitter
                 </a>
-                <a href="https://cloud-native.slack.com/messages/CHY2THYUU" target="_blank" class="page__btn page__btn_w community__btn">
+                <a href="{{ site.social_links[page.lang].slack }}" target="_blank" class="page__btn page__btn_w community__btn">
                     <span class="page__icon page__icon_slack"></span>
                     Join via Slack
+                </a>
+                <a href="{{ site.social_links[page.lang].telegram }}" target="_blank" class="page__btn page__btn_w community__btn">
+                    <span class="page__icon page__icon_telegram"></span>
+                    Join via Telegram
                 </a>
             </div>
         </div>

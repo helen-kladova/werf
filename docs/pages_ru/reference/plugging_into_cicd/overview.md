@@ -1,8 +1,7 @@
 ---
 title: Общие сведения
 sidebar: documentation
-permalink: ru/documentation/reference/plugging_into_cicd/overview.html
-ref: documentation_reference_plugging_into_cicd_overview
+permalink: documentation/reference/plugging_into_cicd/overview.html
 author: Timofey Kirillov <timofey.kirillov@flant.com>
 ---
 

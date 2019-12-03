@@ -1,8 +1,7 @@
 ---
 title: Общие сведения
 sidebar: documentation
-permalink: ru/documentation/configuration/introduction.html
-ref: documentation_configuration_introduction
+permalink: documentation/configuration/introduction.html
 author: Alexey Igrychev <alexey.igrychev@flant.com>, Timofey Kirillov <timofey.kirillov@flant.com>
 ---
 

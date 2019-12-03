@@ -1,8 +1,7 @@
 ---
 title: Импорт из артефактов и образов
 sidebar: documentation
-permalink: ru/documentation/configuration/stapel_image/import_directive.html
-ref: documentation_configuration_stapel_image_import_directive
+permalink: documentation/configuration/stapel_image/import_directive.html
 author: Alexey Igrychev <alexey.igrychev@flant.com>
 summary: |
   <a class="google-drawings" href="https://docs.google.com/drawings/d/e/2PACX-1vSHlip8uqKZ7Wh00abw6kuh0_3raMr-g1LcLjgRDgztHVIHbY2V-_qp7zZ0GPeN46LKoqb-yMhfaG-l/pub?w=2031&amp;h=144" data-featherlight="image">
@@ -102,6 +101,6 @@ import:
 Вы также можете указывать владельца и группу для импортируемых ресурсов с помощью параметров `owner: <owner>` и `group: <group>` соответственно. 
 Это поведение аналогично используемому при добавлении кода из git-репозиториев, и вы можете подробнее почитать об этом в [соответствующем разделе]({{ site.baseurl }}/ru/documentation/configuration/stapel_image/git_directive.html).
 
-> Обратите внимание, что путь импортируемых ресурсов и путь указанный в _git mappingх_ не должны пересекаться
+> Обратите внимание, что путь импортируемых ресурсов и путь указанный в _git mappings_ не должны пересекаться
 
 Подробнее об использовании _артефактов_ можно узнать в [отдельной статье]({{ site.baseurl }}/ru/documentation/configuration/stapel_artifact.html).

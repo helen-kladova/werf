@@ -2,7 +2,6 @@
 title: Working with chart dependencies
 sidebar: documentation
 permalink: documentation/reference/deploy_process/working_with_chart_dependencies.html
-ref: documentation_reference_deploy_process_working_with_chart_dependencies
 author: Alexey Igrychev <alexey.igrychev@flant.com>
 ---
 

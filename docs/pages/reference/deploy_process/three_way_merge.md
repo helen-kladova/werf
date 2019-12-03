@@ -2,7 +2,6 @@
 title: "Experimental: three way merge"
 sidebar: documentation
 permalink: documentation/reference/deploy_process/experimental_three_way_merge.html
-ref: documentation_reference_deploy_process_experimental_three_way_merge
 author: Timofey Kirillov <timofey.kirillov@flant.com>
 ---
 

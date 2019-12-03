@@ -2,7 +2,6 @@
 title: Registry authorization
 sidebar: documentation
 permalink: documentation/reference/registry_authorization.html
-ref: documentation_reference_registry_authorization
 author: Timofey Kirillov <timofey.kirillov@flant.com>
 ---
 

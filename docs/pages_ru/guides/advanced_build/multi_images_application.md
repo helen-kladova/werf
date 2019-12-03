@@ -1,9 +1,8 @@
 ---
 title: Приложение с несколькими образами
 sidebar: documentation
-permalink: ru/documentation/guides/advanced_build/multi_images.html
+permalink: documentation/guides/advanced_build/multi_images.html
 author: Artem Kladov <artem.kladov@flant.com>
-ref: documentation_guides_advanced_build_multi_images
 ---
 
 ## Обзор задачи

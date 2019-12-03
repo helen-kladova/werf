@@ -2,7 +2,6 @@
 title: Adding docker instructions
 sidebar: documentation
 permalink: documentation/configuration/stapel_image/docker_directive.html
-ref: documentation_configuration_stapel_image_docker_directive
 author: Alexey Igrychev <alexey.igrychev@flant.com>
 summary: |
   <a class="google-drawings" href="https://docs.google.com/drawings/d/e/2PACX-1vTZB0BLxL7mRUFxkrOMaj310CQgb5D5H_V0gXe7QYsTu3kKkdwchg--A1EoEP2CtKbO8pp2qARfeoOK/pub?w=2031&amp;h=144" data-featherlight="image">

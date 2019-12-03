@@ -2,7 +2,6 @@
 title: Build process
 sidebar: documentation
 permalink: documentation/reference/build_process.html
-ref: documentation_reference_build_process
 author: Alexey Igrychev <alexey.igrychev@flant.com>
 ---
 

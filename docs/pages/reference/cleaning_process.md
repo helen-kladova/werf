@@ -2,9 +2,7 @@
 title: Cleaning process
 sidebar: documentation
 permalink: documentation/reference/cleaning_process.html
-ref: documentation_reference_cleaning_process
 author: Artem Kladov <artem.kladov@flant.com>, Timofey Kirillov <timofey.kirillov@flant.com>
-ref: reference_cleaning_process
 ---
 
 Build and publish processes create sets of docker layers but do not delete them.

@@ -1,8 +1,7 @@
 ---
 title: Деплой в Kubernetes
 sidebar: documentation
-permalink: ru/documentation/reference/deploy_process/deploy_into_kubernetes.html
-ref: documentation_reference_deploy_process_deploy_into_kubernetes
+permalink: documentation/reference/deploy_process/deploy_into_kubernetes.html
 author: Timofey Kirillov <timofey.kirillov@flant.com>
 ---
 
@@ -294,7 +293,6 @@ global:
       branch: mybranch
       is_branch: true
       is_tag: false
-      ref: mybranch
       tag: '"-"'
     docker_tag: mybranch
     image:

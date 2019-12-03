@@ -2,7 +2,6 @@
 title: Setup Minikube
 sidebar: documentation
 permalink: documentation/reference/development_and_debug/setup_minikube.html
-ref: documentation_reference_development_and_debug_setup_minikube
 author: Timofey Kirillov <timofey.kirillov@flant.com>
 ---
 

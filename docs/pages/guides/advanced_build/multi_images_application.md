@@ -3,7 +3,6 @@ title: Multi-images application
 sidebar: documentation
 permalink: documentation/guides/advanced_build/multi_images.html
 author: Artem Kladov <artem.kladov@flant.com>
-ref: documentation_guides_advanced_build_multi_images
 ---
 
 ## Task Overview

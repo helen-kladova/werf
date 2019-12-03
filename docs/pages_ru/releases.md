@@ -1,6 +1,6 @@
 ---
 title: Releases
-permalink: ru/releases.html
+permalink: releases.html
 sidebar: documentation
 layout: default
 ---

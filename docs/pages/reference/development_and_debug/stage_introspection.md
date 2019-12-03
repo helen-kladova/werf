@@ -2,7 +2,6 @@
 title: Stage Introspection
 sidebar: documentation
 permalink: documentation/reference/development_and_debug/stage_introspection.html
-ref: documentation_reference_development_and_debug_stage_introspection
 author: Alexey Igrychev <alexey.igrychev@flant.com>
 summary: |
   <div class="language-bash highlighter-rouge">

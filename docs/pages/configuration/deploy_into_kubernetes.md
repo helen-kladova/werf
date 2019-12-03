@@ -2,7 +2,6 @@
 title: Deploy into kubernetes
 sidebar: documentation
 permalink: documentation/configuration/deploy_into_kubernetes.html
-ref: documentation_configuration_deploy_into_kubernetes
 author: Timofey Kirillov <timofey.kirillov@flant.com>
 ---
 
